@@ -8,18 +8,31 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
+        :root {
+            --primary: #0b3d91;
+            --accent: #ffd166;
+        }
+
         body {
-            font-family: 'Poppins', sans-serif;
-            background: #f5f5f5
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+            background: #f4f6f9;
+            color: #1f2d3d;
         }
 
-        .navy {
-            background: #0a1f44;
-            color: #fff
+        .site-header {
+            background: linear-gradient(90deg, var(--primary), #08306a);
+            color: #fff;
         }
 
-        .gold {
-            color: #d4af37
+        .btn-accent {
+            background: var(--accent);
+            color: #102a43;
+            border: none;
+        }
+
+        .hero {
+            background: linear-gradient(180deg, rgba(11, 61, 145, 0.05), transparent);
+            padding: 3.5rem 0;
         }
     </style>
 </head>
