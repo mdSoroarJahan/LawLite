@@ -45,14 +45,69 @@ Route::post('/_debug/echo', function (\Illuminate\Http\Request $request) {
         'cookies' => $request->cookies->all(),
     ]);
 });
+
+// Dev helper: create/find test user and login (only in local env)
+Route::get('/_dev/login-as', function () {
+    if (env('APP_ENV') !== 'local') {
+        abort(404);
+    }
+
+    $email = 'test@example.com';
+    $user = \App\Models\User::where('email', $email)->first();
+    if (! $user) {
+        $user = \App\Models\User::create([
+            'name' => 'Dev Tester',
+            'email' => $email,
+            'password' => \Illuminate\Support\Facades\Hash::make('password'),
+        ]);
+    }
+
+    \Illuminate\Support\Facades\Auth::login($user);
+
+    return redirect('/')->with('status', 'Logged in as ' . $user->email . ' (dev)');
+});
+
+// Dev quick-switch by role
+Route::get('/_dev/login-as/{role}', function ($role) {
+    if (env('APP_ENV') !== 'local') {
+        abort(404);
+    }
+
+    $map = [
+        'admin' => 'admin@example.com',
+        'lawyer' => 'lawyer@example.com',
+        'user' => 'user@example.com',
+    ];
+
+    if (! isset($map[$role])) abort(404);
+
+    $user = \App\Models\User::where('email', $map[$role])->first();
+    if (! $user) {
+        // create if missing
+        $user = \App\Models\User::create([
+            'name' => ucfirst($role) . ' Tester',
+            'email' => $map[$role],
+            'password' => \Illuminate\Support\Facades\Hash::make('password'),
+        ]);
+    }
+
+    \Illuminate\Support\Facades\Auth::login($user);
+    return redirect('/')->with('status', 'Logged in as ' . $user->email);
+});
 Route::get('/register', [\App\Http\Controllers\AuthController::class, 'register'])->name('register');
 // Auth form submission
 Route::post('/login', [\App\Http\Controllers\AuthController::class, 'authenticate'])->name('login.post');
 Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 Route::post('/register', [\App\Http\Controllers\AuthController::class, 'store'])->name('register.post');
 
-// Admin dashboard placeholder (protect in future)
-Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'dashboard'])->name('admin.dashboard');
+// Admin dashboard and management routes (protected)
+Route::middleware(['auth', 'is_admin'])->group(function () {
+    Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/admin/users', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('admin.users.index');
+    Route::get('/admin/users/{id}/edit', [\App\Http\Controllers\Admin\UserController::class, 'edit'])->name('admin.users.edit');
+    Route::put('/admin/users/{id}', [\App\Http\Controllers\Admin\UserController::class, 'update'])->name('admin.users.update');
+    Route::delete('/admin/users/{id}', [\App\Http\Controllers\Admin\UserController::class, 'destroy'])->name('admin.users.destroy');
+});
 
 // Local debug: show session id and CSRF token
 Route::get('/_debug/session', function (\Illuminate\Http\Request $request) {
@@ -66,6 +121,11 @@ Route::get('/_debug/session', function (\Illuminate\Http\Request $request) {
 // Notification endpoints (AJAX)
 Route::middleware('auth')->get('/notifications', [NotificationsController::class, 'index']);
 Route::middleware('auth')->post('/notifications/mark-read', [NotificationsController::class, 'markRead']);
+
+// User profile
+Route::middleware('auth')->get('/profile', function (\Illuminate\Http\Request $request) {
+    return view('profile.show', ['user' => $request->user()]);
+})->name('profile.show');
 
 // Chat endpoints
 Route::middleware('auth')->post('/chat/send', [ChatController::class, 'send']);

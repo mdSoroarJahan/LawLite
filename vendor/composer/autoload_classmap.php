@@ -10,6 +10,7 @@ return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'Database\\Seeders\\ArticleSeeder' => $baseDir . '/database/seeders/ArticleSeeder.php',
     'Database\\Seeders\\DatabaseSeeder' => $baseDir . '/database/seeders/DatabaseSeeder.php',
+    'Database\\Seeders\\DevUserSeeder' => $baseDir . '/database/seeders/DevUserSeeder.php',
     'Database\\Seeders\\LawyerSeeder' => $baseDir . '/database/seeders/LawyerSeeder.php',
     'Database\\Seeders\\UserSeeder' => $baseDir . '/database/seeders/UserSeeder.php',
     'DateError' => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/DateError.php',

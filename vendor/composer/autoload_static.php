@@ -432,6 +432,7 @@ class ComposerStaticInitfec4c545c78d506982ca3bd5c993800d
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Database\\Seeders\\ArticleSeeder' => __DIR__ . '/../..' . '/database/seeders/ArticleSeeder.php',
         'Database\\Seeders\\DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeders/DatabaseSeeder.php',
+        'Database\\Seeders\\DevUserSeeder' => __DIR__ . '/../..' . '/database/seeders/DevUserSeeder.php',
         'Database\\Seeders\\LawyerSeeder' => __DIR__ . '/../..' . '/database/seeders/LawyerSeeder.php',
         'Database\\Seeders\\UserSeeder' => __DIR__ . '/../..' . '/database/seeders/UserSeeder.php',
         'DateError' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateError.php',

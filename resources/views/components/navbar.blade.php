@@ -21,6 +21,19 @@
                     <li class="nav-item ms-3"><a class="btn btn-sm btn-accent" href="{{ route('login') }}">Sign in</a></li>
                     <li class="nav-item ms-2"><a class="nav-link text-white" href="{{ route('register') }}">Register</a>
                     </li>
+                    @if (env('APP_ENV') === 'local')
+                        <li class="nav-item dropdown ms-2">
+                            <a class="nav-link dropdown-toggle text-warning" href="#" id="devMenu" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">Dev</a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="devMenu">
+                                <li><a class="dropdown-item" href="{{ url('/_dev/login-as/admin') }}">Login as admin</a>
+                                </li>
+                                <li><a class="dropdown-item" href="{{ url('/_dev/login-as/lawyer') }}">Login as lawyer</a>
+                                </li>
+                                <li><a class="dropdown-item" href="{{ url('/_dev/login-as/user') }}">Login as user</a></li>
+                            </ul>
+                        </li>
+                    @endif
                 @else
                     <li class="nav-item dropdown ms-3">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button"

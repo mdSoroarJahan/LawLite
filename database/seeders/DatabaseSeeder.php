@@ -12,6 +12,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             LawyerSeeder::class,
             ArticleSeeder::class,
+            \Database\Seeders\DevUserSeeder::class,
         ]);
     }
 }
