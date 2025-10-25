@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 use App\Services\GeminiService;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;

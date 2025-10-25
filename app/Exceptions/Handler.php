@@ -6,6 +6,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 use App\Exceptions\GeminiException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 
 class Handler extends ExceptionHandler
 {
@@ -49,7 +50,10 @@ class Handler extends ExceptionHandler
 
         // Render GeminiException as a 502 JSON response for API requests
         $this->renderable(function (GeminiException $e, $request) {
-            $retryAfter = config('gemini.retry_after', 30);
+            // Prefer the retry-after and attempts values carried by the exception when set,
+            // otherwise fall back to config defaults.
+            $retryAfter = method_exists($e, 'getRetryAfter') && $e->getRetryAfter() ? $e->getRetryAfter() : config('gemini.retry_after', 30);
+            $attempts = method_exists($e, 'getAttempts') ? $e->getAttempts() : null;
 
             // Structured payload that clients can use for programmatic retries
             $payload = [
@@ -59,6 +63,18 @@ class Handler extends ExceptionHandler
                 'retry_after' => $retryAfter,
             ];
 
+            if ($attempts !== null) {
+                $payload['attempts'] = $attempts;
+            }
+
+            // Structured logging for observability: include retry_after and attempts when available
+            Log::warning('Rendering GeminiException response', [
+                'retry_after' => $retryAfter,
+                'attempts' => $attempts,
+                'message' => $e->getMessage(),
+                'path' => $request->path(),
+            ]);
+
             // If the client expects JSON, return a structured JSON response with Retry-After header
             if ($request->expectsJson() || $request->is('api/*') || $request->wantsJson()) {
                 return response()->json($payload, 502)
@@ -66,7 +82,12 @@ class Handler extends ExceptionHandler
             }
 
             // For non-JSON requests fall back to a simple response with 502 and Retry-After header
-            return response('AI service unavailable. Please try again later.', 502)
+            $body = 'AI service unavailable. Please try again later.';
+            if ($attempts !== null) {
+                $body .= " (attempts={$attempts})";
+            }
+
+            return response($body, 502)
                 ->header('Retry-After', (string) $retryAfter);
         });
     }

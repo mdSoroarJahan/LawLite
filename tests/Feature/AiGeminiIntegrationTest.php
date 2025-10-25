@@ -5,14 +5,11 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use App\Exceptions\GeminiException;
 use App\Services\GeminiService;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\User;
 
-class AiGeminiExceptionTest extends TestCase
+class AiGeminiIntegrationTest extends TestCase
 {
-    use WithFaker;
-
-    public function testAskEndpointReturns502WhenGeminiFails()
+    public function testAskEndpointWithAuthReturns502WhenGeminiFails()
     {
         // Bind a stub gemini service that throws the GeminiException
         $this->app->bind(GeminiService::class, function () {
@@ -25,9 +22,11 @@ class AiGeminiExceptionTest extends TestCase
             };
         });
 
-        // Authenticate and include CSRF token so middleware is exercised
-        $user = new \App\Models\User(['id' => 1001, 'name' => 'Test User', 'email' => 'testuser@example']);
+        // Create an in-memory user instance and authenticate
+        $user = new User(['id' => 9999, 'name' => 'Integration Tester', 'email' => 'int@test.example']);
         $this->actingAs($user);
+
+        // Ensure session has a CSRF token and include it in the request headers
         $this->withSession(['_token' => 'test-csrf-token']);
         $response = $this->withHeaders(['X-CSRF-TOKEN' => 'test-csrf-token'])
             ->postJson(route('ai.ask'), ['question' => 'Hello?']);
@@ -37,7 +36,7 @@ class AiGeminiExceptionTest extends TestCase
         $this->assertTrue($response->headers->has('Retry-After'));
     }
 
-    public function testSummarizeEndpointReturns502WhenGeminiFails()
+    public function testSummarizeEndpointWithAuthReturns502WhenGeminiFails()
     {
         $this->app->bind(GeminiService::class, function () {
             return new class extends \App\Services\GeminiService {
@@ -49,9 +48,10 @@ class AiGeminiExceptionTest extends TestCase
             };
         });
 
-        // Authenticate and include CSRF token so middleware is exercised
-        $user = new \App\Models\User(['id' => 1002, 'name' => 'Test User 2', 'email' => 'testuser2@example']);
+        $user = new User(['id' => 9998, 'name' => 'Integration Tester 2', 'email' => 'int2@test.example']);
         $this->actingAs($user);
+
+        // Ensure session has a CSRF token and include it in the request headers
         $this->withSession(['_token' => 'test-csrf-token']);
         $response = $this->withHeaders(['X-CSRF-TOKEN' => 'test-csrf-token'])
             ->postJson(route('ai.summarize'), ['documents' => ['a']]);

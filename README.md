@@ -1,50 +1,76 @@
-# LawLite
+﻿# LawLite
 
-LawLite is a bilingual (Bangla/English) legal consultation platform connecting verified lawyers with users, providing AI-powered Q&A and document summarization via the Gemini API.
+LawLite is a bilingual (Bangla / English) legal consultation and knowledge-sharing platform scaffolded with Laravel 10.
 
-This repository contains scaffolding to build the platform using Laravel, ElasticSearch, and the Gemini API.
+## AI error response contract
 
-Quick start
+When the upstream AI service (Gemini) is unavailable the application returns HTTP 502 with a structured JSON payload and a `Retry-After` header to help clients handle retries gracefully.
 
-- Copy `.env.example` to `.env` and fill in database and Gemini API keys.
-- Install dependencies: `composer install`
-- Generate app key: `php artisan key:generate`
-- Run migrations: `php artisan migrate`
-- Seed sample data: `php artisan db:seed`
-- Serve: `php artisan serve`
+Example response:
 
-Notes
+```http
+HTTP/1.1 502 Bad Gateway
+Retry-After: 30
 
-- To enable real-time chat and notifications, add Pusher keys to `.env` (PUSHER_APP_KEY, PUSHER_APP_CLUSTER, PUSHER_APP_SECRET, PUSHER_APP_ID). The layout includes Echo/Pusher client wiring.
-- To enable search, run an ElasticSearch instance and set `ELASTICSEARCH_HOST` in `.env`. The project includes a stubbed indexer command in `app/Console/Commands/IndexSearchCommand.php`.
-
-See the `resources` directory for Blade components and `app/Services/GeminiService.php` for the Gemini integration.
-
-Gemini (AI) configuration
-
-The app integrates with a Gemini-compatible AI service. Add these variables to your `.env` or copy from `.env.example`:
-
-```
-GEMINI_API_KEY=your_api_key_here
-GEMINI_API_URL=https://api.gemini.example/v1
-GEMINI_DEFAULT_LANGUAGE=en
-GEMINI_TIMEOUT=30
-GEMINI_RETRIES=2
+{
+  "ok": false,
+  "error": "AI service unavailable. Please try again later.",
+  "code": "AI_SERVICE_UNAVAILABLE",
+  "retry_after": 30
+}
 ```
 
-Notes:
+- `code` is a machine-friendly error identifier.
+- `retry_after` (seconds) is present in both the JSON body and the `Retry-After` header.
 
-- The `GeminiService` is registered via `App\Providers\GeminiServiceProvider` and injected into `AiController`.
-- In local/dev you can leave `GEMINI_API_KEY` empty and stub responses for testing.
+Clients should respect `Retry-After` and avoid tight retry loops. Treat `AI_SERVICE_UNAVAILABLE` as transient.
 
-Dev quick-switch
+## Metrics (optional)
 
-There are dev helper routes that allow logging in as seed users (visible only when `APP_ENV=local`):
+This project includes a minimal StatsD-style metrics emitter. Metrics are disabled by default. To enable metrics, set the following in your `.env`:
 
+```env
+METRICS_ENABLED=true
+METRICS_HOST=127.0.0.1
+METRICS_PORT=8125
+METRICS_PREFIX=lawlite.dev
 ```
-GET /_dev/login-as/admin    -> logs in as admin@example.com
-GET /_dev/login-as/lawyer   -> logs in as lawyer@example.com
-GET /_dev/login-as/user     -> logs in as user@example.com
+
+When enabled the `GeminiService` emits two counters:
+
+- `gemini.retry.attempts`  incremented on each retry attempt.
+- `gemini.retry.final_failures`  incremented when all retries fail.
+
+The implementation is best-effort (UDP) and will not throw on failures to send metrics.
+
+## Running tests
+
+Locally (Windows PowerShell):
+
+```powershell
+composer install
+vendor\\bin\\phpunit
 ```
 
-Remove or disable these routes in production.
+CI: The repository contains `.github/workflows/phpunit.yml` which runs PHPUnit on push and pull requests to `main`.
+
+## Quick start
+
+1. Copy `.env.example` to `.env` and set DB and Gemini API variables.
+2. Install dependencies: `composer install`
+3. Generate app key: `php artisan key:generate`
+4. Run migrations: `php artisan migrate`
+5. Seed sample data: `php artisan db:seed`
+6. Serve locally: `php artisan serve`
+
+## Developer notes
+
+- Gemini config: `config/gemini.php`  set `GEMINI_API_KEY`, `GEMINI_RETRY_AFTER`, etc.
+- `app/Services/GeminiService.php` contains retry logic, logging, and metrics emission.
+- `app/Exceptions/Handler.php` renders `GeminiException` as 502 with `retry_after` (and `attempts` when available).
+
+## Dev & Ops notes
+
+- For real-time features add Pusher/Echo keys to `.env` (PUSHER_* variables).
+- To enable search, provide an ElasticSearch host in `.env` (ELASTICSEARCH_HOST).
+- The `GeminiService` is registered via `App\\Providers\\GeminiServiceProvider` and injected into controllers that need AI features.

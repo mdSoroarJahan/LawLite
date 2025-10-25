@@ -7,6 +7,8 @@ use GuzzleHttp\Exception\GuzzleException;
 use App\Exceptions\GeminiException;
 use Psr\Http\Message\ResponseInterface;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
+use App\Services\Metrics;
 
 class GeminiService
 {
@@ -91,6 +93,15 @@ class GeminiService
                 return $decoded === null ? ['raw' => $body] : $decoded;
             } catch (GuzzleException $e) {
                 $lastEx = $e;
+                // log the failed attempt so we can monitor retries
+                Log::warning('GeminiService request failed (GuzzleException)', [
+                    'method' => $method,
+                    'uri' => $uri,
+                    'attempt' => $attempts,
+                    'error' => $e->getMessage(),
+                ]);
+                // increment retry attempt metric (best-effort)
+                Metrics::increment('gemini.retry.attempts');
                 // simple backoff
                 if ($attempts > $this->retries) {
                     break;
@@ -99,11 +110,22 @@ class GeminiService
                 continue;
             } catch (\Throwable $t) {
                 $lastEx = $t;
+                Log::error('GeminiService unexpected error', [
+                    'method' => $method,
+                    'uri' => $uri,
+                    'attempt' => $attempts,
+                    'error' => $t->getMessage(),
+                ]);
                 break;
             }
         }
 
-        $msg = 'GeminiService request failed: ' . ($lastEx ? $lastEx->getMessage() : 'unknown');
-        throw new GeminiException($msg, 0, $lastEx);
+        $msg = sprintf('GeminiService request failed after %d attempts: %s', $attempts, ($lastEx ? $lastEx->getMessage() : 'unknown'));
+        // Attach retry_after value (suggested) to the exception message for downstream handling if needed
+        $retryAfter = config('gemini.retry_after', 30);
+        $msg = $msg . sprintf(' (retry_after=%d)', $retryAfter);
+        // increment final failure metric
+        Metrics::increment('gemini.retry.final_failures');
+        throw new GeminiException($msg, 0, $lastEx, $attempts, $retryAfter);
     }
 }
