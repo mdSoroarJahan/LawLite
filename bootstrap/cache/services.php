@@ -26,7 +26,8 @@
     22 => 'Termwind\\Laravel\\TermwindServiceProvider',
     23 => 'App\\Providers\\AppServiceProvider',
     24 => 'App\\Providers\\AuthServiceProvider',
-    25 => 'App\\Providers\\RouteServiceProvider',
+    25 => 'App\\Providers\\GeminiServiceProvider',
+    26 => 'App\\Providers\\RouteServiceProvider',
   ),
   'eager' => 
   array (
@@ -44,7 +45,8 @@
     11 => 'Termwind\\Laravel\\TermwindServiceProvider',
     12 => 'App\\Providers\\AppServiceProvider',
     13 => 'App\\Providers\\AuthServiceProvider',
-    14 => 'App\\Providers\\RouteServiceProvider',
+    14 => 'App\\Providers\\GeminiServiceProvider',
+    15 => 'App\\Providers\\RouteServiceProvider',
   ),
   'deferred' => 
   array (

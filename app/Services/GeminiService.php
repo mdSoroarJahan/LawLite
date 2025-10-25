@@ -4,6 +4,7 @@ namespace App\Services;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use App\Exceptions\GeminiException;
 use Psr\Http\Message\ResponseInterface;
 use Illuminate\Support\Arr;
 
@@ -102,6 +103,7 @@ class GeminiService
             }
         }
 
-        throw new \Exception('GeminiService request failed: ' . ($lastEx ? $lastEx->getMessage() : 'unknown'));
+        $msg = 'GeminiService request failed: ' . ($lastEx ? $lastEx->getMessage() : 'unknown');
+        throw new GeminiException($msg, 0, $lastEx);
     }
 }

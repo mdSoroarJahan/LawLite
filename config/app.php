@@ -41,6 +41,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
+        App\Providers\GeminiServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
     ],
 

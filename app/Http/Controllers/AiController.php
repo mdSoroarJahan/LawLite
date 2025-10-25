@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\GeminiService;
+use App\Exceptions\GeminiException;
 use App\Models\AiQuery;
 use App\Models\AiDocument;
 use Illuminate\Support\Facades\Log;
@@ -26,6 +27,7 @@ class AiController extends Controller
         ]);
 
         $language = $data['language'] ?? 'en';
+
         $result = $this->gemini->askQuestion($data['question'], $language);
 
         // persist to ai_queries table
@@ -52,6 +54,7 @@ class AiController extends Controller
         ]);
 
         $language = $data['language'] ?? 'bn';
+
         $result = $this->gemini->summarize($data['documents'], $language);
 
         // store in ai_documents

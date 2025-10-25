@@ -11,4 +11,6 @@ return [
     'timeout' => env('GEMINI_TIMEOUT', 30),
     // Number of retries for transient errors
     'retries' => env('GEMINI_RETRIES', 2),
+    // Retry-After seconds suggested to clients when upstream AI is unavailable
+    'retry_after' => env('GEMINI_RETRY_AFTER', 30),
 ];
