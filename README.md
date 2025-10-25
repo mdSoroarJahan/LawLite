@@ -43,6 +43,13 @@ When enabled the `GeminiService` emits two counters:
 
 The implementation is best-effort (UDP) and will not throw on failures to send metrics.
 
+Advanced options
+
+- `METRICS_USE_CLIENT` (boolean) — when true, the app will attempt to use a maintained StatsD client library (domnikl/statsd by default) to send metrics over UDP. If the client is unavailable or fails, the code falls back to the simple UDP sender. Default: `false`.
+- `METRICS_TESTING_SPY` (boolean) — test-only helper. When enabled in tests the `Metrics` service writes emitted metric names to `storage/logs/metrics_test.log` so unit tests can assert metrics were emitted without requiring a running metrics backend. Default: `false`.
+
+Note: the project currently includes optional support for `domnikl/statsd`. The package is small and functional; if you prefer a different client (for example `slickdeals/statsd`) we can swap it — the `Metrics` service is implemented to allow a client or fall back to UDP.
+
 ## Running tests
 
 Locally (Windows PowerShell):

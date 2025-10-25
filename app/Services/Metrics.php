@@ -28,15 +28,28 @@ class Metrics
         if (!config('metrics.enabled', false)) {
             return;
         }
+        $prefix = config('metrics.prefix');
+        $metric = $prefix ? trim($prefix, '.') . '.' . $name : $name;
 
+        // Optionally use a maintained client library (domnikl/statsd) if enabled
+        if (config('metrics.use_client', false) && class_exists(\Domnikl\Statsd\Client::class)) {
+            try {
+                $host = config('metrics.host', '127.0.0.1');
+                $port = config('metrics.port', 8125);
+                $connection = new \Domnikl\Statsd\Connection\Socket($host, $port);
+                $client = new \Domnikl\Statsd\Client($connection, $prefix ?? null);
+                $client->increment($name, $value);
+                return;
+            } catch (\Throwable $e) {
+                // fall through to UDP fallback
+            }
+        }
+
+        // UDP fallback (best-effort)
         $host = config('metrics.host', '127.0.0.1');
         $port = config('metrics.port', 8125);
-        $prefix = config('metrics.prefix');
-
-        $metric = $prefix ? trim($prefix, '.') . '.' . $name : $name;
         $payload = sprintf("%s:%d|c", $metric, $value);
 
-        // Best-effort UDP send; do not throw on failure
         try {
             $sock = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
             if ($sock === false) {

@@ -10,4 +10,6 @@ return [
 
     // Optional prefix for metric names
     'prefix' => env('METRICS_PREFIX', null),
+    // Use a maintained client (e.g., domnikl/statsd) when true. Falls back to UDP send.
+    'use_client' => env('METRICS_USE_CLIENT', false),
 ];
