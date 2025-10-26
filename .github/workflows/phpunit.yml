@@ -43,7 +43,7 @@ jobs:
           php artisan key:generate --ansi || true
           php artisan migrate --force || true
 
-      - name: Debug: PHP and PHPUnit versions
+      - name: "Debug: PHP and PHPUnit versions"
         run: |
           php -v
           vendor/bin/phpunit --version || true
