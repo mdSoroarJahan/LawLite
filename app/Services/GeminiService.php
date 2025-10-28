@@ -12,11 +12,11 @@ use App\Services\Metrics;
 
 class GeminiService
 {
-    protected $client;
-    protected $apiKey;
-    protected $baseUrl;
-    protected $timeout;
-    protected $retries;
+    protected Client $client;
+    protected string $apiKey;
+    protected string $baseUrl;
+    protected int $timeout;
+    protected int $retries;
 
     public function __construct(Client $client = null)
     {
@@ -28,7 +28,15 @@ class GeminiService
         $this->client = $client ?? new Client(['base_uri' => $this->baseUrl, 'timeout' => $this->timeout]);
     }
 
-    public function askQuestion(string $question, string $language = null)
+    /**
+     * Ask a question to the Gemini AI and return decoded JSON (array) or null on no-body.
+     *
+     * @param string $question
+     * @param string|null $language
+     * @return array|null
+     * @throws GeminiException
+     */
+    public function askQuestion(string $question, ?string $language = null): ?array
     {
         $language = $language ?? config('gemini.default_language', 'en');
 
@@ -37,14 +45,20 @@ class GeminiService
             'language' => $language,
         ];
 
-        $response = $this->request('POST', '/ask', [
+        return $this->request('POST', '/ask', [
             'json' => $payload,
         ]);
-
-        return $response;
     }
 
-    public function summarize(array $documentFiles, string $language = null)
+    /**
+     * Summarize documents via Gemini.
+     *
+     * @param array<int,string|array<string,mixed>> $documentFiles
+     * @param string|null $language
+     * @return array|null
+     * @throws GeminiException
+     */
+    public function summarize(array $documentFiles, ?string $language = null): ?array
     {
         $language = $language ?? config('gemini.default_language', 'bn');
 
@@ -68,7 +82,17 @@ class GeminiService
      * @return array|null
      * @throws \Exception
      */
-    protected function request(string $method, string $uri, array $options = [])
+    /**
+     * Perform an HTTP request with retries and error handling.
+     * Returns decoded JSON array on success, or throws GeminiException on failure.
+     *
+     * @param string $method
+     * @param string $uri
+     * @param array<string,mixed> $options
+     * @return array<string,mixed>|null
+     * @throws GeminiException
+     */
+    protected function request(string $method, string $uri, array $options = []): ?array
     {
         $attempts = 0;
         $lastEx = null;

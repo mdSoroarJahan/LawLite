@@ -5,6 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\Lawyer
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property string|null $expertise
+ * @property string|null $bio
+ * @property string|null $license_number
+ * @property string|null $verification_status
+ * @property array|null $documents
+ * @property float|null $latitude
+ * @property float|null $longitude
+ * @property string|null $city
+ */
 class Lawyer extends Model
 {
     use HasFactory;

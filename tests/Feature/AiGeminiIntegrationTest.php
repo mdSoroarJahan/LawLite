@@ -15,7 +15,7 @@ class AiGeminiIntegrationTest extends TestCase
         $this->app->bind(GeminiService::class, function () {
             return new class extends \App\Services\GeminiService {
                 public function __construct() {}
-                public function askQuestion($q, $lang = null)
+                public function askQuestion(string $q, ?string $lang = null): ?array
                 {
                     throw new GeminiException('upstream error');
                 }
@@ -41,7 +41,7 @@ class AiGeminiIntegrationTest extends TestCase
         $this->app->bind(GeminiService::class, function () {
             return new class extends \App\Services\GeminiService {
                 public function __construct() {}
-                public function summarize($docs, $lang = null)
+                public function summarize(array $docs, ?string $lang = null): ?array
                 {
                     throw new GeminiException('upstream error');
                 }
