@@ -19,31 +19,31 @@ parameters:
 			path: app/Console/Commands/DevSeedUsers.php
 
 		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Builder\|Illuminate\\Database\\Eloquent\\Model\:\:\$city\.$#'
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Builder\:\:\$city\.$#'
 			identifier: property.notFound
 			count: 1
 			path: app/Console/Commands/IndexSearchCommand.php
 
 		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Builder\|Illuminate\\Database\\Eloquent\\Model\:\:\$expertise\.$#'
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Builder\:\:\$expertise\.$#'
 			identifier: property.notFound
 			count: 1
 			path: app/Console/Commands/IndexSearchCommand.php
 
 		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Builder\|Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Builder\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
 			path: app/Console/Commands/IndexSearchCommand.php
 
 		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Builder\|Illuminate\\Database\\Eloquent\\Model\:\:\$latitude\.$#'
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Builder\:\:\$latitude\.$#'
 			identifier: property.notFound
 			count: 1
 			path: app/Console/Commands/IndexSearchCommand.php
 
 		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Builder\|Illuminate\\Database\\Eloquent\\Model\:\:\$longitude\.$#'
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Builder\:\:\$longitude\.$#'
 			identifier: property.notFound
 			count: 1
 			path: app/Console/Commands/IndexSearchCommand.php
@@ -163,24 +163,6 @@ parameters:
 			path: app/Http/Controllers/AiController.php
 
 		-
-			message: '#^Method App\\Http\\Controllers\\AiController\:\:ask\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Http/Controllers/AiController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\AiController\:\:summarize\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Http/Controllers/AiController.php
-
-		-
-			message: '#^Property App\\Http\\Controllers\\AiController\:\:\$gemini has no type specified\.$#'
-			identifier: missingType.property
-			count: 1
-			path: app/Http/Controllers/AiController.php
-
-		-
 			message: '#^Access to an undefined property App\\Models\\Lawyer\:\:\$user\.$#'
 			identifier: property.notFound
 			count: 1
@@ -277,24 +259,6 @@ parameters:
 			path: app/Http/Controllers/ChatController.php
 
 		-
-			message: '#^Method App\\Http\\Controllers\\ChatController\:\:history\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Http/Controllers/ChatController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\ChatController\:\:history\(\) has parameter \$withUserId with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: app/Http/Controllers/ChatController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\ChatController\:\:send\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Http/Controllers/ChatController.php
-
-		-
 			message: '#^Parameter \#1 \$column of static method Illuminate\\Database\\Eloquent\\Model\:\:where\(\) expects string, Closure given\.$#'
 			identifier: argument.type
 			count: 1
@@ -332,12 +296,6 @@ parameters:
 
 		-
 			message: '#^Method App\\Http\\Controllers\\NotificationsController\:\:index\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Http/Controllers/NotificationsController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\NotificationsController\:\:markRead\(\) has no return type specified\.$#'
 			identifier: missingType.return
 			count: 1
 			path: app/Http/Controllers/NotificationsController.php
@@ -481,82 +439,16 @@ parameters:
 			path: app/Models/Lawyer.php
 
 		-
-			message: '#^Method App\\Models\\Lawyer\:\:analytics\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Models/Lawyer.php
-
-		-
-			message: '#^Method App\\Models\\Lawyer\:\:appointments\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Models/Lawyer.php
-
-		-
-			message: '#^Method App\\Models\\Lawyer\:\:user\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Models/Lawyer.php
-
-		-
 			message: '#^Property App\\Models\\Lawyer\:\:\$casts type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
 			path: app/Models/Lawyer.php
 
 		-
-			message: '#^Method App\\Models\\Message\:\:receiver\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Models/Message.php
-
-		-
-			message: '#^Method App\\Models\\Message\:\:sender\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Models/Message.php
-
-		-
 			message: '#^Method App\\Models\\Notification\:\:user\(\) has no return type specified\.$#'
 			identifier: missingType.return
 			count: 1
 			path: app/Models/Notification.php
-
-		-
-			message: '#^Method App\\Models\\User\:\:aiDocuments\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Models/User.php
-
-		-
-			message: '#^Method App\\Models\\User\:\:aiQueries\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Models/User.php
-
-		-
-			message: '#^Method App\\Models\\User\:\:appointments\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Models/User.php
-
-		-
-			message: '#^Method App\\Models\\User\:\:lawyer\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Models/User.php
-
-		-
-			message: '#^Method App\\Models\\User\:\:messagesReceived\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Models/User.php
-
-		-
-			message: '#^Method App\\Models\\User\:\:messagesSent\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Models/User.php
 
 		-
 			message: '#^Method App\\Notifications\\GenericNotification\:\:toDatabase\(\) has no return type specified\.$#'
@@ -613,247 +505,115 @@ parameters:
 			path: app/Providers/GeminiServiceProvider.php
 
 		-
-			message: '#^Method App\\Services\\GeminiService\:\:askQuestion\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
+			message: '#^Ternary operator condition is always false\.$#'
+			identifier: ternary.alwaysFalse
 			count: 1
-			path: app/Services/GeminiService.php
+			path: scripts/check_command_autoload.php
 
 		-
-			message: '#^Method App\\Services\\GeminiService\:\:summarize\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
+			message: '#^Call to an undefined static method App\\Models\\User\:\:whereIn\(\)\.$#'
+			identifier: staticMethod.notFound
 			count: 1
-			path: app/Services/GeminiService.php
+			path: scripts/check_users.php
 
 		-
-			message: '#^Method Illuminate\\Database\\Migrations\\Migration@anonymous/database/migrations/2025_10_20_000001_create_users_table\.php\:7\:\:down\(\) has no return type specified\.$#'
-			identifier: missingType.return
+			message: '#^Call to an undefined static method App\\Models\\User\:\:whereIn\(\)\.$#'
+			identifier: staticMethod.notFound
 			count: 1
-			path: database/migrations/2025_10_20_000001_create_users_table.php
+			path: scripts/check_users_root.php
 
 		-
-			message: '#^Method Illuminate\\Database\\Migrations\\Migration@anonymous/database/migrations/2025_10_20_000001_create_users_table\.php\:7\:\:up\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: database/migrations/2025_10_20_000001_create_users_table.php
-
-		-
-			message: '#^Method Illuminate\\Database\\Migrations\\Migration@anonymous/database/migrations/2025_10_20_000002_create_lawyers_table\.php\:7\:\:down\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: database/migrations/2025_10_20_000002_create_lawyers_table.php
-
-		-
-			message: '#^Method Illuminate\\Database\\Migrations\\Migration@anonymous/database/migrations/2025_10_20_000002_create_lawyers_table\.php\:7\:\:up\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: database/migrations/2025_10_20_000002_create_lawyers_table.php
-
-		-
-			message: '#^Method Illuminate\\Database\\Migrations\\Migration@anonymous/database/migrations/2025_10_20_000003_create_messages_table\.php\:7\:\:down\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: database/migrations/2025_10_20_000003_create_messages_table.php
-
-		-
-			message: '#^Method Illuminate\\Database\\Migrations\\Migration@anonymous/database/migrations/2025_10_20_000003_create_messages_table\.php\:7\:\:up\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: database/migrations/2025_10_20_000003_create_messages_table.php
-
-		-
-			message: '#^Method Illuminate\\Database\\Migrations\\Migration@anonymous/database/migrations/2025_10_20_000004_create_appointments_table\.php\:7\:\:down\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: database/migrations/2025_10_20_000004_create_appointments_table.php
-
-		-
-			message: '#^Method Illuminate\\Database\\Migrations\\Migration@anonymous/database/migrations/2025_10_20_000004_create_appointments_table\.php\:7\:\:up\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: database/migrations/2025_10_20_000004_create_appointments_table.php
-
-		-
-			message: '#^Method Illuminate\\Database\\Migrations\\Migration@anonymous/database/migrations/2025_10_20_000005_create_ai_queries_table\.php\:7\:\:down\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: database/migrations/2025_10_20_000005_create_ai_queries_table.php
-
-		-
-			message: '#^Method Illuminate\\Database\\Migrations\\Migration@anonymous/database/migrations/2025_10_20_000005_create_ai_queries_table\.php\:7\:\:up\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: database/migrations/2025_10_20_000005_create_ai_queries_table.php
-
-		-
-			message: '#^Method Illuminate\\Database\\Migrations\\Migration@anonymous/database/migrations/2025_10_20_000006_create_ai_documents_table\.php\:7\:\:down\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: database/migrations/2025_10_20_000006_create_ai_documents_table.php
-
-		-
-			message: '#^Method Illuminate\\Database\\Migrations\\Migration@anonymous/database/migrations/2025_10_20_000006_create_ai_documents_table\.php\:7\:\:up\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: database/migrations/2025_10_20_000006_create_ai_documents_table.php
-
-		-
-			message: '#^Method Illuminate\\Database\\Migrations\\Migration@anonymous/database/migrations/2025_10_20_000007_create_articles_table\.php\:7\:\:down\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: database/migrations/2025_10_20_000007_create_articles_table.php
-
-		-
-			message: '#^Method Illuminate\\Database\\Migrations\\Migration@anonymous/database/migrations/2025_10_20_000007_create_articles_table\.php\:7\:\:up\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: database/migrations/2025_10_20_000007_create_articles_table.php
-
-		-
-			message: '#^Method Illuminate\\Database\\Migrations\\Migration@anonymous/database/migrations/2025_10_20_000008_create_faqs_table\.php\:7\:\:down\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: database/migrations/2025_10_20_000008_create_faqs_table.php
-
-		-
-			message: '#^Method Illuminate\\Database\\Migrations\\Migration@anonymous/database/migrations/2025_10_20_000008_create_faqs_table\.php\:7\:\:up\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: database/migrations/2025_10_20_000008_create_faqs_table.php
-
-		-
-			message: '#^Method Illuminate\\Database\\Migrations\\Migration@anonymous/database/migrations/2025_10_20_000009_create_analytics_table\.php\:7\:\:down\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: database/migrations/2025_10_20_000009_create_analytics_table.php
-
-		-
-			message: '#^Method Illuminate\\Database\\Migrations\\Migration@anonymous/database/migrations/2025_10_20_000009_create_analytics_table\.php\:7\:\:up\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: database/migrations/2025_10_20_000009_create_analytics_table.php
-
-		-
-			message: '#^Method Illuminate\\Database\\Migrations\\Migration@anonymous/database/migrations/2025_10_20_000010_create_admin_verifications_table\.php\:7\:\:down\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: database/migrations/2025_10_20_000010_create_admin_verifications_table.php
-
-		-
-			message: '#^Method Illuminate\\Database\\Migrations\\Migration@anonymous/database/migrations/2025_10_20_000010_create_admin_verifications_table\.php\:7\:\:up\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: database/migrations/2025_10_20_000010_create_admin_verifications_table.php
-
-		-
-			message: '#^Method Illuminate\\Database\\Migrations\\Migration@anonymous/database/migrations/2025_10_20_000011_create_notifications_table\.php\:7\:\:down\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: database/migrations/2025_10_20_000011_create_notifications_table.php
-
-		-
-			message: '#^Method Illuminate\\Database\\Migrations\\Migration@anonymous/database/migrations/2025_10_20_000011_create_notifications_table\.php\:7\:\:up\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: database/migrations/2025_10_20_000011_create_notifications_table.php
-
-		-
-			message: '#^Method Illuminate\\Database\\Migrations\\Migration@anonymous/database/migrations/2025_10_20_000012_create_password_resets_table\.php\:7\:\:down\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: database/migrations/2025_10_20_000012_create_password_resets_table.php
-
-		-
-			message: '#^Method Illuminate\\Database\\Migrations\\Migration@anonymous/database/migrations/2025_10_20_000012_create_password_resets_table\.php\:7\:\:up\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: database/migrations/2025_10_20_000012_create_password_resets_table.php
-
-		-
-			message: '#^Method Illuminate\\Database\\Migrations\\Migration@anonymous/database/migrations/2025_10_20_000013_create_laravel_notifications_table\.php\:7\:\:down\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: database/migrations/2025_10_20_000013_create_laravel_notifications_table.php
-
-		-
-			message: '#^Method Illuminate\\Database\\Migrations\\Migration@anonymous/database/migrations/2025_10_20_000013_create_laravel_notifications_table\.php\:7\:\:up\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: database/migrations/2025_10_20_000013_create_laravel_notifications_table.php
-
-		-
-			message: '#^Access to an undefined property object\:\:\$id\.$#'
+			message: '#^Access to an undefined property object\:\:\$role\.$#'
 			identifier: property.notFound
 			count: 1
-			path: database/seeders/ArticleSeeder.php
+			path: scripts/create_dev_users.php
 
 		-
-			message: '#^Method Database\\Seeders\\ArticleSeeder\:\:run\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: database/seeders/ArticleSeeder.php
-
-		-
-			message: '#^Method Database\\Seeders\\DatabaseSeeder\:\:run\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: database/seeders/DatabaseSeeder.php
-
-		-
-			message: '#^Method Database\\Seeders\\DevUserSeeder\:\:run\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: database/seeders/DevUserSeeder.php
-
-		-
-			message: '#^Static method Illuminate\\Database\\Eloquent\\Model\:\:firstOrCreate\(\) invoked with 2 parameters, 1 required\.$#'
-			identifier: arguments.count
-			count: 1
-			path: database/seeders/DevUserSeeder.php
-
-		-
-			message: '#^Access to an undefined property object\:\:\$id\.$#'
-			identifier: property.notFound
-			count: 1
-			path: database/seeders/LawyerSeeder.php
-
-		-
-			message: '#^Method Database\\Seeders\\LawyerSeeder\:\:run\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: database/seeders/LawyerSeeder.php
-
-		-
-			message: '#^Method Database\\Seeders\\UserSeeder\:\:run\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: database/seeders/UserSeeder.php
-
-		-
-			message: '#^Call to an undefined method Illuminate\\Contracts\\Routing\\ResponseFactory\|Illuminate\\Http\\Response\:\:json\(\)\.$#'
+			message: '#^Call to an undefined method object\:\:save\(\)\.$#'
 			identifier: method.notFound
 			count: 1
-			path: routes/api.php
+			path: scripts/create_dev_users.php
 
 		-
-			message: '#^Access to an undefined property object\:\:\$email\.$#'
-			identifier: property.notFound
-			count: 2
-			path: routes/web.php
+			message: '#^Method Tests\\Feature\\AiGeminiExceptionTest\:\:testAskEndpointReturns502WhenGeminiFails\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Feature/AiGeminiExceptionTest.php
 
 		-
-			message: '#^Call to an undefined method Illuminate\\Contracts\\Routing\\ResponseFactory\|Illuminate\\Http\\Response\:\:json\(\)\.$#'
-			identifier: method.notFound
-			count: 2
-			path: routes/web.php
+			message: '#^Method Tests\\Feature\\AiGeminiExceptionTest\:\:testSummarizeEndpointReturns502WhenGeminiFails\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Feature/AiGeminiExceptionTest.php
 
 		-
-			message: '#^Call to an undefined method Illuminate\\Http\\RedirectResponse\|Illuminate\\Routing\\Redirector\:\:with\(\)\.$#'
-			identifier: method.notFound
-			count: 2
-			path: routes/web.php
+			message: '#^Method Tests\\Feature\\AiGeminiIntegrationTest\:\:testAskEndpointWithAuthReturns502WhenGeminiFails\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Feature/AiGeminiIntegrationTest.php
 
 		-
-			message: '#^Parameter \#1 \$user of static method Illuminate\\Support\\Facades\\Auth\:\:login\(\) expects Illuminate\\Contracts\\Auth\\Authenticatable, object given\.$#'
+			message: '#^Method Tests\\Feature\\AiGeminiIntegrationTest\:\:testSummarizeEndpointWithAuthReturns502WhenGeminiFails\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Feature/AiGeminiIntegrationTest.php
+
+		-
+			message: '#^Method Tests\\Feature\\AiGeminiMetadataIntegrationTest\:\:testAskEndpointReturnsExceptionMetadata\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Feature/AiGeminiMetadataIntegrationTest.php
+
+		-
+			message: '#^Method Tests\\Feature\\AiGeminiMetadataIntegrationTest\:\:testSummarizeEndpointReturnsExceptionMetadata\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Feature/AiGeminiMetadataIntegrationTest.php
+
+		-
+			message: '#^Method Tests\\Unit\\GeminiExceptionTest\:\:testExceptionDefaultsAreNullable\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Unit/GeminiExceptionTest.php
+
+		-
+			message: '#^Method Tests\\Unit\\GeminiExceptionTest\:\:testExceptionHoldsAttemptsAndRetryAfter\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Unit/GeminiExceptionTest.php
+
+		-
+			message: '#^Method Tests\\Unit\\GeminiMetricsTest\:\:test_gemini_service_emits_retry_and_final_failure_metrics\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Unit/GeminiMetricsTest.php
+
+		-
+			message: '#^Parameter \#2 \$array of function array_map expects array, list\<string\>\|false given\.$#'
 			identifier: argument.type
-			count: 2
-			path: routes/web.php
+			count: 1
+			path: tests/Unit/GeminiMetricsTest.php
+
+		-
+			message: '#^Method Tests\\Unit\\GeminiServiceTest\:\:testAskQuestionReturnsDecodedJson\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Unit/GeminiServiceTest.php
+
+		-
+			message: '#^Parameter \#3 \$body of class GuzzleHttp\\Psr7\\Response constructor expects Psr\\Http\\Message\\StreamInterface\|resource\|string\|null, string\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/GeminiServiceTest.php
+
+		-
+			message: '#^Method Tests\\Unit\\MetricsSpyTest\:\:test_metrics_increment_writes_to_spy_log\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Unit/MetricsSpyTest.php
+
+		-
+			message: '#^Parameter \#2 \$array of function array_map expects array, list\<string\>\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/MetricsSpyTest.php
