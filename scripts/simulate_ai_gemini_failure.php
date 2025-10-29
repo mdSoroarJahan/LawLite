@@ -8,12 +8,13 @@ $kernel->bootstrap();
 // Bind a concrete subclass of GeminiService so type-hinting matches
 $app->bind(App\Services\GeminiService::class, function () {
     return new class extends App\Services\GeminiService {
-        public function __construct() {}
-        public function askQuestion($q, $lang = null)
+        // Keep signatures compatible with the parent service
+        public function askQuestion(string $question, ?string $language = null): ?array
         {
             throw new App\Exceptions\GeminiException('simulated upstream error');
         }
-        public function summarize($docs, $lang = null)
+
+        public function summarize(array $documentFiles, ?string $language = null): ?array
         {
             throw new App\Exceptions\GeminiException('simulated upstream error');
         }

@@ -33,7 +33,7 @@ class GeminiService
      *
      * @param string $question
      * @param string|null $language
-     * @return array|null
+     * @return array<string,mixed>|null
      * @throws GeminiException
      */
     public function askQuestion(string $question, ?string $language = null): ?array
@@ -55,7 +55,7 @@ class GeminiService
      *
      * @param array<int,string|array<string,mixed>> $documentFiles
      * @param string|null $language
-     * @return array|null
+     * @return array<string,mixed>|null
      * @throws GeminiException
      */
     public function summarize(array $documentFiles, ?string $language = null): ?array

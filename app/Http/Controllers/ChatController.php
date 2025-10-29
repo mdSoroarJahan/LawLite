@@ -6,10 +6,15 @@ use Illuminate\Http\Request;
 use App\Models\Message;
 use App\Notifications\GenericNotification;
 use App\Events\MessageSent;
+use Illuminate\Http\JsonResponse;
 
 class ChatController extends Controller
 {
-    public function send(Request $request)
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function send(Request $request): JsonResponse
     {
         $data = $request->validate([
             'receiver_id' => 'required|integer',
@@ -37,10 +42,15 @@ class ChatController extends Controller
             // log but don't fail
         }
 
-        return response()->json(['ok' => true, 'message' => $message]);
+        return new JsonResponse(['ok' => true, 'message' => $message]);
     }
 
-    public function history(Request $request, $withUserId)
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param int $withUserId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function history(Request $request, $withUserId): JsonResponse
     {
         $userId = $request->user()->id;
         $messages = Message::where(function ($q) use ($userId, $withUserId) {
@@ -49,6 +59,6 @@ class ChatController extends Controller
             $q->where('sender_id', $withUserId)->where('receiver_id', $userId);
         })->orderBy('created_at')->get();
 
-        return response()->json(['ok' => true, 'messages' => $messages]);
+        return new JsonResponse(['ok' => true, 'messages' => $messages]);
     }
 }

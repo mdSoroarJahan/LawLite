@@ -11,7 +11,7 @@ class IndexSearchCommand extends Command
     protected $signature = 'search:reindex';
     protected $description = 'Reindex lawyers and articles into ElasticSearch';
 
-    public function handle()
+    public function handle(): int
     {
         $this->info('Starting reindex...');
 
@@ -20,6 +20,7 @@ class IndexSearchCommand extends Command
 
         $lawyers = Lawyer::with('user')->get();
         foreach ($lawyers as $lawyer) {
+            /** @var \App\Models\Lawyer $lawyer */
             // build index document
             $doc = [
                 'id' => $lawyer->id,
@@ -33,6 +34,7 @@ class IndexSearchCommand extends Command
 
         $articles = Article::all();
         foreach ($articles as $article) {
+            /** @var \App\Models\Article $article */
             $doc = [
                 'id' => $article->id,
                 'title' => $article->title,

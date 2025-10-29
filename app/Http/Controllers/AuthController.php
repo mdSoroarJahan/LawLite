@@ -6,21 +6,30 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Contracts\View\View;
+use Illuminate\Contracts\View\Factory as ViewFactory;
 
 class AuthController extends Controller
 {
-    public function login()
+    /** @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View */
+    public function login(): View|ViewFactory
     {
         return view('auth.login');
     }
 
-    public function register()
+    /** @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View */
+    public function register(): View|ViewFactory
     {
         return view('auth.register');
     }
 
     // Handle registration form POST
-    public function store(Request $request)
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(Request $request): RedirectResponse
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
@@ -40,7 +49,11 @@ class AuthController extends Controller
     }
 
     // Handle login form POST
-    public function authenticate(Request $request)
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function authenticate(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
             'email' => 'required|email',
@@ -55,7 +68,11 @@ class AuthController extends Controller
         return back()->withErrors(['email' => 'Invalid credentials'])->onlyInput('email');
     }
 
-    public function logout(Request $request)
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function logout(Request $request): RedirectResponse
     {
         \Illuminate\Support\Facades\Auth::logout();
         $request->session()->invalidate();

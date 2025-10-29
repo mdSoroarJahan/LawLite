@@ -10,4 +10,17 @@ return [
 
     // Optional prefix for metric names
     'prefix' => env('METRICS_PREFIX', null),
+    // When true, Metrics will attempt to use a StatsD client library
+    // (domnikl/statsd or slickdeals/statsd) instead of sending raw UDP packets.
+    // Note: the code includes an adapter that detects either package at runtime.
+    'use_client' => env('METRICS_USE_CLIENT', false),
+
+    // Optional explicit client name; normally not required. Valid values:
+    //  - 'domnikl' (legacy, may be marked abandoned)
+    //  - 'slickdeals' (maintained fork)
+    'client' => env('METRICS_CLIENT', null),
+
+    // When true, metrics are written to storage/logs/metrics_test.log so tests
+    // can assert that metrics were emitted without needing a running StatsD.
+    'testing_spy' => env('METRICS_TESTING_SPY', false),
 ];

@@ -52,8 +52,8 @@ class Handler extends ExceptionHandler
         $this->renderable(function (GeminiException $e, $request) {
             // Prefer the retry-after and attempts values carried by the exception when set,
             // otherwise fall back to config defaults.
-            $retryAfter = method_exists($e, 'getRetryAfter') && $e->getRetryAfter() ? $e->getRetryAfter() : config('gemini.retry_after', 30);
-            $attempts = method_exists($e, 'getAttempts') ? $e->getAttempts() : null;
+            $retryAfter = $e->getRetryAfter() ?? config('gemini.retry_after', 30);
+            $attempts = $e->getAttempts() ?? null;
 
             // Structured payload that clients can use for programmatic retries
             $payload = [
@@ -77,8 +77,8 @@ class Handler extends ExceptionHandler
 
             // If the client expects JSON, return a structured JSON response with Retry-After header
             if ($request->expectsJson() || $request->is('api/*') || $request->wantsJson()) {
-                return response()->json($payload, 502)
-                    ->header('Retry-After', (string) $retryAfter);
+                // Return a concrete JsonResponse so static analysis can resolve methods
+                return new JsonResponse($payload, 502, ['Retry-After' => (string) $retryAfter]);
             }
 
             // For non-JSON requests fall back to a simple response with 502 and Retry-After header
@@ -87,8 +87,9 @@ class Handler extends ExceptionHandler
                 $body .= " (attempts={$attempts})";
             }
 
-            return response($body, 502)
-                ->header('Retry-After', (string) $retryAfter);
+            $resp = new \Illuminate\Http\Response($body, 502);
+            $resp->header('Retry-After', (string) $retryAfter);
+            return $resp;
         });
     }
 }

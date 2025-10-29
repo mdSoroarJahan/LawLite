@@ -9,7 +9,7 @@ use App\Models\User;
 
 class AiGeminiMetadataIntegrationTest extends TestCase
 {
-    public function testAskEndpointReturnsExceptionMetadata()
+    public function testAskEndpointReturnsExceptionMetadata(): void
     {
         // Bind stub that throws GeminiException with metadata
         $this->app->bind(GeminiService::class, function () {
@@ -34,7 +34,7 @@ class AiGeminiMetadataIntegrationTest extends TestCase
         $this->assertEquals('45', $response->headers->get('Retry-After'));
     }
 
-    public function testSummarizeEndpointReturnsExceptionMetadata()
+    public function testSummarizeEndpointReturnsExceptionMetadata(): void
     {
         $this->app->bind(GeminiService::class, function () {
             return new class extends \App\Services\GeminiService {

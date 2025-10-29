@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class IsAdmin
 {
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): mixed
     {
         $user = $request->user();
         if (!$user || $user->role !== 'admin') {

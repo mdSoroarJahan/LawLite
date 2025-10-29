@@ -22,7 +22,7 @@ class DevSeedUsers extends Command
      */
     protected $description = 'Create development seed users (admin, lawyer, user) idempotently';
 
-    public function handle()
+    public function handle(): int
     {
         $map = [
             'admin' => 'admin@example.com',
@@ -32,6 +32,7 @@ class DevSeedUsers extends Command
 
         foreach ($map as $role => $email) {
             $user = User::where('email', $email)->first();
+            /** @var User|null $user */
             if (! $user) {
                 $user = User::create([
                     'name' => ucfirst($role) . ' Tester',

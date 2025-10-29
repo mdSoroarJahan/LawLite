@@ -7,7 +7,7 @@ use App\Exceptions\GeminiException;
 
 class GeminiExceptionTest extends TestCase
 {
-    public function testExceptionHoldsAttemptsAndRetryAfter()
+    public function testExceptionHoldsAttemptsAndRetryAfter(): void
     {
         $ex = new GeminiException('boom', 0, null, 4, 60);
 
@@ -15,7 +15,7 @@ class GeminiExceptionTest extends TestCase
         $this->assertEquals(60, $ex->getRetryAfter());
     }
 
-    public function testExceptionDefaultsAreNullable()
+    public function testExceptionDefaultsAreNullable(): void
     {
         $ex = new GeminiException('simple');
 

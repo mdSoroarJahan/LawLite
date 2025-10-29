@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $question
  * @property string|null $answer
  * @property string|null $language
- * @property array|null $metadata
+ * @property array<string,mixed>|null $metadata
  */
 class AiQuery extends Model
 {
@@ -21,10 +21,14 @@ class AiQuery extends Model
 
     protected $fillable = ['user_id', 'question', 'answer', 'language', 'metadata'];
 
+    /** @var array<string,string> */
     protected $casts = [
         'metadata' => 'array',
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
         return $this->belongsTo(User::class);

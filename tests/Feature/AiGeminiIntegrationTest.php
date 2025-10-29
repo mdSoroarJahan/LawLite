@@ -9,7 +9,7 @@ use App\Models\User;
 
 class AiGeminiIntegrationTest extends TestCase
 {
-    public function testAskEndpointWithAuthReturns502WhenGeminiFails()
+    public function testAskEndpointWithAuthReturns502WhenGeminiFails(): void
     {
         // Bind a stub gemini service that throws the GeminiException
         $this->app->bind(GeminiService::class, function () {
@@ -36,7 +36,7 @@ class AiGeminiIntegrationTest extends TestCase
         $this->assertTrue($response->headers->has('Retry-After'));
     }
 
-    public function testSummarizeEndpointWithAuthReturns502WhenGeminiFails()
+    public function testSummarizeEndpointWithAuthReturns502WhenGeminiFails(): void
     {
         $this->app->bind(GeminiService::class, function () {
             return new class extends \App\Services\GeminiService {

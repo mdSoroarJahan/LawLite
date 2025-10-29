@@ -29,7 +29,7 @@ class GeminiServiceProvider extends ServiceProvider
     /**
      * Bootstrap services.
      */
-    public function boot()
+    public function boot(): void
     {
         // no-op
     }

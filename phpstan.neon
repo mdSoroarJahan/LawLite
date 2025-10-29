@@ -1,0 +1,5 @@
+parameters:
+    level: 7
+    stubFiles:
+        - phpstan-stubs/eloquent-stubs.php
+        - phpstan-stubs/response-stubs.php

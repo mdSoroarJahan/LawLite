@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class IsVerifiedLawyer
 {
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): mixed
     {
         $user = $request->user();
         if (!$user || $user->role !== 'lawyer' || !$user->lawyer || $user->lawyer->verification_status !== 'verified') {

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class Authenticate
 {
-    public function handle(Request $request, Closure $next, $guard = null)
+    public function handle(Request $request, Closure $next, $guard = null): mixed
     {
         // Minimal implementation: don't enforce auth in dev scaffold.
         return $next($request);

@@ -13,6 +13,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $receiver_id
  * @property string $content
  * @property bool $is_read
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property-read \App\Models\User|null $sender
+ * @property-read \App\Models\User|null $receiver
  */
 class Message extends Model
 {
@@ -20,11 +23,13 @@ class Message extends Model
 
     protected $fillable = ['sender_id', 'receiver_id', 'content', 'is_read'];
 
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo */
     public function sender()
     {
         return $this->belongsTo(User::class, 'sender_id');
     }
 
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo */
     public function receiver()
     {
         return $this->belongsTo(User::class, 'receiver_id');

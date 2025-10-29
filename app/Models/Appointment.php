@@ -11,11 +11,17 @@ class Appointment extends Model
 
     protected $fillable = ['lawyer_id', 'user_id', 'date', 'time', 'status', 'type', 'notes'];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function lawyer()
     {
         return $this->belongsTo(Lawyer::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
         return $this->belongsTo(User::class);

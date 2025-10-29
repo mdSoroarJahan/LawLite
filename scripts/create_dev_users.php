@@ -15,6 +15,7 @@ $map = [
 
 foreach ($map as $role => $email) {
     $user = User::where('email', $email)->first();
+    /** @var \App\Models\User|null $user */
     if (! $user) {
         $user = User::create([
             'name' => ucfirst($role) . ' Tester',

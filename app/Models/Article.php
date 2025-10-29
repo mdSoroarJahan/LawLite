@@ -20,6 +20,9 @@ class Article extends Model
 
     protected $fillable = ['title', 'content', 'author_id', 'language', 'published_at'];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function author()
     {
         return $this->belongsTo(User::class, 'author_id');

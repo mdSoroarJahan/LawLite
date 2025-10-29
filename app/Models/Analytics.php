@@ -11,6 +11,9 @@ class Analytics extends Model
 
     protected $fillable = ['lawyer_id', 'total_messages', 'total_appointments', 'avg_response_time'];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function lawyer()
     {
         return $this->belongsTo(Lawyer::class);

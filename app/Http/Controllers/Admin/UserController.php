@@ -7,10 +7,13 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Contracts\View\View;
+use Illuminate\Contracts\View\Factory as ViewFactory;
 
 class UserController extends Controller
 {
-    public function index()
+    /** @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View */
+    public function index(): View|ViewFactory
     {
         // support search and role filter
         $q = request()->input('q');
@@ -26,16 +29,25 @@ class UserController extends Controller
             $query->where('role', $role);
         }
 
-        $users = $query->orderBy('id', 'desc')->paginate(20)->withQueryString();
+        $users = $query->orderBy('id', 'desc')->paginate(20);
         return view('admin.users.index', compact('users', 'q', 'role'));
     }
 
-    public function edit($id)
+    /**
+     * @param int $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function edit($id): View|ViewFactory
     {
         $user = User::findOrFail($id);
         return view('admin.users.edit', compact('user'));
     }
 
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
@@ -59,6 +71,10 @@ class UserController extends Controller
         return Redirect::route('admin.users.index')->with('status', 'User updated');
     }
 
+    /**
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy($id)
     {
         $user = User::findOrFail($id);

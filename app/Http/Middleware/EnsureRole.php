@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class EnsureRole
 {
-    public function handle(Request $request, Closure $next, ...$roles)
+    public function handle(Request $request, Closure $next, ...$roles): mixed
     {
         $user = $request->user();
         if (!$user || !in_array($user->role, $roles)) {

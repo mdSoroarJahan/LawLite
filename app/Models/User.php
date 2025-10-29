@@ -34,31 +34,37 @@ class User extends Authenticatable
 
     protected $hidden = ['password'];
 
+    /** @return \Illuminate\Database\Eloquent\Relations\HasOne */
     public function lawyer()
     {
         return $this->hasOne(Lawyer::class);
     }
 
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany */
     public function messagesSent()
     {
         return $this->hasMany(Message::class, 'sender_id');
     }
 
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany */
     public function messagesReceived()
     {
         return $this->hasMany(Message::class, 'receiver_id');
     }
 
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany */
     public function appointments()
     {
         return $this->hasMany(Appointment::class);
     }
 
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany */
     public function aiQueries()
     {
         return $this->hasMany(AiQuery::class);
     }
 
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany */
     public function aiDocuments()
     {
         return $this->hasMany(AiDocument::class);

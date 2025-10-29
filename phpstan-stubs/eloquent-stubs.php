@@ -17,7 +17,7 @@ namespace Illuminate\Database\Eloquent {
      * @method static \Illuminate\Database\Eloquent\Builder latest(string $column = 'created_at')
      * @method static \Illuminate\Database\Eloquent\Builder orderBy(string $column, string $direction = 'asc')
      * @method static \Illuminate\Database\Eloquent\Builder limit(int $value)
-     * @method static \Illuminate\Contracts\Pagination\LengthAwarePaginator paginate(?int $perPage = null, array $columns = ['*'])
+     * @method static \Illuminate\Contracts\Pagination\LengthAwarePaginator paginate(?int $perPage = null, array<int,string> $columns = ['*'])
      */
     class Model
     {
@@ -81,4 +81,12 @@ namespace Illuminate\Database\Eloquent {
 
 namespace Illuminate\Database\Eloquent {
     class Collection extends \Illuminate\Support\Collection {}
+}
+
+namespace Illuminate\Support {
+    /**
+     * Minimal stub for Collection so PHPStan recognizes the class used by eloquent stubs.
+     * Keep it plain to avoid ArrayObject generic type complaints.
+     */
+    class Collection {}
 }

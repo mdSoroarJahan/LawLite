@@ -9,6 +9,9 @@ namespace Illuminate\Contracts\Routing {
         /**
          * Create a new JSON response
          * @param mixed $data
+         * @param int $status
+         * @param array<string,string> $headers
+         * @param int $options
          * @return JsonResponse
          */
         public function json($data = null, int $status = 200, array $headers = [], int $options = 0);
@@ -29,6 +32,9 @@ namespace Illuminate\Http {
         /**
          * Return a JSON response
          * @param mixed $data
+         * @param int $status
+         * @param array<string,string> $headers
+         * @param int $options
          * @return JsonResponse
          */
         public function json($data = null, int $status = 200, array $headers = [], int $options = 0) {}
@@ -52,7 +58,11 @@ namespace Illuminate\Contracts\Pagination {
 namespace Illuminate\Http {
     class RedirectResponse
     {
-        /** @return $this */
+        /**
+         * @param string $key
+         * @param mixed $value
+         * @return $this
+         */
         public function with(string $key, $value) {}
     }
 }
@@ -61,10 +71,33 @@ namespace Illuminate\Routing {
     // Minimal Redirector stub so method calls like ->with() and ->intended() resolve in PHPStan
     class Redirector
     {
-        /** @return \Illuminate\Http\RedirectResponse */
+        /**
+         * @param string $key
+         * @param mixed $value
+         * @return \Illuminate\Http\RedirectResponse
+         */
         public function with(string $key, $value) {}
 
-        /** @return \Illuminate\Http\RedirectResponse */
+        /**
+         * @param string $default
+         * @return \Illuminate\Http\RedirectResponse
+         */
         public function intended($default = '/') {}
+    }
+}
+
+namespace {
+    /**
+     * Helper stub for the global response() helper.
+     *
+     * @param mixed $content
+     * @param int $status
+     * @param array<string,string> $headers
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response|null
+     */
+    function response(mixed $content = null, int $status = 200, array $headers = []): \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response|null
+    {
+        // This stub is not executed at runtime in production; returning null keeps the file parseable
+        return null;
     }
 }

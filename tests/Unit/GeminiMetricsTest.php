@@ -33,7 +33,7 @@ class GeminiMetricsTest extends TestCase
         parent::tearDown();
     }
 
-    public function test_gemini_service_emits_retry_and_final_failure_metrics()
+    public function test_gemini_service_emits_retry_and_final_failure_metrics(): void
     {
         // Create a Guzzle client mock that always throws a RequestException
         $client = $this->getMockBuilder(\GuzzleHttp\Client::class)
@@ -52,7 +52,9 @@ class GeminiMetricsTest extends TestCase
         } finally {
             $path = storage_path('logs/metrics_test.log');
             $this->assertFileExists($path, 'Expected metrics spy log to exist');
-            $lines = array_filter(array_map('trim', file($path)));
+            $lines = array_filter(array_map(function ($s) {
+                return trim((string) $s);
+            }, (array) file($path)));
             // Expect two retry attempts (attempts metric) and one final failure
             $attempts = 0;
             $finals = 0;

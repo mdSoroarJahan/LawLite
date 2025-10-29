@@ -8,25 +8,46 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Queue\SerializesModels;
+use App\Models\Message;
 
 class MessageSent implements ShouldBroadcastNow
 {
     use InteractsWithSockets, SerializesModels;
 
-    public $message;
+    /**
+     * The message model instance being broadcast.
+     *
+     * @var Message
+     */
+    public Message $message;
 
-    public function __construct($message)
+    /**
+     * Create a new event instance.
+     *
+     * @param Message $message
+     */
+    public function __construct(Message $message)
     {
         $this->message = $message;
     }
 
-    public function broadcastOn()
+    /**
+     * Get the channels the event should broadcast on.
+     *
+     * @return Channel|array<int, Channel>
+     */
+    public function broadcastOn(): Channel|array
     {
         // broadcast to a private channel for the receiver
         return new PrivateChannel('user.' . $this->message->receiver_id);
     }
 
-    public function broadcastWith()
+    /**
+     * The data to broadcast with the event.
+     *
+     * @return array<string, mixed>
+     */
+    public function broadcastWith(): array
     {
         return [
             'id' => $this->message->id,

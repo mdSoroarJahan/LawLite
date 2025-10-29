@@ -9,9 +9,11 @@ use App\Exceptions\GeminiException;
 use App\Models\AiQuery;
 use App\Models\AiDocument;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\JsonResponse;
 
 class AiController extends Controller
 {
+    /** @var \App\Services\GeminiService */
     protected $gemini;
 
     public function __construct(GeminiService $gemini)
@@ -19,7 +21,11 @@ class AiController extends Controller
         $this->gemini = $gemini;
     }
 
-    public function ask(Request $request)
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function ask(Request $request): JsonResponse
     {
         $data = $request->validate([
             'question' => 'required|string',
@@ -43,10 +49,14 @@ class AiController extends Controller
             Log::error('Failed to save AI query: ' . $e->getMessage());
         }
 
-        return response()->json(['ok' => true, 'result' => $result]);
+        return new JsonResponse(['ok' => true, 'result' => $result]);
     }
 
-    public function summarize(Request $request)
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function summarize(Request $request): JsonResponse
     {
         $data = $request->validate([
             'documents' => 'required|array',
@@ -69,6 +79,6 @@ class AiController extends Controller
             Log::error('Failed to save AI document summary: ' . $e->getMessage());
         }
 
-        return response()->json(['ok' => true, 'result' => $result]);
+        return new JsonResponse(['ok' => true, 'result' => $result]);
     }
 }

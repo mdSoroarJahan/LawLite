@@ -27,7 +27,7 @@ class MetricsSpyTest extends TestCase
         parent::tearDown();
     }
 
-    public function test_metrics_increment_writes_to_spy_log()
+    public function test_metrics_increment_writes_to_spy_log(): void
     {
         // Call the metrics helper
         Metrics::increment('test.metric', 3);
@@ -35,7 +35,9 @@ class MetricsSpyTest extends TestCase
         $p = storage_path('logs/metrics_test.log');
         $this->assertFileExists($p, 'Metrics spy log should be created');
 
-        $contents = trim(implode("\n", array_map('trim', file($p))));
+        $contents = trim(implode("\n", array_map(function ($s) {
+            return trim((string) $s);
+        }, (array) file($p))));
         $this->assertStringContainsString('test.metric', $contents);
     }
 }

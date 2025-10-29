@@ -9,9 +9,9 @@ use GuzzleHttp\Psr7\Response;
 
 class GeminiServiceTest extends TestCase
 {
-    public function testAskQuestionReturnsDecodedJson()
+    public function testAskQuestionReturnsDecodedJson(): void
     {
-        $body = json_encode(['answer' => 'Hello from Gemini']);
+        $body = (string) json_encode(['answer' => 'Hello from Gemini']);
         $response = new Response(200, ['Content-Type' => 'application/json'], $body);
 
         $mockClient = $this->createMock(Client::class);

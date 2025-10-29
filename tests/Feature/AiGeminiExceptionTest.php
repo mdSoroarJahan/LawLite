@@ -12,7 +12,7 @@ class AiGeminiExceptionTest extends TestCase
 {
     use WithFaker;
 
-    public function testAskEndpointReturns502WhenGeminiFails()
+    public function testAskEndpointReturns502WhenGeminiFails(): void
     {
         // Bind a stub gemini service that throws the GeminiException
         $this->app->bind(GeminiService::class, function () {
@@ -37,7 +37,7 @@ class AiGeminiExceptionTest extends TestCase
         $this->assertTrue($response->headers->has('Retry-After'));
     }
 
-    public function testSummarizeEndpointReturns502WhenGeminiFails()
+    public function testSummarizeEndpointReturns502WhenGeminiFails(): void
     {
         $this->app->bind(GeminiService::class, function () {
             return new class extends \App\Services\GeminiService {

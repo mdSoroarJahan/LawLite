@@ -6,10 +6,15 @@ use Illuminate\Http\Request;
 use App\Models\Appointment;
 use App\Models\Lawyer;
 use App\Notifications\GenericNotification;
+use Illuminate\Http\JsonResponse;
 
 class AppointmentController extends Controller
 {
-    public function book(Request $request)
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function book(Request $request): JsonResponse
     {
         $data = $request->validate([
             'lawyer_id' => 'required|integer',
@@ -31,6 +36,7 @@ class AppointmentController extends Controller
 
         // notify the lawyer
         try {
+            /** @var \App\Models\Lawyer|null $lawyer */
             $lawyer = Lawyer::find($data['lawyer_id']);
             if ($lawyer && $lawyer->user) {
                 $lawyer->user->notify(new GenericNotification('appointment', 'You have a new appointment'));
@@ -39,6 +45,6 @@ class AppointmentController extends Controller
             // log
         }
 
-        return response()->json(['ok' => true, 'appointment' => $appointment]);
+        return new JsonResponse(['ok' => true, 'appointment' => $appointment]);
     }
 }

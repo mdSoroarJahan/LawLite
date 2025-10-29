@@ -20,6 +20,9 @@ class AiDocument extends Model
 
     protected $fillable = ['user_id', 'document_path', 'summary_text', 'language'];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
