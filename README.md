@@ -1,5 +1,8 @@
 ﻿# LawLite
 
+[![PHPStan](https://github.com/mdSoroarJahan/LawLite/actions/workflows/phpstan.yml/badge.svg)](https://github.com/mdSoroarJahan/LawLite/actions/workflows/phpstan.yml)
+[![PHPUnit](https://github.com/mdSoroarJahan/LawLite/actions/workflows/phpunit.yml/badge.svg)](https://github.com/mdSoroarJahan/LawLite/actions/workflows/phpunit.yml)
+
 LawLite is a bilingual (Bangla / English) legal consultation and knowledge-sharing platform scaffolded with Laravel 10.
 
 ## AI error response contract
