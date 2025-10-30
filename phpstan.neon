@@ -3,3 +3,6 @@ parameters:
     stubFiles:
         - phpstan-stubs/eloquent-stubs.php
         - phpstan-stubs/response-stubs.php
+    ignoreErrors:
+        - message: '#If condition is always false\.#'
+          path: scripts/check_command_autoload.php

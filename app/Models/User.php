@@ -17,6 +17,7 @@ use Illuminate\Notifications\Notifiable;
  * @property string|null $password
  * @property string $role
  * @property string|null $language_preference
+ * @method static \Illuminate\Database\Eloquent\Builder whereIn(string $column, array<int,mixed> $values)
  */
 class User extends Authenticatable
 {

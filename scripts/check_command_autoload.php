@@ -1,5 +1,6 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
+/** @var class-string $class */
 $class = '\\App\\Console\\Commands\\DevSeedUsers';
 if (class_exists($class)) {
     echo "FOUND" . PHP_EOL;
@@ -10,6 +11,10 @@ if (class_exists($class)) {
     if (file_exists($file)) {
         echo "file exists\n";
         require $file;
-        echo class_exists($class) ? "FOUND_AFTER_REQUIRE\n" : "STILL_NOT_FOUND\n";
+        if (class_exists($class)) {
+            echo "FOUND_AFTER_REQUIRE\n";
+        } else {
+            echo "STILL_NOT_FOUND\n";
+        }
     }
 }

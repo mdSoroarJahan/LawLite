@@ -45,7 +45,9 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect('/');
+        /** @var \Illuminate\Http\RedirectResponse $resp */
+        $resp = redirect('/');
+        return $resp;
     }
 
     // Handle login form POST
@@ -62,7 +64,9 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/');
+            /** @var \Illuminate\Routing\Redirector $redirector */
+            $redirector = redirect();
+            return $redirector->intended('/');
         }
 
         return back()->withErrors(['email' => 'Invalid credentials'])->onlyInput('email');
@@ -77,6 +81,8 @@ class AuthController extends Controller
         \Illuminate\Support\Facades\Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/');
+        /** @var \Illuminate\Http\RedirectResponse $resp */
+        $resp = redirect('/');
+        return $resp;
     }
 }

@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class EnsureRole
 {
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
+     * @param mixed ...$roles
+     * @return mixed
+     */
     public function handle(Request $request, Closure $next, ...$roles): mixed
     {
         $user = $request->user();

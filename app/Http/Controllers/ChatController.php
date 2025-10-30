@@ -53,9 +53,11 @@ class ChatController extends Controller
     public function history(Request $request, $withUserId): JsonResponse
     {
         $userId = $request->user()->id;
-        $messages = Message::where(function ($q) use ($userId, $withUserId) {
+        $messages = Message::query()->where(function ($q) use ($userId, $withUserId) {
+            /** @var \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $q */
             $q->where('sender_id', $userId)->where('receiver_id', $withUserId);
         })->orWhere(function ($q) use ($userId, $withUserId) {
+            /** @var \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $q */
             $q->where('sender_id', $withUserId)->where('receiver_id', $userId);
         })->orderBy('created_at')->get();
 

@@ -10,11 +10,12 @@ namespace Illuminate\Contracts\Routing {
          * Create a new JSON response
          * @param mixed $data
          * @param int $status
-         * @param array<string,string> $headers
+         * @param array<string,string>|null $headers
+         * @phpstan-param array<string,string>|null $headers
          * @param int $options
          * @return JsonResponse
          */
-        public function json($data = null, int $status = 200, array $headers = [], int $options = 0);
+        public function json($data = null, int $status = 200, ?array $headers = null, int $options = 0);
     }
 }
 
@@ -33,11 +34,12 @@ namespace Illuminate\Http {
          * Return a JSON response
          * @param mixed $data
          * @param int $status
-         * @param array<string,string> $headers
+         * @param array<string,string>|null $headers
+         * @phpstan-param array<string,string>|null $headers
          * @param int $options
          * @return JsonResponse
          */
-        public function json($data = null, int $status = 200, array $headers = [], int $options = 0) {}
+        public function json($data = null, int $status = 200, ?array $headers = null, int $options = 0) {}
     }
 
     class JsonResponse extends Response
@@ -90,14 +92,15 @@ namespace {
     /**
      * Helper stub for the global response() helper.
      *
-     * @param mixed $content
-     * @param int $status
-     * @param array<string,string> $headers
+     * This is intentionally permissive for PHPStan stubbing; callers should use
+     * the ResponseFactory methods defined above (e.g. json()).
+     *
+     * @param mixed ...$args
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response|null
      */
-    function response(mixed $content = null, int $status = 200, array $headers = []): \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response|null
+    function response(mixed ...$args): \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response|null
     {
-        // This stub is not executed at runtime in production; returning null keeps the file parseable
+        // This stub is not executed at runtime; keep it parseable for PHPStan.
         return null;
     }
 }

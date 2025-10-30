@@ -10,7 +10,9 @@ class GenericNotification extends Notification
 {
     use Queueable;
 
+    /** @var string */
     protected $type;
+    /** @var string */
     protected $message;
 
     public function __construct(string $type, string $message)
@@ -19,12 +21,20 @@ class GenericNotification extends Notification
         $this->message = $message;
     }
 
-    public function via($notifiable)
+    /**
+     * @param mixed $notifiable
+     * @return array<int,string>
+     */
+    public function via($notifiable): array
     {
         return ['database'];
     }
 
-    public function toDatabase($notifiable)
+    /**
+     * @param mixed $notifiable
+     * @return array<string,mixed>
+     */
+    public function toDatabase($notifiable): array
     {
         return [
             'type' => $this->type,

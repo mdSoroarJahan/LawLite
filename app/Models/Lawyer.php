@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property float|null $latitude
  * @property float|null $longitude
  * @property string|null $city
+ * @property-read \App\Models\User|null $user
  */
 class Lawyer extends Model
 {
