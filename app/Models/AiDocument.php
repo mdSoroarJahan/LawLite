@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 /**
  * @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\AiDocumentFactory>
- * @method static \Database\Factories\AiDocumentFactory factory(...$parameters)
  */
 class AiDocument extends Model
 {

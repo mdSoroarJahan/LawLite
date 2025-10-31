@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\NotificationFactory>
- * @method static \Database\Factories\NotificationFactory factory(...$parameters)
  */
 class Notification extends Model
 {

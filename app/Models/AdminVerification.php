@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\AdminVerificationFactory>
- * @method static \Database\Factories\AdminVerificationFactory factory(...$parameters)
  */
 class AdminVerification extends Model
 {

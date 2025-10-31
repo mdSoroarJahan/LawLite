@@ -17,7 +17,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 /**
  * @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\AiQueryFactory>
- * @method static \Database\Factories\AiQueryFactory factory(...$parameters)
  */
 class AiQuery extends Model
 {

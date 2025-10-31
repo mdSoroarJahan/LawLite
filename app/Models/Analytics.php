@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\AnalyticsFactory>
- * @method static \Database\Factories\AnalyticsFactory factory(...$parameters)
  */
 class Analytics extends Model
 {

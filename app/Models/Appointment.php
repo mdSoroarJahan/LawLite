@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\AppointmentFactory>
- * @method static \Database\Factories\AppointmentFactory factory(...$parameters)
  */
 class Appointment extends Model
 {

@@ -19,7 +19,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 /**
  * @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\MessageFactory>
- * @method static \Database\Factories\MessageFactory factory(...$parameters)
  */
 class Message extends Model
 {

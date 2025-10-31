@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 /**
  * @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\ArticleFactory>
- * @method static \Database\Factories\ArticleFactory factory(...$parameters)
  */
 class Article extends Model
 {

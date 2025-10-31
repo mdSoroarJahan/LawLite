@@ -22,7 +22,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 /**
  * @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\LawyerFactory>
- * @method static \Database\Factories\LawyerFactory factory(...$parameters)
  */
 class Lawyer extends Model
 {
