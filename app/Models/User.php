@@ -18,9 +18,7 @@ use Illuminate\Notifications\Notifiable;
  * @property string $role
  * @property string|null $language_preference
  * @method static \Illuminate\Database\Eloquent\Builder whereIn(string $column, array<int,mixed> $values)
- */
-/**
- * @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\UserFactory>
+ * @phpstan-use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\UserFactory>
  */
 class User extends Authenticatable
 {

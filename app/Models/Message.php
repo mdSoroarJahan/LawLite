@@ -16,9 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property-read \App\Models\User|null $sender
  * @property-read \App\Models\User|null $receiver
- */
-/**
- * @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\MessageFactory>
+ * @phpstan-use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\MessageFactory>
  */
 class Message extends Model
 {

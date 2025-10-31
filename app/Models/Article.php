@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $language
  */
 /**
- * @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\ArticleFactory>
+ * @phpstan-use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\ArticleFactory>
  */
 class Article extends Model
 {

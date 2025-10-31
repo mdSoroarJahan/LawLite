@@ -19,9 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property float|null $longitude
  * @property string|null $city
  * @property-read \App\Models\User|null $user
- */
-/**
- * @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\LawyerFactory>
+ * @phpstan-use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\LawyerFactory>
  */
 class Lawyer extends Model
 {

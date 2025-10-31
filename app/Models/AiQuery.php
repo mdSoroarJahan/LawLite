@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property array<string,mixed>|null $metadata
  */
 /**
- * @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\AiQueryFactory>
+ * @phpstan-use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\AiQueryFactory>
  */
 class AiQuery extends Model
 {
