@@ -21,6 +21,13 @@ jobs:
           extensions: mbstring, bcmath, xml
           ini-values: memory_limit=2G
 
+      - name: Debug environment
+        run: |
+          php -v
+          composer --version || true
+          composer diagnose || true
+          ls -la
+
       - name: Get Composer cache directory
         id: composer-cache
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"

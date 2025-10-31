@@ -17,6 +17,12 @@ jobs:
         with:
           php-version: "8.2"
           extensions: mbstring, xml
+      - name: Debug environment
+        run: |
+          php -v
+          composer --version || true
+          composer diagnose || true
+          ls -la
       - name: Get composer cache
         uses: actions/cache@v4
         with:
