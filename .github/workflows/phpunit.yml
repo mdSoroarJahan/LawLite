@@ -51,4 +51,9 @@ jobs:
           php artisan migrate --force || true
 
       - name: Run PHPUnit
-        run: vendor/bin/phpunit --colors=never
+        run: |
+          if [ -f phpunit.xml ]; then
+            vendor/bin/phpunit --configuration phpunit.xml --testsuite=Unit --colors=never
+          else
+            vendor/bin/phpunit --testsuite=Unit --colors=never
+          fi
