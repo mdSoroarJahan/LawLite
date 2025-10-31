@@ -55,7 +55,9 @@ class GeminiRetrySuccessTest extends TestCase
         // Ensure metrics spy logged at least one retry attempt
         $p = storage_path('logs/metrics_test.log');
         $this->assertFileExists($p);
-        $contents = implode('\n', array_map(function ($s) { return trim((string) $s); }, (array) file($p)));
+        $contents = implode('\n', array_map(function ($s) {
+            return trim((string) $s);
+        }, (array) file($p)));
         $this->assertStringContainsString('gemini.retry.attempts', $contents);
     }
 }
