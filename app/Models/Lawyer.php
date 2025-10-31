@@ -20,10 +20,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $city
  * @property-read \App\Models\User|null $user
  */
-    /**
-     * @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\LawyerFactory>
-     * @method static \Database\Factories\LawyerFactory factory(...$parameters)
-     */
+/**
+ * @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\LawyerFactory>
+ * @method static \Database\Factories\LawyerFactory factory(...$parameters)
+ */
 class Lawyer extends Model
 {
     use HasFactory;
