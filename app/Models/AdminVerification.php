@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\AdminVerificationFactory>
+ * @method static \Database\Factories\AdminVerificationFactory factory(...$parameters)
  */
 class AdminVerification extends Model
 {
@@ -14,25 +15,16 @@ class AdminVerification extends Model
 
     protected $fillable = ['lawyer_id', 'verified_by', 'date_verified'];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Lawyer, \App\Models\AdminVerification>
-     */
     public function lawyer()
     {
         return $this->belongsTo(Lawyer::class);
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\AdminVerification>
-     */
     public function verifier()
     {
         return $this->belongsTo(User::class, 'verified_by');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Lawyer, \App\Models\AdminVerification>
-     */
     public function lawyerRelation()
     {
         // alias to satisfy static analysis when referencing the relationship

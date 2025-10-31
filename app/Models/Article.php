@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 /**
  * @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\ArticleFactory>
+ * @method static \Database\Factories\ArticleFactory factory(...$parameters)
  */
 class Article extends Model
 {
@@ -23,9 +24,6 @@ class Article extends Model
 
     protected $fillable = ['title', 'content', 'author_id', 'language', 'published_at'];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Article>
-     */
     public function author()
     {
         return $this->belongsTo(User::class, 'author_id');

@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 /**
  * @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\AiDocumentFactory>
+ * @method static \Database\Factories\AiDocumentFactory factory(...$parameters)
  */
 class AiDocument extends Model
 {
@@ -23,9 +24,6 @@ class AiDocument extends Model
 
     protected $fillable = ['user_id', 'document_path', 'summary_text', 'language'];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\AiDocument>
-     */
     public function user()
     {
         return $this->belongsTo(User::class);

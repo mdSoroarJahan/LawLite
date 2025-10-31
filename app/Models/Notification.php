@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\NotificationFactory>
+ * @method static \Database\Factories\NotificationFactory factory(...$parameters)
  */
 class Notification extends Model
 {
@@ -14,9 +15,6 @@ class Notification extends Model
 
     protected $fillable = ['user_id', 'type', 'message', 'read_status'];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Notification>
-     */
     public function user()
     {
         return $this->belongsTo(User::class);

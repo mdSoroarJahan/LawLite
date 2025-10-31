@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 /**
  * @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\AiQueryFactory>
+ * @method static \Database\Factories\AiQueryFactory factory(...$parameters)
  */
 class AiQuery extends Model
 {
@@ -29,9 +30,6 @@ class AiQuery extends Model
         'metadata' => 'array',
     ];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\AiQuery>
-     */
     public function user()
     {
         return $this->belongsTo(User::class);

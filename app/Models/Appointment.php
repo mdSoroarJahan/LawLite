@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\AppointmentFactory>
+ * @method static \Database\Factories\AppointmentFactory factory(...$parameters)
  */
 class Appointment extends Model
 {
@@ -14,17 +15,11 @@ class Appointment extends Model
 
     protected $fillable = ['lawyer_id', 'user_id', 'date', 'time', 'status', 'type', 'notes'];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Lawyer, \App\Models\Appointment>
-     */
     public function lawyer()
     {
         return $this->belongsTo(Lawyer::class);
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Appointment>
-     */
     public function user()
     {
         return $this->belongsTo(User::class);
