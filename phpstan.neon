@@ -1,8 +1,8 @@
 includes:
     - vendor/nunomaduro/larastan/extension.neon
+    - phpstan-baseline.neon
 
 parameters:
-    baseline: phpstan-baseline.neon
     level: 7
     # Removed local stubs because Larastan provides compatible stubs that otherwise
     # caused duplicate class declaration errors. If you need project-specific
