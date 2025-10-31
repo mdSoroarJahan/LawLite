@@ -17,19 +17,22 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\Models\User|null $sender
  * @property-read \App\Models\User|null $receiver
  */
+/**
+ * @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\MessageFactory>
+ */
 class Message extends Model
 {
     use HasFactory;
 
     protected $fillable = ['sender_id', 'receiver_id', 'content', 'is_read'];
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo */
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Message> */
     public function sender()
     {
         return $this->belongsTo(User::class, 'sender_id');
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo */
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Message> */
     public function receiver()
     {
         return $this->belongsTo(User::class, 'receiver_id');

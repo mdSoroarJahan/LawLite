@@ -20,6 +20,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $city
  * @property-read \App\Models\User|null $user
  */
+/**
+ * @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\LawyerFactory>
+ */
 class Lawyer extends Model
 {
     use HasFactory;
@@ -31,19 +34,19 @@ class Lawyer extends Model
         'documents' => 'array',
     ];
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo */
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Lawyer> */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany */
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Appointment, \App\Models\Lawyer> */
     public function appointments()
     {
         return $this->hasMany(Appointment::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasOne */
+    /** @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\Analytics, \App\Models\Lawyer> */
     public function analytics()
     {
         return $this->hasOne(Analytics::class);

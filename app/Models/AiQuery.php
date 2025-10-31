@@ -15,6 +15,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $language
  * @property array<string,mixed>|null $metadata
  */
+/**
+ * @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\AiQueryFactory>
+ */
 class AiQuery extends Model
 {
     use HasFactory;
@@ -27,7 +30,7 @@ class AiQuery extends Model
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\AiQuery>
      */
     public function user()
     {

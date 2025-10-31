@@ -19,6 +19,9 @@ use Illuminate\Notifications\Notifiable;
  * @property string|null $language_preference
  * @method static \Illuminate\Database\Eloquent\Builder whereIn(string $column, array<int,mixed> $values)
  */
+/**
+ * @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\UserFactory>
+ */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
@@ -35,37 +38,37 @@ class User extends Authenticatable
 
     protected $hidden = ['password'];
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasOne */
+    /** @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\Lawyer, \App\Models\User> */
     public function lawyer()
     {
         return $this->hasOne(Lawyer::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany */
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Message, \App\Models\User> */
     public function messagesSent()
     {
         return $this->hasMany(Message::class, 'sender_id');
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany */
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Message, \App\Models\User> */
     public function messagesReceived()
     {
         return $this->hasMany(Message::class, 'receiver_id');
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany */
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Appointment, \App\Models\User> */
     public function appointments()
     {
         return $this->hasMany(Appointment::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany */
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\AiQuery, \App\Models\User> */
     public function aiQueries()
     {
         return $this->hasMany(AiQuery::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\HasMany */
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\AiDocument, \App\Models\User> */
     public function aiDocuments()
     {
         return $this->hasMany(AiDocument::class);

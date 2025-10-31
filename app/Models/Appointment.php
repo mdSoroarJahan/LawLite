@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\AppointmentFactory>
+ */
 class Appointment extends Model
 {
     use HasFactory;
@@ -12,7 +15,7 @@ class Appointment extends Model
     protected $fillable = ['lawyer_id', 'user_id', 'date', 'time', 'status', 'type', 'notes'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Lawyer, \App\Models\Appointment>
      */
     public function lawyer()
     {
@@ -20,7 +23,7 @@ class Appointment extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Appointment>
      */
     public function user()
     {

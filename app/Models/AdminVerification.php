@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\AdminVerificationFactory>
+ */
 class AdminVerification extends Model
 {
     use HasFactory;
@@ -12,7 +15,7 @@ class AdminVerification extends Model
     protected $fillable = ['lawyer_id', 'verified_by', 'date_verified'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Lawyer, \App\Models\AdminVerification>
      */
     public function lawyer()
     {
@@ -20,7 +23,7 @@ class AdminVerification extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\AdminVerification>
      */
     public function verifier()
     {
@@ -28,7 +31,7 @@ class AdminVerification extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Lawyer, \App\Models\AdminVerification>
      */
     public function lawyerRelation()
     {

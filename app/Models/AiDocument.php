@@ -14,6 +14,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $summary_text
  * @property string|null $language
  */
+/**
+ * @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\AiDocumentFactory>
+ */
 class AiDocument extends Model
 {
     use HasFactory;
@@ -21,7 +24,7 @@ class AiDocument extends Model
     protected $fillable = ['user_id', 'document_path', 'summary_text', 'language'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\AiDocument>
      */
     public function user()
     {
