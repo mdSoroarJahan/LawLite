@@ -1,32 +1,26 @@
 parameters:
 	ignoreErrors:
 		-
-			message: '#^Relation ''user'' is not found in App\\Models\\Lawyer model\.$#'
-			identifier: larastan.relationExistence
-			count: 1
-			path: app/Console/Commands/IndexSearchCommand.php
-
-		-
 			message: '#^Class App\\Models\\AdminVerification uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
 			identifier: missingType.generics
 			count: 1
 			path: app/Models/AdminVerification.php
 
 		-
-			message: '#^Method App\\Models\\AdminVerification\:\:lawyer\(\) has no return type specified\.$#'
-			identifier: missingType.return
+			message: '#^Method App\\Models\\AdminVerification\:\:lawyer\(\) should return Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\Lawyer, App\\Models\\AdminVerification\> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\Lawyer, \$this\(App\\Models\\AdminVerification\)\>\.$#'
+			identifier: return.type
 			count: 1
 			path: app/Models/AdminVerification.php
 
 		-
-			message: '#^Method App\\Models\\AdminVerification\:\:lawyerRelation\(\) has no return type specified\.$#'
-			identifier: missingType.return
+			message: '#^Method App\\Models\\AdminVerification\:\:lawyerRelation\(\) should return Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\Lawyer, App\\Models\\AdminVerification\> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\Lawyer, \$this\(App\\Models\\AdminVerification\)\>\.$#'
+			identifier: return.type
 			count: 1
 			path: app/Models/AdminVerification.php
 
 		-
-			message: '#^Method App\\Models\\AdminVerification\:\:verifier\(\) has no return type specified\.$#'
-			identifier: missingType.return
+			message: '#^Method App\\Models\\AdminVerification\:\:verifier\(\) should return Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\User, App\\Models\\AdminVerification\> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\User, \$this\(App\\Models\\AdminVerification\)\>\.$#'
+			identifier: return.type
 			count: 1
 			path: app/Models/AdminVerification.php
 
@@ -37,8 +31,8 @@ parameters:
 			path: app/Models/AiDocument.php
 
 		-
-			message: '#^Method App\\Models\\AiDocument\:\:user\(\) has no return type specified\.$#'
-			identifier: missingType.return
+			message: '#^Method App\\Models\\AiDocument\:\:user\(\) should return Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\User, App\\Models\\AiDocument\> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\User, \$this\(App\\Models\\AiDocument\)\>\.$#'
+			identifier: return.type
 			count: 1
 			path: app/Models/AiDocument.php
 
@@ -49,8 +43,8 @@ parameters:
 			path: app/Models/AiQuery.php
 
 		-
-			message: '#^Method App\\Models\\AiQuery\:\:user\(\) has no return type specified\.$#'
-			identifier: missingType.return
+			message: '#^Method App\\Models\\AiQuery\:\:user\(\) should return Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\User, App\\Models\\AiQuery\> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\User, \$this\(App\\Models\\AiQuery\)\>\.$#'
+			identifier: return.type
 			count: 1
 			path: app/Models/AiQuery.php
 
@@ -61,8 +55,8 @@ parameters:
 			path: app/Models/Analytics.php
 
 		-
-			message: '#^Method App\\Models\\Analytics\:\:lawyer\(\) has no return type specified\.$#'
-			identifier: missingType.return
+			message: '#^Method App\\Models\\Analytics\:\:lawyer\(\) should return Illuminate\\Database\\Eloquent\\Relations\\HasOne\<App\\Models\\Lawyer, App\\Models\\Analytics\> but returns Illuminate\\Database\\Eloquent\\Relations\\HasOne\<App\\Models\\Lawyer, \$this\(App\\Models\\Analytics\)\>\.$#'
+			identifier: return.type
 			count: 1
 			path: app/Models/Analytics.php
 
@@ -73,14 +67,14 @@ parameters:
 			path: app/Models/Appointment.php
 
 		-
-			message: '#^Method App\\Models\\Appointment\:\:lawyer\(\) has no return type specified\.$#'
-			identifier: missingType.return
+			message: '#^Method App\\Models\\Appointment\:\:lawyer\(\) should return Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\Lawyer, App\\Models\\Appointment\> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\Lawyer, \$this\(App\\Models\\Appointment\)\>\.$#'
+			identifier: return.type
 			count: 1
 			path: app/Models/Appointment.php
 
 		-
-			message: '#^Method App\\Models\\Appointment\:\:user\(\) has no return type specified\.$#'
-			identifier: missingType.return
+			message: '#^Method App\\Models\\Appointment\:\:user\(\) should return Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\User, App\\Models\\Appointment\> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\User, \$this\(App\\Models\\Appointment\)\>\.$#'
+			identifier: return.type
 			count: 1
 			path: app/Models/Appointment.php
 
@@ -91,8 +85,8 @@ parameters:
 			path: app/Models/Article.php
 
 		-
-			message: '#^Method App\\Models\\Article\:\:author\(\) has no return type specified\.$#'
-			identifier: missingType.return
+			message: '#^Method App\\Models\\Article\:\:author\(\) should return Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\User, App\\Models\\Article\> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\User, \$this\(App\\Models\\Article\)\>\.$#'
+			identifier: return.type
 			count: 1
 			path: app/Models/Article.php
 
@@ -109,20 +103,20 @@ parameters:
 			path: app/Models/Lawyer.php
 
 		-
-			message: '#^Method App\\Models\\Lawyer\:\:analytics\(\) has no return type specified\.$#'
-			identifier: missingType.return
+			message: '#^Method App\\Models\\Lawyer\:\:analytics\(\) should return Illuminate\\Database\\Eloquent\\Relations\\HasOne\<App\\Models\\Analytics, App\\Models\\Lawyer\> but returns Illuminate\\Database\\Eloquent\\Relations\\HasOne\<App\\Models\\Analytics, \$this\(App\\Models\\Lawyer\)\>\.$#'
+			identifier: return.type
 			count: 1
 			path: app/Models/Lawyer.php
 
 		-
-			message: '#^Method App\\Models\\Lawyer\:\:appointments\(\) has no return type specified\.$#'
-			identifier: missingType.return
+			message: '#^Method App\\Models\\Lawyer\:\:appointments\(\) should return Illuminate\\Database\\Eloquent\\Relations\\HasMany\<App\\Models\\Appointment, App\\Models\\Lawyer\> but returns Illuminate\\Database\\Eloquent\\Relations\\HasMany\<App\\Models\\Appointment, \$this\(App\\Models\\Lawyer\)\>\.$#'
+			identifier: return.type
 			count: 1
 			path: app/Models/Lawyer.php
 
 		-
-			message: '#^Method App\\Models\\Lawyer\:\:user\(\) has no return type specified\.$#'
-			identifier: missingType.return
+			message: '#^Method App\\Models\\Lawyer\:\:user\(\) should return Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\User, App\\Models\\Lawyer\> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\User, \$this\(App\\Models\\Lawyer\)\>\.$#'
+			identifier: return.type
 			count: 1
 			path: app/Models/Lawyer.php
 
@@ -151,8 +145,8 @@ parameters:
 			path: app/Models/Notification.php
 
 		-
-			message: '#^Method App\\Models\\Notification\:\:user\(\) has no return type specified\.$#'
-			identifier: missingType.return
+			message: '#^Method App\\Models\\Notification\:\:user\(\) should return Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\User, App\\Models\\Notification\> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\User, \$this\(App\\Models\\Notification\)\>\.$#'
+			identifier: return.type
 			count: 1
 			path: app/Models/Notification.php
 
