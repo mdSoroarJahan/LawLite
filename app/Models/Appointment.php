@@ -15,7 +15,7 @@ class Appointment extends Model
     protected $fillable = ['lawyer_id', 'user_id', 'date', 'time', 'status', 'type', 'notes'];
 
     /**
-     * @method static \Database\Factories\AppointmentFactory factory(...$parameters)
+    /** @method static \Database\Factories\AppointmentFactory factory(...$parameters)
      */
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Lawyer, \App\Models\Appointment> */
     /** @phpstan-ignore-next-line */

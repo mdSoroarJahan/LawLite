@@ -14,8 +14,8 @@ class Notification extends Model
 
     protected $fillable = ['user_id', 'type', 'message', 'read_status'];
 
-    /** @phpstan-ignore-next-line */
     /** @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Notification> */
+    /** @phpstan-ignore-next-line */
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);

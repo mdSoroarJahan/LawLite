@@ -17,8 +17,8 @@ class Article extends Model
 
     protected $fillable = ['title', 'content', 'author_id', 'language', 'published_at'];
 
-    /** @phpstan-ignore-next-line */
     /** @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Article> */
+    /** @phpstan-ignore-next-line */
     public function author(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id');
