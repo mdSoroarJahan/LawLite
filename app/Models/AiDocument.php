@@ -13,8 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $document_path
  * @property string|null $summary_text
  * @property string|null $language
- */
-/**
+ * @method static \Database\Factories\AiDocumentFactory factory(...$parameters)
  * @phpstan-use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\AiDocumentFactory>
  */
 class AiDocument extends Model
@@ -23,7 +22,9 @@ class AiDocument extends Model
 
     protected $fillable = ['user_id', 'document_path', 'summary_text', 'language'];
 
-    public function user()
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\AiDocument> */
+    /** @phpstan-ignore-next-line */
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);
     }

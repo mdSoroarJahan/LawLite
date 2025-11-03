@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property float|null $longitude
  * @property string|null $city
  * @property-read \App\Models\User|null $user
+ * @method static \Database\Factories\LawyerFactory factory(...$parameters)
  * @phpstan-use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\LawyerFactory>
  */
 class Lawyer extends Model
@@ -32,17 +33,23 @@ class Lawyer extends Model
         'documents' => 'array',
     ];
 
-    public function user()
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Lawyer> */
+    /** @phpstan-ignore-next-line */
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function appointments()
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Appointment, \App\Models\Lawyer> */
+    /** @phpstan-ignore-next-line */
+    public function appointments(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Appointment::class);
     }
 
-    public function analytics()
+    /** @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\Analytics, \App\Models\Lawyer> */
+    /** @phpstan-ignore-next-line */
+    public function analytics(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Analytics::class);
     }

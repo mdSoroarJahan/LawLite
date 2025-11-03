@@ -1,0 +1,11 @@
+includes:
+    - vendor/nunomaduro/larastan/extension.neon
+
+parameters:
+    level: 7
+    # Removed local stubs because Larastan provides compatible stubs that otherwise
+    # caused duplicate class declaration errors. If you need project-specific
+    # stubs, add them carefully to avoid conflicts with vendor stubs.
+    ignoreErrors:
+        - message: '#If condition is always false\\.#'
+          path: scripts/check_command_autoload.php

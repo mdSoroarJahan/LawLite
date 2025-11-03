@@ -7,32 +7,8 @@ parameters:
 			path: app/Models/AdminVerification.php
 
 		-
-			message: '#^Method App\\Models\\AdminVerification\:\:lawyer\(\) should return Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\Lawyer, App\\Models\\AdminVerification\> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\Lawyer, \$this\(App\\Models\\AdminVerification\)\>\.$#'
-			identifier: return.type
-			count: 1
-			path: app/Models/AdminVerification.php
-
-		-
-			message: '#^Method App\\Models\\AdminVerification\:\:lawyerRelation\(\) should return Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\Lawyer, App\\Models\\AdminVerification\> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\Lawyer, \$this\(App\\Models\\AdminVerification\)\>\.$#'
-			identifier: return.type
-			count: 1
-			path: app/Models/AdminVerification.php
-
-		-
-			message: '#^Method App\\Models\\AdminVerification\:\:verifier\(\) should return Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\User, App\\Models\\AdminVerification\> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\User, \$this\(App\\Models\\AdminVerification\)\>\.$#'
-			identifier: return.type
-			count: 1
-			path: app/Models/AdminVerification.php
-
-		-
 			message: '#^Class App\\Models\\AiDocument uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
 			identifier: missingType.generics
-			count: 1
-			path: app/Models/AiDocument.php
-
-		-
-			message: '#^Method App\\Models\\AiDocument\:\:user\(\) should return Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\User, App\\Models\\AiDocument\> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\User, \$this\(App\\Models\\AiDocument\)\>\.$#'
-			identifier: return.type
 			count: 1
 			path: app/Models/AiDocument.php
 
@@ -43,38 +19,14 @@ parameters:
 			path: app/Models/AiQuery.php
 
 		-
-			message: '#^Method App\\Models\\AiQuery\:\:user\(\) should return Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\User, App\\Models\\AiQuery\> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\User, \$this\(App\\Models\\AiQuery\)\>\.$#'
-			identifier: return.type
-			count: 1
-			path: app/Models/AiQuery.php
-
-		-
 			message: '#^Class App\\Models\\Analytics uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
 			identifier: missingType.generics
 			count: 1
 			path: app/Models/Analytics.php
 
 		-
-			message: '#^Method App\\Models\\Analytics\:\:lawyer\(\) should return Illuminate\\Database\\Eloquent\\Relations\\HasOne\<App\\Models\\Lawyer, App\\Models\\Analytics\> but returns Illuminate\\Database\\Eloquent\\Relations\\HasOne\<App\\Models\\Lawyer, \$this\(App\\Models\\Analytics\)\>\.$#'
-			identifier: return.type
-			count: 1
-			path: app/Models/Analytics.php
-
-		-
 			message: '#^Class App\\Models\\Appointment uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
 			identifier: missingType.generics
-			count: 1
-			path: app/Models/Appointment.php
-
-		-
-			message: '#^Method App\\Models\\Appointment\:\:lawyer\(\) should return Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\Lawyer, App\\Models\\Appointment\> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\Lawyer, \$this\(App\\Models\\Appointment\)\>\.$#'
-			identifier: return.type
-			count: 1
-			path: app/Models/Appointment.php
-
-		-
-			message: '#^Method App\\Models\\Appointment\:\:user\(\) should return Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\User, App\\Models\\Appointment\> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\User, \$this\(App\\Models\\Appointment\)\>\.$#'
-			identifier: return.type
 			count: 1
 			path: app/Models/Appointment.php
 
@@ -103,38 +55,8 @@ parameters:
 			path: app/Models/Lawyer.php
 
 		-
-			message: '#^Method App\\Models\\Lawyer\:\:analytics\(\) should return Illuminate\\Database\\Eloquent\\Relations\\HasOne\<App\\Models\\Analytics, App\\Models\\Lawyer\> but returns Illuminate\\Database\\Eloquent\\Relations\\HasOne\<App\\Models\\Analytics, \$this\(App\\Models\\Lawyer\)\>\.$#'
-			identifier: return.type
-			count: 1
-			path: app/Models/Lawyer.php
-
-		-
-			message: '#^Method App\\Models\\Lawyer\:\:appointments\(\) should return Illuminate\\Database\\Eloquent\\Relations\\HasMany\<App\\Models\\Appointment, App\\Models\\Lawyer\> but returns Illuminate\\Database\\Eloquent\\Relations\\HasMany\<App\\Models\\Appointment, \$this\(App\\Models\\Lawyer\)\>\.$#'
-			identifier: return.type
-			count: 1
-			path: app/Models/Lawyer.php
-
-		-
-			message: '#^Method App\\Models\\Lawyer\:\:user\(\) should return Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\User, App\\Models\\Lawyer\> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\User, \$this\(App\\Models\\Lawyer\)\>\.$#'
-			identifier: return.type
-			count: 1
-			path: app/Models/Lawyer.php
-
-		-
 			message: '#^Class App\\Models\\Message uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
 			identifier: missingType.generics
-			count: 1
-			path: app/Models/Message.php
-
-		-
-			message: '#^Method App\\Models\\Message\:\:receiver\(\) should return Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\User, App\\Models\\Message\> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\User, \$this\(App\\Models\\Message\)\>\.$#'
-			identifier: return.type
-			count: 1
-			path: app/Models/Message.php
-
-		-
-			message: '#^Method App\\Models\\Message\:\:sender\(\) should return Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\User, App\\Models\\Message\> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<App\\Models\\User, \$this\(App\\Models\\Message\)\>\.$#'
-			identifier: return.type
 			count: 1
 			path: app/Models/Message.php
 
@@ -152,48 +74,6 @@ parameters:
 
 		-
 			message: '#^Class App\\Models\\User uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
-			identifier: missingType.generics
-			count: 1
-			path: app/Models/User.php
-
-		-
-			message: '#^Method App\\Models\\User\:\:aiDocuments\(\) should return Illuminate\\Database\\Eloquent\\Relations\\HasMany\<App\\Models\\AiDocument, App\\Models\\User\> but returns Illuminate\\Database\\Eloquent\\Relations\\HasMany\<App\\Models\\AiDocument, \$this\(App\\Models\\User\)\>\.$#'
-			identifier: return.type
-			count: 1
-			path: app/Models/User.php
-
-		-
-			message: '#^Method App\\Models\\User\:\:aiQueries\(\) should return Illuminate\\Database\\Eloquent\\Relations\\HasMany\<App\\Models\\AiQuery, App\\Models\\User\> but returns Illuminate\\Database\\Eloquent\\Relations\\HasMany\<App\\Models\\AiQuery, \$this\(App\\Models\\User\)\>\.$#'
-			identifier: return.type
-			count: 1
-			path: app/Models/User.php
-
-		-
-			message: '#^Method App\\Models\\User\:\:appointments\(\) should return Illuminate\\Database\\Eloquent\\Relations\\HasMany\<App\\Models\\Appointment, App\\Models\\User\> but returns Illuminate\\Database\\Eloquent\\Relations\\HasMany\<App\\Models\\Appointment, \$this\(App\\Models\\User\)\>\.$#'
-			identifier: return.type
-			count: 1
-			path: app/Models/User.php
-
-		-
-			message: '#^Method App\\Models\\User\:\:lawyer\(\) should return Illuminate\\Database\\Eloquent\\Relations\\HasOne\<App\\Models\\Lawyer, App\\Models\\User\> but returns Illuminate\\Database\\Eloquent\\Relations\\HasOne\<App\\Models\\Lawyer, \$this\(App\\Models\\User\)\>\.$#'
-			identifier: return.type
-			count: 1
-			path: app/Models/User.php
-
-		-
-			message: '#^Method App\\Models\\User\:\:messagesReceived\(\) should return Illuminate\\Database\\Eloquent\\Relations\\HasMany\<App\\Models\\Message, App\\Models\\User\> but returns Illuminate\\Database\\Eloquent\\Relations\\HasMany\<App\\Models\\Message, \$this\(App\\Models\\User\)\>\.$#'
-			identifier: return.type
-			count: 1
-			path: app/Models/User.php
-
-		-
-			message: '#^Method App\\Models\\User\:\:messagesSent\(\) should return Illuminate\\Database\\Eloquent\\Relations\\HasMany\<App\\Models\\Message, App\\Models\\User\> but returns Illuminate\\Database\\Eloquent\\Relations\\HasMany\<App\\Models\\Message, \$this\(App\\Models\\User\)\>\.$#'
-			identifier: return.type
-			count: 1
-			path: app/Models/User.php
-
-		-
-			message: '#^PHPDoc tag @method for method App\\Models\\User\:\:whereIn\(\) return type contains generic class Illuminate\\Database\\Eloquent\\Builder but does not specify its types\: TModel$#'
 			identifier: missingType.generics
 			count: 1
 			path: app/Models/User.php

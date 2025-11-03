@@ -17,7 +17,8 @@ use Illuminate\Notifications\Notifiable;
  * @property string|null $password
  * @property string $role
  * @property string|null $language_preference
- * @method static \Illuminate\Database\Eloquent\Builder whereIn(string $column, array<int,mixed> $values)
+ * @method static \Illuminate\Database\Eloquent\Builder<\App\Models\User> whereIn(string $column, array<int,mixed> $values)
+ * @method static \Database\Factories\UserFactory factory(...$parameters)
  * @phpstan-use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\UserFactory>
  */
 class User extends Authenticatable
@@ -37,37 +38,43 @@ class User extends Authenticatable
     protected $hidden = ['password'];
 
     /** @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\Lawyer, \App\Models\User> */
-    public function lawyer()
+    /** @phpstan-ignore-next-line */
+    public function lawyer(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Lawyer::class);
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Message, \App\Models\User> */
-    public function messagesSent()
+    /** @phpstan-ignore-next-line */
+    public function messagesSent(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Message::class, 'sender_id');
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Message, \App\Models\User> */
-    public function messagesReceived()
+    /** @phpstan-ignore-next-line */
+    public function messagesReceived(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Message::class, 'receiver_id');
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Appointment, \App\Models\User> */
-    public function appointments()
+    /** @phpstan-ignore-next-line */
+    public function appointments(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Appointment::class);
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\AiQuery, \App\Models\User> */
-    public function aiQueries()
+    /** @phpstan-ignore-next-line */
+    public function aiQueries(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(AiQuery::class);
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\AiDocument, \App\Models\User> */
-    public function aiDocuments()
+    /** @phpstan-ignore-next-line */
+    public function aiDocuments(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(AiDocument::class);
     }

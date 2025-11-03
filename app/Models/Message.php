@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property-read \App\Models\User|null $sender
  * @property-read \App\Models\User|null $receiver
+ * @method static \Database\Factories\MessageFactory factory(...$parameters)
  * @phpstan-use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\MessageFactory>
  */
 class Message extends Model
@@ -25,13 +26,15 @@ class Message extends Model
     protected $fillable = ['sender_id', 'receiver_id', 'content', 'is_read'];
 
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Message> */
-    public function sender()
+    /** @phpstan-ignore-next-line */
+    public function sender(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'sender_id');
     }
 
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Message> */
-    public function receiver()
+    /** @phpstan-ignore-next-line */
+    public function receiver(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'receiver_id');
     }

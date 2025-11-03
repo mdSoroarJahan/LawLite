@@ -8,13 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * App\Models\Article
  *
- * @property int $id
- * @property string $title
- * @property string $content
- * @property int $author_id
- * @property string $language
- */
-/**
+ * @method static \Database\Factories\ArticleFactory factory(...$parameters)
  * @phpstan-use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\ArticleFactory>
  */
 class Article extends Model
@@ -23,7 +17,9 @@ class Article extends Model
 
     protected $fillable = ['title', 'content', 'author_id', 'language', 'published_at'];
 
-    public function author()
+    /** @phpstan-ignore-next-line */
+    /** @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Article> */
+    public function author(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id');
     }

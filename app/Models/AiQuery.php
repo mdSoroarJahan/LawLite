@@ -14,8 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $answer
  * @property string|null $language
  * @property array<string,mixed>|null $metadata
- */
-/**
+ * @method static \Database\Factories\AiQueryFactory factory(...$parameters)
  * @phpstan-use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\AiQueryFactory>
  */
 class AiQuery extends Model
@@ -29,7 +28,9 @@ class AiQuery extends Model
         'metadata' => 'array',
     ];
 
-    public function user()
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\AiQuery> */
+    /** @phpstan-ignore-next-line */
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);
     }

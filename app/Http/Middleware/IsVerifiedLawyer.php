@@ -10,7 +10,9 @@ class IsVerifiedLawyer
     public function handle(Request $request, Closure $next): mixed
     {
         $user = $request->user();
-        if (!$user || $user->role !== 'lawyer' || !$user->lawyer || $user->lawyer->verification_status !== 'verified') {
+        /** @var \App\Models\Lawyer|null $lawyer */
+        $lawyer = $user ? $user->lawyer : null;
+        if (!$user || $user->role !== 'lawyer' || !$lawyer || $lawyer->verification_status !== 'verified') {
             abort(403, 'Lawyer not verified.');
         }
         return $next($request);

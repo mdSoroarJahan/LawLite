@@ -14,12 +14,19 @@ class Appointment extends Model
 
     protected $fillable = ['lawyer_id', 'user_id', 'date', 'time', 'status', 'type', 'notes'];
 
-    public function lawyer()
+    /**
+     * @method static \Database\Factories\AppointmentFactory factory(...$parameters)
+     */
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Lawyer, \App\Models\Appointment> */
+    /** @phpstan-ignore-next-line */
+    public function lawyer(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Lawyer::class);
     }
 
-    public function user()
+    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Appointment> */
+    /** @phpstan-ignore-next-line */
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);
     }
