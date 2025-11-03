@@ -4,6 +4,7 @@ includes:
 
 parameters:
     level: 7
+    reportUnmatchedIgnoredErrors: false
     # Removed local stubs because Larastan provides compatible stubs that otherwise
     # caused duplicate class declaration errors. If you need project-specific
     # stubs, add them carefully to avoid conflicts with vendor stubs.
