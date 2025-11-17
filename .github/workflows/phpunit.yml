@@ -58,6 +58,9 @@ jobs:
           php artisan key:generate --ansi || true
           php artisan migrate --force || true
 
+      - name: Prepare tests
+        run: composer test-prepare
+
       - name: Run PHPUnit
         run: vendor/bin/phpunit tests --colors=never
 
