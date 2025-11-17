@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       APP_DEBUG: "true"
+      SESSION_DRIVER: "array"
 
     steps:
       - name: Checkout repository
@@ -43,6 +44,11 @@ jobs:
 
       - name: Install Composer dependencies
         run: composer install --no-progress --no-scripts --prefer-dist
+
+      - name: Ensure storage directories
+        run: |
+          mkdir -p storage/framework/sessions storage/framework/views storage/framework/cache storage/logs
+          chmod -R 0777 storage || true
 
       - name: Run migrations (in-memory sqlite)
         env:
