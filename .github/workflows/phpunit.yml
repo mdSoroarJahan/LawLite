@@ -10,7 +10,7 @@ jobs:
   phpunit:
     runs-on: ubuntu-latest
     env:
-      APP_DEBUG: "true"
+      APP_DEBUG: "false"
       SESSION_DRIVER: "array"
 
     steps:
@@ -71,7 +71,7 @@ jobs:
           if [ -f storage/logs/laravel.log ]; then tail -n 200 storage/logs/laravel.log; else echo 'no laravel.log found'; fi
 
       - name: Upload Laravel log
-        if: always()
+        if: ${{ failure() }}
         uses: actions/upload-artifact@v4
         with:
           name: laravel-log
