@@ -119,4 +119,36 @@ class Handler extends ExceptionHandler
             }
         });
     }
+
+    /**
+     * Defensive render fallback: ensure GeminiException always returns
+     * a minimal 502 JSON response even if other rendering paths fail.
+     *
+     * This complements the renderable callback and protects CI/tests
+     * from unexpected 500s caused by logging or header operations.
+     */
+    public function render($request, Throwable $e)
+    {
+        try {
+            if ($e instanceof GeminiException) {
+                $retryAfter = $e->getRetryAfter() ?? config('gemini.retry_after', 30);
+                $payload = [
+                    'ok' => false,
+                    'error' => 'AI service unavailable. Please try again later.',
+                    'code' => 'AI_SERVICE_UNAVAILABLE',
+                    'retry_after' => $retryAfter,
+                ];
+
+                if (($attempts = $e->getAttempts()) !== null) {
+                    $payload['attempts'] = $attempts;
+                }
+
+                return new JsonResponse($payload, 502, ['Retry-After' => (string) $retryAfter]);
+            }
+        } catch (Throwable $_) {
+            // swallow any errors here to avoid turning this into a 500
+        }
+
+        return parent::render($request, $e);
+    }
 }
