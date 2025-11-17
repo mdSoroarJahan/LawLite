@@ -27,4 +27,8 @@
     "phpstan/phpstan": "^2.1",
     "nunomaduro/larastan": "^3.7"
   }
+  ,
+  "scripts": {
+    "test-prepare": "php scripts/test-prepare.php"
+  }
 }
