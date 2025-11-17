@@ -48,48 +48,75 @@ class Handler extends ExceptionHandler
             // default reporting
         });
 
-        // Render GeminiException as a 502 JSON response for API requests
+        // Render GeminiException as a 502 JSON response for API requests.
+        // Wrap rendering in a try/catch to avoid converting rendering errors into 500 responses
+        // (for example if logging or a header operation unexpectedly throws in CI).
         $this->renderable(function (GeminiException $e, $request) {
-            // Prefer the retry-after and attempts values carried by the exception when set,
-            // otherwise fall back to config defaults.
-            $retryAfter = $e->getRetryAfter() ?? config('gemini.retry_after', 30);
-            $attempts = $e->getAttempts() ?? null;
+            try {
+                // Prefer the retry-after and attempts values carried by the exception when set,
+                // otherwise fall back to config defaults.
+                $retryAfter = $e->getRetryAfter() ?? config('gemini.retry_after', 30);
+                $attempts = $e->getAttempts() ?? null;
 
-            // Structured payload that clients can use for programmatic retries
-            $payload = [
-                'ok' => false,
-                'error' => 'AI service unavailable. Please try again later.',
-                'code' => 'AI_SERVICE_UNAVAILABLE',
-                'retry_after' => $retryAfter,
-            ];
+                // Structured payload that clients can use for programmatic retries
+                $payload = [
+                    'ok' => false,
+                    'error' => 'AI service unavailable. Please try again later.',
+                    'code' => 'AI_SERVICE_UNAVAILABLE',
+                    'retry_after' => $retryAfter,
+                ];
 
-            if ($attempts !== null) {
-                $payload['attempts'] = $attempts;
-            }
+                if ($attempts !== null) {
+                    $payload['attempts'] = $attempts;
+                }
 
-            // Structured logging for observability: include retry_after and attempts when available
-            Log::warning('Rendering GeminiException response', [
-                'retry_after' => $retryAfter,
-                'attempts' => $attempts,
-                'message' => $e->getMessage(),
-                'path' => $request->path(),
-            ]);
+                // Structured logging for observability: include retry_after and attempts when available
+                Log::warning('Rendering GeminiException response', [
+                    'retry_after' => $retryAfter,
+                    'attempts' => $attempts,
+                    'message' => $e->getMessage(),
+                    'path' => $request->path(),
+                ]);
 
-            // If the client expects JSON, return a structured JSON response with Retry-After header
-            if ($request->expectsJson() || $request->is('api/*') || $request->wantsJson()) {
-                // Return a concrete JsonResponse so static analysis can resolve methods
+                // If the client expects JSON, return a structured JSON response with Retry-After header
+                if ($request->expectsJson() || $request->is('api/*') || $request->wantsJson()) {
+                    // Return a concrete JsonResponse so static analysis can resolve methods
+                    return new JsonResponse($payload, 502, ['Retry-After' => (string) $retryAfter]);
+                }
+
+                // For non-JSON requests fall back to a simple response with 502 and Retry-After header
+                $body = 'AI service unavailable. Please try again later.';
+                if ($attempts !== null) {
+                    $body .= " (attempts={$attempts})";
+                }
+
+                $resp = new \Illuminate\Http\Response($body, 502);
+                $resp->header('Retry-After', (string) $retryAfter);
+                return $resp;
+            } catch (\Throwable $renderEx) {
+                // If rendering the GeminiException fails (e.g., logger misconfiguration),
+                // log the rendering error and return a minimal safe 502 response so tests
+                // and clients get the correct status instead of a 500.
+                try {
+                    Log::error('Failed while rendering GeminiException response', [
+                        'render_error' => (string) $renderEx,
+                        'original_error' => (string) $e,
+                        'path' => $request->path(),
+                    ]);
+                } catch (\Throwable $_) {
+                    // best-effort logging; swallow to avoid further exceptions
+                }
+
+                $retryAfter = config('gemini.retry_after', 30);
+                $payload = [
+                    'ok' => false,
+                    'error' => 'AI service unavailable. Please try again later.',
+                    'code' => 'AI_SERVICE_UNAVAILABLE',
+                    'retry_after' => $retryAfter,
+                ];
+
                 return new JsonResponse($payload, 502, ['Retry-After' => (string) $retryAfter]);
             }
-
-            // For non-JSON requests fall back to a simple response with 502 and Retry-After header
-            $body = 'AI service unavailable. Please try again later.';
-            if ($attempts !== null) {
-                $body .= " (attempts={$attempts})";
-            }
-
-            $resp = new \Illuminate\Http\Response($body, 502);
-            $resp->header('Retry-After', (string) $retryAfter);
-            return $resp;
         });
     }
 }
