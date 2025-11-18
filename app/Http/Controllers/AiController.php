@@ -27,6 +27,7 @@ class AiController extends Controller
      */
     public function ask(Request $request): JsonResponse
     {
+        /** @var array{question: string, language?: string|null} $data */
         $data = (array) $request->validate([
             'question' => 'required|string',
             'language' => 'nullable|string|in:en,bn',
@@ -64,12 +65,19 @@ class AiController extends Controller
             'language' => 'nullable|string|in:en,bn',
         ]);
 
+        /** @var array{documents: array<int, array<string, mixed>|string>, language?: string|null} $data */
+        $data = (array) $request->validate([
+            'documents' => 'required|array',
+            'language' => 'nullable|string|in:en,bn',
+        ]);
+
         $language = isset($data['language']) && $data['language'] !== null ? strval($data['language']) : 'bn';
         $documentsRaw = $data['documents'];
         $documents = is_array($documentsRaw) ? array_map(function ($d) {
             return is_array($d) ? $d : strval($d);
         }, $documentsRaw) : [];
 
+        /** @var array<int, array<string, mixed>|string> $documents */
         $result = $this->gemini->summarize($documents, $language);
 
         // store in ai_documents
