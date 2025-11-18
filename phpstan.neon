@@ -5,6 +5,8 @@ includes:
 parameters:
     level: 10
     reportUnmatchedIgnoredErrors: false
+    excludePaths:
+        - scripts/*
     stubFiles:
         - phpstan-stubs/hasfactory.php
     # Removed local stubs because Larastan provides compatible stubs that otherwise
