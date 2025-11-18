@@ -16,7 +16,7 @@ class ChatController extends Controller
      */
     public function send(Request $request): JsonResponse
     {
-        $data = $request->validate([
+        $data = (array) $request->validate([
             'receiver_id' => 'required|integer',
             'content' => 'required|string',
         ]);

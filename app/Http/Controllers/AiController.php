@@ -27,7 +27,7 @@ class AiController extends Controller
      */
     public function ask(Request $request): JsonResponse
     {
-        $data = $request->validate([
+        $data = (array) $request->validate([
             'question' => 'required|string',
             'language' => 'nullable|string|in:en,bn',
         ]);
@@ -58,7 +58,7 @@ class AiController extends Controller
      */
     public function summarize(Request $request): JsonResponse
     {
-        $data = $request->validate([
+        $data = (array) $request->validate([
             'documents' => 'required|array',
             'language' => 'nullable|string|in:en,bn',
         ]);

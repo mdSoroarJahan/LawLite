@@ -31,7 +31,7 @@ class AuthController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $data = $request->validate([
+        $data = (array) $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
@@ -57,7 +57,7 @@ class AuthController extends Controller
      */
     public function authenticate(Request $request): RedirectResponse
     {
-        $credentials = $request->validate([
+        $credentials = (array) $request->validate([
             'email' => 'required|email',
             'password' => 'required|string',
         ]);
