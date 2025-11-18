@@ -3,7 +3,7 @@ includes:
     - phpstan-baseline.neon
 
 parameters:
-    level: 9
+    level: 10
     reportUnmatchedIgnoredErrors: false
     stubFiles:
         - phpstan-stubs/hasfactory.php
