@@ -24,9 +24,14 @@ class AppointmentController extends Controller
             'notes' => 'nullable|string',
         ]);
 
+        $user = $request->user();
+        if ($user === null) {
+            return new JsonResponse(['ok' => false, 'message' => 'Unauthenticated'], 401);
+        }
+
         $appointment = Appointment::create([
             'lawyer_id' => $data['lawyer_id'],
-            'user_id' => $request->user()->id,
+            'user_id' => $user->id,
             'date' => $data['date'],
             'time' => $data['time'],
             'status' => 'scheduled',

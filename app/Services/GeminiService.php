@@ -23,10 +23,29 @@ class GeminiService
         // Prefer reading from config() at runtime. Environment variables should be
         // consumed in config files (config/gemini.php) so the values work when the
         // config is cached. Provide safe defaults here.
-        $this->apiKey = config('gemini.api_key', '');
-        $this->baseUrl = config('gemini.base_url', 'https://api.gemini.example/v1');
-        $this->timeout = config('gemini.timeout', 30);
-        $this->retries = config('gemini.retries', 2);
+        $cfg = config('gemini.api_key', '');
+        if (!is_scalar($cfg) && $cfg !== null) {
+            $cfg = '';
+        }
+        $this->apiKey = strval($cfg);
+
+        $cfg = config('gemini.base_url', 'https://api.gemini.example/v1');
+        if (!is_scalar($cfg) && $cfg !== null) {
+            $cfg = 'https://api.gemini.example/v1';
+        }
+        $this->baseUrl = strval($cfg);
+
+        $cfg = config('gemini.timeout', 30);
+        if (!is_scalar($cfg) && $cfg !== null) {
+            $cfg = 30;
+        }
+        $this->timeout = intval($cfg);
+
+        $cfg = config('gemini.retries', 2);
+        if (!is_scalar($cfg) && $cfg !== null) {
+            $cfg = 2;
+        }
+        $this->retries = intval($cfg);
 
         $this->client = $client ?? new Client(['base_uri' => $this->baseUrl, 'timeout' => $this->timeout]);
     }
@@ -101,7 +120,7 @@ class GeminiService
         $lastEx = null;
 
         // prepare headers including Authorization
-        $headers = Arr::get($options, 'headers', []);
+        $headers = (array) Arr::get($options, 'headers', []);
         $headers = array_merge($headers, [
             'Authorization' => 'Bearer ' . $this->apiKey,
             'Accept' => 'application/json',
@@ -116,8 +135,13 @@ class GeminiService
                 /** @var ResponseInterface $resp */
                 $resp = $this->client->request($method, $uri, $options);
                 $body = $resp->getBody()->getContents();
+                /** @var array<string,mixed>|null $decoded */
                 $decoded = json_decode($body, true);
-                return $decoded === null ? ['raw' => $body] : $decoded;
+                if (is_array($decoded)) {
+                    /** @var array<string,mixed> $decoded */
+                    return $decoded;
+                }
+                return ['raw' => strval($body)];
             } catch (GuzzleException $e) {
                 $lastEx = $e;
                 // log the failed attempt so we can monitor retries
@@ -147,9 +171,14 @@ class GeminiService
             }
         }
 
-        $msg = sprintf('GeminiService request failed after %d attempts: %s', $attempts, ($lastEx ? $lastEx->getMessage() : 'unknown'));
+        $lastExMessage = $lastEx instanceof \Throwable ? $lastEx->getMessage() : 'unknown';
+        $msg = sprintf('GeminiService request failed after %d attempts: %s', $attempts, $lastExMessage);
         // Attach retry_after value (suggested) to the exception message for downstream handling if needed
-        $retryAfter = config('gemini.retry_after', 30);
+        $retryCfg = config('gemini.retry_after', 30);
+        if (!is_scalar($retryCfg) && $retryCfg !== null) {
+            $retryCfg = 30;
+        }
+        $retryAfter = intval($retryCfg);
         $msg = $msg . sprintf(' (retry_after=%d)', $retryAfter);
         // increment final failure metric
         Metrics::increment('gemini.retry.final_failures');

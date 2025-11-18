@@ -21,8 +21,13 @@ class ChatController extends Controller
             'content' => 'required|string',
         ]);
 
+        $user = $request->user();
+        if ($user === null) {
+            return new JsonResponse(['ok' => false, 'message' => 'Unauthenticated'], 401);
+        }
+
         $message = Message::create([
-            'sender_id' => $request->user()->id,
+            'sender_id' => $user->id,
             'receiver_id' => $data['receiver_id'],
             'content' => $data['content'],
         ]);
@@ -52,7 +57,12 @@ class ChatController extends Controller
      */
     public function history(Request $request, $withUserId): JsonResponse
     {
-        $userId = $request->user()->id;
+        $user = $request->user();
+        if ($user === null) {
+            return new JsonResponse(['ok' => false, 'message' => 'Unauthenticated'], 401);
+        }
+
+        $userId = $user->id;
         $messages = Message::query()->where(function ($q) use ($userId, $withUserId) {
             /** @var \Illuminate\Database\Eloquent\Builder<\App\Models\Message> $q */
             $q->where('sender_id', $userId)->where('receiver_id', $withUserId);

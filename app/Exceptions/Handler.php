@@ -55,7 +55,12 @@ class Handler extends ExceptionHandler
             try {
                 // Prefer the retry-after and attempts values carried by the exception when set,
                 // otherwise fall back to config defaults.
-                $retryAfter = $e->getRetryAfter() ?? config('gemini.retry_after', 30);
+                $retryCfg = $e->getRetryAfter() ?? config('gemini.retry_after', 30);
+                if (!is_scalar($retryCfg) && $retryCfg !== null) {
+                    $retryCfg = 30;
+                }
+                $retryAfter = intval($retryCfg);
+                /** @var int $retryAfter */
                 $attempts = $e->getAttempts() ?? null;
 
                 // Structured payload that clients can use for programmatic retries
@@ -81,7 +86,7 @@ class Handler extends ExceptionHandler
                 // If the client expects JSON, return a structured JSON response with Retry-After header
                 if ($request->expectsJson() || $request->is('api/*') || $request->wantsJson()) {
                     // Return a concrete JsonResponse so static analysis can resolve methods
-                    return new JsonResponse($payload, 502, ['Retry-After' => (string) $retryAfter]);
+                    return new JsonResponse($payload, 502, ['Retry-After' => strval($retryAfter)]);
                 }
 
                 // For non-JSON requests fall back to a simple response with 502 and Retry-After header
@@ -91,7 +96,7 @@ class Handler extends ExceptionHandler
                 }
 
                 $resp = new \Illuminate\Http\Response($body, 502);
-                $resp->header('Retry-After', (string) $retryAfter);
+                $resp->header('Retry-After', strval($retryAfter));
                 return $resp;
             } catch (\Throwable $renderEx) {
                 // If rendering the GeminiException fails (e.g., logger misconfiguration),
@@ -99,15 +104,19 @@ class Handler extends ExceptionHandler
                 // and clients get the correct status instead of a 500.
                 try {
                     Log::error('Failed while rendering GeminiException response', [
-                        'render_error' => (string) $renderEx,
-                        'original_error' => (string) $e,
+                        'render_error' => $renderEx->getMessage(),
+                        'original_error' => $e->getMessage(),
                         'path' => $request->path(),
                     ]);
                 } catch (\Throwable $_) {
                     // best-effort logging; swallow to avoid further exceptions
                 }
-
-                $retryAfter = config('gemini.retry_after', 30);
+                $retryCfg = config('gemini.retry_after', 30);
+                if (!is_scalar($retryCfg) && $retryCfg !== null) {
+                    $retryCfg = 30;
+                }
+                $retryAfter = intval($retryCfg);
+                /** @var int $retryAfter */
                 $payload = [
                     'ok' => false,
                     'error' => 'AI service unavailable. Please try again later.',
@@ -115,7 +124,7 @@ class Handler extends ExceptionHandler
                     'retry_after' => $retryAfter,
                 ];
 
-                return new JsonResponse($payload, 502, ['Retry-After' => (string) $retryAfter]);
+                return new JsonResponse($payload, 502, ['Retry-After' => strval($retryAfter)]);
             }
         });
     }
@@ -131,7 +140,12 @@ class Handler extends ExceptionHandler
     {
         try {
             if ($e instanceof GeminiException) {
-                $retryAfter = $e->getRetryAfter() ?? config('gemini.retry_after', 30);
+                $retryCfg = $e->getRetryAfter() ?? config('gemini.retry_after', 30);
+                if (!is_scalar($retryCfg) && $retryCfg !== null) {
+                    $retryCfg = 30;
+                }
+                $retryAfter = intval($retryCfg);
+                /** @var int $retryAfter */
                 $payload = [
                     'ok' => false,
                     'error' => 'AI service unavailable. Please try again later.',
@@ -143,7 +157,7 @@ class Handler extends ExceptionHandler
                     $payload['attempts'] = $attempts;
                 }
 
-                return new JsonResponse($payload, 502, ['Retry-After' => (string) $retryAfter]);
+                return new JsonResponse($payload, 502, ['Retry-After' => strval($retryAfter)]);
             }
         } catch (Throwable $_) {
             // swallow any errors here to avoid turning this into a 500
