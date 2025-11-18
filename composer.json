@@ -25,7 +25,8 @@
     "phpunit/phpunit": "^9.5",
     "fakerphp/faker": "^1.24",
     "phpstan/phpstan": "^2.1",
-    "nunomaduro/larastan": "^3.7"
+    "nunomaduro/larastan": "^3.7",
+    "larastan/larastan": "^3.8"
   }
   ,
   "scripts": {
