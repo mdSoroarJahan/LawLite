@@ -34,7 +34,7 @@ class AiController extends Controller
         ]);
 
         $question = strval($data['question']);
-        $language = isset($data['language']) && $data['language'] !== null ? strval($data['language']) : 'en';
+        $language = $data['language'] ?? 'en';
 
         $result = $this->gemini->askQuestion($question, $language);
 
@@ -71,11 +71,11 @@ class AiController extends Controller
             'language' => 'nullable|string|in:en,bn',
         ]);
 
-        $language = isset($data['language']) && $data['language'] !== null ? strval($data['language']) : 'bn';
+        $language = $data['language'] ?? 'bn';
         $documentsRaw = $data['documents'];
-        $documents = is_array($documentsRaw) ? array_map(function ($d) {
+        $documents = array_map(function ($d) {
             return is_array($d) ? $d : strval($d);
-        }, $documentsRaw) : [];
+        }, $documentsRaw);
 
         /** @var array<int, array<string, mixed>|string> $documents */
         $result = $this->gemini->summarize($documents, $language);

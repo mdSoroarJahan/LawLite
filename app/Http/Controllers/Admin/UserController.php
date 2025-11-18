@@ -65,9 +65,7 @@ class UserController extends Controller
         $user->name = strval($data['name']);
         $user->email = strval($data['email']);
         $user->role = strval($data['role']);
-        $user->language_preference = isset($data['language_preference']) && $data['language_preference'] !== null
-            ? strval($data['language_preference'])
-            : $user->language_preference;
+        $user->language_preference = $data['language_preference'] ?? $user->language_preference;
         if (! empty($data['password'])) {
             $user->password = Hash::make(strval($data['password']));
         }
