@@ -16,8 +16,10 @@ class UserController extends Controller
     public function index(): View|ViewFactory
     {
         // support search and role filter
-        $q = request()->input('q');
-        $role = request()->input('role');
+        $qRaw = request()->input('q', '');
+        $q = (is_scalar($qRaw) || $qRaw === null) ? strval($qRaw) : '';
+        $roleRaw = request()->input('role', '');
+        $role = (is_scalar($roleRaw) || $roleRaw === null) ? strval($roleRaw) : '';
 
         $query = User::query();
         if ($q) {
