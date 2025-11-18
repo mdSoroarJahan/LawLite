@@ -32,9 +32,10 @@ class AiController extends Controller
             'language' => 'nullable|string|in:en,bn',
         ]);
 
-        $language = $data['language'] ?? 'en';
+        $question = strval($data['question']);
+        $language = isset($data['language']) && $data['language'] !== null ? strval($data['language']) : 'en';
 
-        $result = $this->gemini->askQuestion($data['question'], $language);
+        $result = $this->gemini->askQuestion($question, $language);
 
         // persist to ai_queries table
         try {
@@ -63,9 +64,13 @@ class AiController extends Controller
             'language' => 'nullable|string|in:en,bn',
         ]);
 
-        $language = $data['language'] ?? 'bn';
+        $language = isset($data['language']) && $data['language'] !== null ? strval($data['language']) : 'bn';
+        $documentsRaw = $data['documents'];
+        $documents = is_array($documentsRaw) ? array_map(function ($d) {
+            return is_array($d) ? $d : strval($d);
+        }, $documentsRaw) : [];
 
-        $result = $this->gemini->summarize($data['documents'], $language);
+        $result = $this->gemini->summarize($documents, $language);
 
         // store in ai_documents
         try {

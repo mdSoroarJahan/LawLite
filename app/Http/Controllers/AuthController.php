@@ -38,9 +38,9 @@ class AuthController extends Controller
         ]);
 
         $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'name' => strval($data['name']),
+            'email' => strval($data['email']),
+            'password' => Hash::make(strval($data['password'])),
         ]);
 
         Auth::login($user);
@@ -62,6 +62,7 @@ class AuthController extends Controller
             'password' => 'required|string',
         ]);
 
+        $credentials['password'] = strval($credentials['password']);
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             /** @var \Illuminate\Routing\Redirector $redirector */
