@@ -54,10 +54,10 @@ class ChatController extends Controller
     {
         $userId = $request->user()->id;
         $messages = Message::query()->where(function ($q) use ($userId, $withUserId) {
-            /** @var \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $q */
+            /** @var \Illuminate\Database\Eloquent\Builder<\App\Models\Message> $q */
             $q->where('sender_id', $userId)->where('receiver_id', $withUserId);
         })->orWhere(function ($q) use ($userId, $withUserId) {
-            /** @var \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $q */
+            /** @var \Illuminate\Database\Eloquent\Builder<\App\Models\Message> $q */
             $q->where('sender_id', $withUserId)->where('receiver_id', $userId);
         })->orderBy('created_at')->get();
 

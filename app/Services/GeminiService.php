@@ -20,8 +20,11 @@ class GeminiService
 
     public function __construct(Client $client = null)
     {
-        $this->apiKey = config('gemini.api_key', env('GEMINI_API_KEY'));
-        $this->baseUrl = config('gemini.base_url', env('GEMINI_API_URL', 'https://api.gemini.example/v1'));
+        // Prefer reading from config() at runtime. Environment variables should be
+        // consumed in config files (config/gemini.php) so the values work when the
+        // config is cached. Provide safe defaults here.
+        $this->apiKey = config('gemini.api_key', '');
+        $this->baseUrl = config('gemini.base_url', 'https://api.gemini.example/v1');
         $this->timeout = config('gemini.timeout', 30);
         $this->retries = config('gemini.retries', 2);
 
