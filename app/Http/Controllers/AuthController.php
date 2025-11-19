@@ -31,16 +31,17 @@ class AuthController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $data = $request->validate([
+        /** @var array{name: string, email: string, password: string} $data */
+        $data = (array) $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
         ]);
 
         $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'name' => strval($data['name']),
+            'email' => strval($data['email']),
+            'password' => Hash::make(strval($data['password'])),
         ]);
 
         Auth::login($user);
@@ -57,11 +58,13 @@ class AuthController extends Controller
      */
     public function authenticate(Request $request): RedirectResponse
     {
-        $credentials = $request->validate([
+        /** @var array{email: string, password: string} $credentials */
+        $credentials = (array) $request->validate([
             'email' => 'required|email',
             'password' => 'required|string',
         ]);
 
+        $credentials['password'] = strval($credentials['password']);
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             /** @var \Illuminate\Routing\Redirector $redirector */

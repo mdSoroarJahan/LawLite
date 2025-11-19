@@ -16,7 +16,7 @@ class AppointmentController extends Controller
      */
     public function book(Request $request): JsonResponse
     {
-        $data = $request->validate([
+        $data = (array) $request->validate([
             'lawyer_id' => 'required|integer',
             'date' => 'required|date',
             'time' => 'required',

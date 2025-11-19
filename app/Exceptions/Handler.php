@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Http\Request;
 use App\Exceptions\GeminiException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
@@ -51,7 +52,7 @@ class Handler extends ExceptionHandler
         // Render GeminiException as a 502 JSON response for API requests.
         // Wrap rendering in a try/catch to avoid converting rendering errors into 500 responses
         // (for example if logging or a header operation unexpectedly throws in CI).
-        $this->renderable(function (GeminiException $e, $request) {
+        $this->renderable(function (GeminiException $e, Request $request) {
             try {
                 // Prefer the retry-after and attempts values carried by the exception when set,
                 // otherwise fall back to config defaults.

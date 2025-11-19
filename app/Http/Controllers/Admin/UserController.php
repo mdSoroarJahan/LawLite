@@ -53,7 +53,8 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
-        $data = $request->validate([
+        /** @var array{name: string, email: string, role: string, language_preference?: string|null, password?: string|null} $data */
+        $data = (array) $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'role' => 'required|string|in:user,lawyer,admin',
@@ -61,12 +62,12 @@ class UserController extends Controller
             'password' => 'nullable|string|min:6|confirmed',
         ]);
 
-        $user->name = $data['name'];
-        $user->email = $data['email'];
-        $user->role = $data['role'];
+        $user->name = strval($data['name']);
+        $user->email = strval($data['email']);
+        $user->role = strval($data['role']);
         $user->language_preference = $data['language_preference'] ?? $user->language_preference;
         if (! empty($data['password'])) {
-            $user->password = Hash::make($data['password']);
+            $user->password = Hash::make(strval($data['password']));
         }
         $user->save();
 

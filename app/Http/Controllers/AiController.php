@@ -27,14 +27,16 @@ class AiController extends Controller
      */
     public function ask(Request $request): JsonResponse
     {
-        $data = $request->validate([
+        /** @var array{question: string, language?: string|null} $data */
+        $data = (array) $request->validate([
             'question' => 'required|string',
             'language' => 'nullable|string|in:en,bn',
         ]);
 
+        $question = strval($data['question']);
         $language = $data['language'] ?? 'en';
 
-        $result = $this->gemini->askQuestion($data['question'], $language);
+        $result = $this->gemini->askQuestion($question, $language);
 
         // persist to ai_queries table
         try {
@@ -58,14 +60,25 @@ class AiController extends Controller
      */
     public function summarize(Request $request): JsonResponse
     {
-        $data = $request->validate([
+        $data = (array) $request->validate([
+            'documents' => 'required|array',
+            'language' => 'nullable|string|in:en,bn',
+        ]);
+
+        /** @var array{documents: array<int, array<string, mixed>|string>, language?: string|null} $data */
+        $data = (array) $request->validate([
             'documents' => 'required|array',
             'language' => 'nullable|string|in:en,bn',
         ]);
 
         $language = $data['language'] ?? 'bn';
+        $documentsRaw = $data['documents'];
+        $documents = array_map(function ($d) {
+            return is_array($d) ? $d : strval($d);
+        }, $documentsRaw);
 
-        $result = $this->gemini->summarize($data['documents'], $language);
+        /** @var array<int, array<string, mixed>|string> $documents */
+        $result = $this->gemini->summarize($documents, $language);
 
         // store in ai_documents
         try {
