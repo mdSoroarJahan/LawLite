@@ -41,8 +41,17 @@ class GeminiRetrySuccessTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
+        $invocation = 0;
+
         $client->method('request')
-            ->will($this->onConsecutiveCalls($this->throwException($exception), $success));
+            ->willReturnCallback(function () use (&$invocation, $exception, $success) {
+                $invocation++;
+                if ($invocation === 1) {
+                    throw $exception;
+                }
+
+                return $success;
+            });
 
         $svc = new GeminiService($client);
 

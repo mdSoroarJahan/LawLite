@@ -17,14 +17,14 @@
 
         body {
             font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-            background: linear-gradient(180deg,#f8fafc,#f1f5f9);
+            background: linear-gradient(180deg, #f8fafc, #f1f5f9);
             color: #0f172a;
         }
 
         .site-header {
-            background: linear-gradient(90deg,var(--primary),#08306a);
+            background: linear-gradient(90deg, var(--primary), #08306a);
             color: #fff;
-            box-shadow: 0 6px 18px rgba(2,6,23,0.08);
+            box-shadow: 0 6px 18px rgba(2, 6, 23, 0.08);
         }
 
         .btn-accent {
@@ -39,12 +39,14 @@
         }
 
         .card-ghost {
-            background: rgba(255,255,255,0.85);
+            background: rgba(255, 255, 255, 0.85);
             border: 0;
-            box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+            box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
         }
 
-        .small-muted { color: var(--muted); }
+        .small-muted {
+            color: var(--muted);
+        }
     </style>
 </head>
 
