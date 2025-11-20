@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Contracts\View\Factory as ViewFactory;
+use Illuminate\Support\Facades\Storage;
 
 class LawyerDashboardController extends Controller
 {
@@ -46,7 +47,7 @@ class LawyerDashboardController extends Controller
     /**
      * Show and handle profile edit (minimal fields for demo).
      */
-    public function editProfile(Request $request): View|ViewFactory
+    public function editProfile(Request $request)
     {
         $user = $request->user();
         if (! $user || $user->role !== 'lawyer') abort(403);
@@ -57,6 +58,8 @@ class LawyerDashboardController extends Controller
                 'phone' => 'nullable|string|max:30',
                 'city' => 'nullable|string|max:120',
                 'expertise' => 'nullable|string|max:255',
+                'documents' => 'nullable|array',
+                'documents.*' => 'file|mimes:pdf,jpeg,png,jpg|max:5120',
             ]);
 
             $user->name = strval($data['name']);
@@ -70,6 +73,20 @@ class LawyerDashboardController extends Controller
             }
             $lawyer->city = isset($data['city']) ? strval($data['city']) : $lawyer->city;
             $lawyer->expertise = isset($data['expertise']) ? strval($data['expertise']) : $lawyer->expertise;
+
+            // Handle uploaded documents (append to existing documents array)
+            if ($request->hasFile('documents')) {
+                $stored = [];
+                foreach ($request->file('documents') as $file) {
+                    if (! $file || ! $file->isValid()) continue;
+                    $path = $file->store('lawyer_documents', 'public');
+                    if ($path) $stored[] = $path;
+                }
+
+                $existing = is_array($lawyer->documents) ? $lawyer->documents : [];
+                $lawyer->documents = array_values(array_merge($existing, $stored));
+            }
+
             $lawyer->save();
 
             return redirect()->route('lawyer.dashboard')->with('status', 'Profile updated');

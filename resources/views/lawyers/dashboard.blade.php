@@ -17,7 +17,8 @@
 
                     <div class="mt-4">
                         <h6>Verification</h6>
-                        <p class="small-muted">Status: <strong>{{ optional($user->lawyer)->verification_status ?? 'not requested' }}</strong></p>
+                        <p class="small-muted">Status:
+                            <strong>{{ optional($user->lawyer)->verification_status ?? 'not requested' }}</strong></p>
                         @if ((optional($user->lawyer)->verification_status ?? null) !== 'verified')
                             <form method="POST" action="{{ route('lawyer.request.verification') }}">
                                 @csrf

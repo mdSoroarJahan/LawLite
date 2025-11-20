@@ -103,7 +103,7 @@ Route::post('/register', [\App\Http\Controllers\AuthController::class, 'store'])
 // Lawyer dashboard (post-login landing for lawyers)
 Route::middleware(['auth', 'role:lawyer'])->get('/lawyer/dashboard', [\App\Http\Controllers\LawyerDashboardController::class, 'dashboard'])->name('lawyer.dashboard');
 Route::middleware(['auth', 'role:lawyer'])->get('/lawyer/appointments', [\App\Http\Controllers\LawyerDashboardController::class, 'appointments'])->name('lawyer.appointments');
-Route::middleware(['auth', 'role:lawyer'])->match(['get','post'], '/lawyer/profile/edit', [\App\Http\Controllers\LawyerDashboardController::class, 'editProfile'])->name('lawyer.profile.edit');
+Route::middleware(['auth', 'role:lawyer'])->match(['get', 'post'], '/lawyer/profile/edit', [\App\Http\Controllers\LawyerDashboardController::class, 'editProfile'])->name('lawyer.profile.edit');
 Route::middleware(['auth', 'role:lawyer'])->post('/lawyer/request-verification', [\App\Http\Controllers\LawyerDashboardController::class, 'requestVerification'])->name('lawyer.request.verification');
 
 // Admin dashboard and management routes (protected)
@@ -113,6 +113,11 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('/admin/users/{id}/edit', [\App\Http\Controllers\Admin\UserController::class, 'edit'])->name('admin.users.edit');
     Route::put('/admin/users/{id}', [\App\Http\Controllers\Admin\UserController::class, 'update'])->name('admin.users.update');
     Route::delete('/admin/users/{id}', [\App\Http\Controllers\Admin\UserController::class, 'destroy'])->name('admin.users.destroy');
+
+    // Verification review
+    Route::get('/admin/verification', [\App\Http\Controllers\Admin\VerificationController::class, 'index'])->name('admin.verification.index');
+    Route::post('/admin/verification/{id}/approve', [\App\Http\Controllers\Admin\VerificationController::class, 'approve'])->name('admin.verification.approve');
+    Route::post('/admin/verification/{id}/reject', [\App\Http\Controllers\Admin\VerificationController::class, 'reject'])->name('admin.verification.reject');
 });
 
 // Local debug: show session id and CSRF token
