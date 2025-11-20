@@ -33,6 +33,18 @@
                             <label>Confirm password</label>
                             <input name="password_confirmation" type="password" class="form-control" />
                         </div>
+                        <div class="mb-3">
+                            <label>Account type</label>
+                            <select name="role" class="form-select">
+                                <option value="user" @if (old('role', 'user') === 'user') selected @endif>Register as User
+                                </option>
+                                <option value="lawyer" @if (old('role') === 'lawyer') selected @endif>Register as Lawyer
+                                </option>
+                            </select>
+                            <div class="form-text">If you are a practicing lawyer, choose "Register as Lawyer". Lawyers will
+                                be reviewed by admins before verification.</div>
+                        </div>
+
                         <button class="btn btn-primary">Register</button>
                     </form>
                 </div>

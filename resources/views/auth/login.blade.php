@@ -29,6 +29,19 @@
                             <input name="password" type="password" class="form-control" />
                         </div>
                         <button class="btn btn-primary">Sign in</button>
+
+                        @if (env('APP_ENV') === 'local')
+                            <hr class="my-3">
+                            <div class="small text-muted">Quick sign-in (development only):</div>
+                            <div class="d-flex gap-2 mt-2">
+                                <a href="{{ url('/_dev/login-as/admin') }}" class="btn btn-sm btn-outline-secondary">Sign in
+                                    as Admin</a>
+                                <a href="{{ url('/_dev/login-as/lawyer') }}" class="btn btn-sm btn-outline-secondary">Sign
+                                    in as Lawyer</a>
+                                <a href="{{ url('/_dev/login-as/user') }}" class="btn btn-sm btn-outline-secondary">Sign in
+                                    as User</a>
+                            </div>
+                        @endif
                     </form>
                 </div>
             </div>

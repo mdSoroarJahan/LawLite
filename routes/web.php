@@ -100,6 +100,9 @@ Route::post('/login', [\App\Http\Controllers\AuthController::class, 'authenticat
 Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 Route::post('/register', [\App\Http\Controllers\AuthController::class, 'store'])->name('register.post');
 
+// Lawyer dashboard (post-login landing for lawyers)
+Route::middleware(['auth', 'role:lawyer'])->get('/lawyer/dashboard', [\App\Http\Controllers\LawyerDashboardController::class, 'dashboard'])->name('lawyer.dashboard');
+
 // Admin dashboard and management routes (protected)
 Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'dashboard'])->name('admin.dashboard');
