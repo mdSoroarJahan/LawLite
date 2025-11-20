@@ -1,6 +1,7 @@
 {
   "name": "mdsoroarjahan/lawlite",
   "description": "LawLite - Bilingual legal consultation platform",
+  "license": "MIT",
   "type": "project",
   "require": {
   "php": "^8.1",
