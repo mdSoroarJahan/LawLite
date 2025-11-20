@@ -6,34 +6,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ config('app.name', 'LawLite') }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
         :root {
             --primary: #0b3d91;
             --accent: #ffd166;
+            --muted: #64748b;
         }
 
         body {
             font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-            background: #f4f6f9;
-            color: #1f2d3d;
+            background: linear-gradient(180deg,#f8fafc,#f1f5f9);
+            color: #0f172a;
         }
 
         .site-header {
-            background: linear-gradient(90deg, var(--primary), #08306a);
+            background: linear-gradient(90deg,var(--primary),#08306a);
             color: #fff;
+            box-shadow: 0 6px 18px rgba(2,6,23,0.08);
         }
 
         .btn-accent {
             background: var(--accent);
-            color: #102a43;
+            color: #0b2540;
             border: none;
+            font-weight: 600;
         }
 
         .hero {
-            background: linear-gradient(180deg, rgba(11, 61, 145, 0.05), transparent);
-            padding: 3.5rem 0;
+            padding: 4.5rem 0;
         }
+
+        .card-ghost {
+            background: rgba(255,255,255,0.85);
+            border: 0;
+            box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+        }
+
+        .small-muted { color: var(--muted); }
     </style>
 </head>
 
