@@ -6,6 +6,7 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Lawyer;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Storage;
 
 class AdminVerificationTest extends TestCase
 {
@@ -15,10 +16,25 @@ class AdminVerificationTest extends TestCase
     {
         $this->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);
 
+        \Illuminate\Support\Facades\Storage::fake('public');
+        // create a sample stored file so the admin page can link to it
+        Storage::disk('public')->put('lawyer_documents/sample.pdf', 'dummy');
+
         $admin = User::factory()->create(['role' => 'admin']);
         $user = User::factory()->create(['role' => 'lawyer']);
-        $lawyer = Lawyer::factory()->create(['user_id' => $user->id, 'verification_status' => 'requested']);
+        $lawyer = Lawyer::factory()->create([
+            'user_id' => $user->id,
+            'verification_status' => 'requested',
+            'documents' => ['lawyer_documents/sample.pdf'],
+        ]);
 
+        // Admin should be able to see document link on the verification index
+        $this->actingAs($admin)
+            ->get(route('admin.verification.index'))
+            ->assertStatus(200)
+            ->assertSee('sample.pdf');
+
+        // Approve action
         $this->actingAs($admin)
             ->post(route('admin.verification.approve', $lawyer->id))
             ->assertRedirect();

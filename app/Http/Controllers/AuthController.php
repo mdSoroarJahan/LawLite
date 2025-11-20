@@ -59,6 +59,12 @@ class AuthController extends Controller
 
         Auth::login($user);
 
+        // After registering, redirect by role so lawyers land on their dashboard
+        $user = Auth::user();
+        if ($user && isset($user->role) && $user->role === 'lawyer') {
+            return redirect()->intended(route('lawyer.dashboard'));
+        }
+
         /** @var \Illuminate\Http\RedirectResponse $resp */
         $resp = redirect('/');
         return $resp;
