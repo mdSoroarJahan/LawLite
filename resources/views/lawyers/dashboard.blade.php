@@ -10,10 +10,22 @@
                         profile, availability).</p>
 
                     <div class="mt-3 d-flex gap-2 flex-wrap">
-                        <a href="{{ route('profile.show') }}" class="btn btn-outline-primary">Edit Profile</a>
+                        <a href="{{ route('lawyer.profile.edit') }}" class="btn btn-outline-primary">Edit Profile</a>
                         <a href="{{ route('lawyers.index') }}" class="btn btn-outline-secondary">View Public Listings</a>
-                        <a href="#" class="btn btn-outline-success">Manage Appointments</a>
-                        <a href="#" class="btn btn-outline-warning">Verification Status</a>
+                        <a href="{{ route('lawyer.appointments') }}" class="btn btn-outline-success">Manage Appointments</a>
+                    </div>
+
+                    <div class="mt-4">
+                        <h6>Verification</h6>
+                        <p class="small-muted">Status: <strong>{{ optional($user->lawyer)->verification_status ?? 'not requested' }}</strong></p>
+                        @if ((optional($user->lawyer)->verification_status ?? null) !== 'verified')
+                            <form method="POST" action="{{ route('lawyer.request.verification') }}">
+                                @csrf
+                                <button class="btn btn-sm btn-warning">Request verification</button>
+                            </form>
+                        @else
+                            <div class="text-success small">Your account is verified.</div>
+                        @endif
                     </div>
                 </div>
             </div>
