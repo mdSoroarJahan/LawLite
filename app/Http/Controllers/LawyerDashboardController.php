@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Contracts\View\Factory as ViewFactory;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\LawyerVerificationRequested;
 
 class LawyerDashboardController extends Controller
 {
@@ -110,6 +112,16 @@ class LawyerDashboardController extends Controller
         } else {
             $lawyer->verification_status = 'requested';
             $lawyer->save();
+        }
+
+        // Notify all admin users so they can review the request
+        try {
+            $admins = \App\Models\User::where('role', 'admin')->get();
+            if ($admins->isNotEmpty()) {
+                Notification::send($admins, new LawyerVerificationRequested($lawyer));
+            }
+        } catch (\Throwable $e) {
+            // Don't block the request if notification fails; log in production
         }
 
         return redirect()->route('lawyer.dashboard')->with('status', 'Verification requested — an admin will review your documents');
