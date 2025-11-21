@@ -14,8 +14,8 @@
                 <div class="col-md-4 mb-4">
                     <div class="card h-100 shadow-sm">
                         <div class="card-body">
-                            <h5 class="card-title"><?php echo e($lawyer->name ?? 'Unnamed Lawyer'); ?></h5>
-                            <p class="card-text text-muted"><?php echo e($lawyer->specialty ?? 'General Practice'); ?></p>
+                            <h5 class="card-title"><?php echo e($lawyer->user->name ?? 'Unnamed Lawyer'); ?></h5>
+                            <p class="card-text text-muted"><?php echo e($lawyer->expertise ?? 'General Practice'); ?></p>
                             <p class="mb-1"><small class="text-muted">Location: <?php echo e($lawyer->city ?? 'Unknown'); ?></small>
                             </p>
                             <a href="<?php echo e(route('lawyers.show', $lawyer->id)); ?>"

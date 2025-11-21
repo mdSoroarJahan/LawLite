@@ -139,6 +139,7 @@ Route::middleware('auth')->get('/profile', function (\Illuminate\Http\Request $r
 })->name('profile.show');
 
 // Chat endpoints
+Route::middleware('auth')->get('/messages', [ChatController::class, 'inbox'])->name('messages.inbox');
 Route::middleware('auth')->post('/chat/send', [ChatController::class, 'send']);
 Route::middleware('auth')->get('/chat/history/{withUserId}', [ChatController::class, 'history']);
 

@@ -17,6 +17,11 @@
                 <li class="nav-item"><a class="nav-link text-white"
                         href="{{ route('appointments.index') }}">Appointments</a></li>
 
+                @auth
+                    <li class="nav-item"><a class="nav-link text-white" href="{{ route('messages.inbox') }}">Messages</a>
+                    </li>
+                @endauth
+
                 @guest
                     <li class="nav-item ms-3"><a class="btn btn-sm btn-accent" href="{{ route('login') }}">Sign in</a></li>
                     <li class="nav-item ms-2"><a class="nav-link text-white" href="{{ route('register') }}">Register</a>
