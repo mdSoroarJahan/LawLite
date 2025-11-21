@@ -61,7 +61,6 @@ class AiController extends Controller
             return new JsonResponse(['ok' => false, 'error' => 'An unexpected error occurred.'], 500);
         }
     }
-    }
 
     /**
      * @param \Illuminate\Http\Request $request

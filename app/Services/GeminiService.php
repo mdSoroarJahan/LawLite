@@ -61,9 +61,9 @@ class GeminiService
     public function askQuestion(string $question, ?string $language = null): ?array
     {
         $language = $language ?? config('gemini.default_language', 'en');
-        
+
         // Build the prompt with language preference
-        $prompt = $language === 'bn' 
+        $prompt = $language === 'bn'
             ? "আপনি একজন বাংলাদেশী আইন বিশেষজ্ঞ। নিম্নলিখিত প্রশ্নের উত্তর দিন:\n\n{$question}"
             : "You are a legal expert in Bangladesh law. Answer the following question concisely:\n\n{$question}";
 
@@ -80,12 +80,12 @@ class GeminiService
         $response = $this->request('POST', "/models/gemini-pro:generateContent?key={$this->apiKey}", [
             'json' => $payload,
         ]);
-        
+
         // Extract text from Google's response format
         if (isset($response['candidates'][0]['content']['parts'][0]['text'])) {
             return ['answer' => $response['candidates'][0]['content']['parts'][0]['text']];
         }
-        
+
         return $response;
     }
 
