@@ -17,6 +17,11 @@
                 <li class="nav-item"><a class="nav-link text-white"
                         href="<?php echo e(route('appointments.index')); ?>">Appointments</a></li>
 
+                <?php if(auth()->guard()->check()): ?>
+                    <li class="nav-item"><a class="nav-link text-white" href="<?php echo e(route('messages.inbox')); ?>">Messages</a>
+                    </li>
+                <?php endif; ?>
+
                 <?php if(auth()->guard()->guest()): ?>
                     <li class="nav-item ms-3"><a class="btn btn-sm btn-accent" href="<?php echo e(route('login')); ?>">Sign in</a></li>
                     <li class="nav-item ms-2"><a class="nav-link text-white" href="<?php echo e(route('register')); ?>">Register</a>

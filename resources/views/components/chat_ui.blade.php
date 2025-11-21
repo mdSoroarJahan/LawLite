@@ -1,15 +1,15 @@
 <div id="chat-ui" class="card fixed-bottom m-3" style="width:350px;display:none;right:0;">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <strong>Chat</strong>
-        <button id="chat-close" class="btn btn-sm btn-secondary">X</button>
+        <strong>{{ __('messages.chat') }}</strong>
+        <button id="chat-close" class="btn btn-sm btn-secondary">{{ __('messages.close') }}</button>
     </div>
     <div class="card-body" style="height:300px;overflow:auto;" id="chat-messages">
         <div class="text-muted">No conversation selected.</div>
     </div>
     <div class="card-footer">
         <div class="input-group">
-            <input id="chat-input" class="form-control" placeholder="Type a message...">
-            <button id="chat-send" class="btn btn-primary">Send</button>
+            <input id="chat-input" class="form-control" placeholder="{{ __('messages.type_message') }}">
+            <button id="chat-send" class="btn btn-primary">{{ __('messages.send') }}</button>
         </div>
     </div>
 </div>
@@ -40,10 +40,17 @@
             box.innerHTML = '';
             json.messages.forEach(m => {
                 const div = document.createElement('div');
-                div.textContent = (m.sender_id === (window.LAWLITE_USER_ID || 0) ? 'Me: ' :
-                    'Them: ') + m.content;
+                const isMe = m.sender_id === (window.LAWLITE_USER_ID || 0);
+                div.className = 'mb-2 d-flex ' + (isMe ? 'justify-content-end' :
+                    'justify-content-start');
+                div.innerHTML = `
+                    <div class="p-2 rounded ${isMe ? 'bg-primary text-white' : 'bg-light'}" style="max-width:70%;">
+                        ${m.content}
+                    </div>
+                `;
                 box.appendChild(div);
             });
+            box.scrollTop = box.scrollHeight;
         }
 
         if (chatToggle) chatToggle.addEventListener('click', () => {
@@ -90,8 +97,14 @@
                     if (currentWithUser && e.sender_id === currentWithUser) {
                         const box = document.getElementById('chat-messages');
                         const div = document.createElement('div');
-                        div.textContent = 'Them: ' + (e.content || '');
+                        div.className = 'mb-2 d-flex justify-content-start';
+                        div.innerHTML = `
+                            <div class="p-2 rounded bg-light" style="max-width:70%;">
+                                ${e.content || ''}
+                            </div>
+                        `;
                         box.appendChild(div);
+                        box.scrollTop = box.scrollHeight;
                     }
                 });
             }

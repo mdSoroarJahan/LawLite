@@ -40,10 +40,17 @@
             box.innerHTML = '';
             json.messages.forEach(m => {
                 const div = document.createElement('div');
-                div.textContent = (m.sender_id === (window.LAWLITE_USER_ID || 0) ? 'Me: ' :
-                    'Them: ') + m.content;
+                const isMe = m.sender_id === (window.LAWLITE_USER_ID || 0);
+                div.className = 'mb-2 d-flex ' + (isMe ? 'justify-content-end' :
+                    'justify-content-start');
+                div.innerHTML = `
+                    <div class="p-2 rounded ${isMe ? 'bg-primary text-white' : 'bg-light'}" style="max-width:70%;">
+                        ${m.content}
+                    </div>
+                `;
                 box.appendChild(div);
             });
+            box.scrollTop = box.scrollHeight;
         }
 
         if (chatToggle) chatToggle.addEventListener('click', () => {
@@ -90,8 +97,14 @@
                     if (currentWithUser && e.sender_id === currentWithUser) {
                         const box = document.getElementById('chat-messages');
                         const div = document.createElement('div');
-                        div.textContent = 'Them: ' + (e.content || '');
+                        div.className = 'mb-2 d-flex justify-content-start';
+                        div.innerHTML = `
+                            <div class="p-2 rounded bg-light" style="max-width:70%;">
+                                ${e.content || ''}
+                            </div>
+                        `;
                         box.appendChild(div);
+                        box.scrollTop = box.scrollHeight;
                     }
                 });
             }

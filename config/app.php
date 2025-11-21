@@ -13,6 +13,10 @@ return [
 
     'locale' => 'en',
 
+    'fallback_locale' => 'en',
+
+    'available_locales' => ['en', 'bn'],
+
     'key' => env('APP_KEY'),
 
     'cipher' => 'AES-256-CBC',

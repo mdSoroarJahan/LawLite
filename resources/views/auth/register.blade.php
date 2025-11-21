@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card p-4">
-                    <h3 class="mb-3">Create account</h3>
+                    <h3 class="mb-3">{{ __('messages.register') }}</h3>
                     <form method="POST" action="{{ route('register.post') }}">
                         @csrf
                         @if ($errors->any())
@@ -18,34 +18,34 @@
                             </div>
                         @endif
                         <div class="mb-3">
-                            <label>Name</label>
+                            <label>{{ __('messages.name') }}</label>
                             <input name="name" value="{{ old('name') }}" class="form-control" />
                         </div>
                         <div class="mb-3">
-                            <label>Email</label>
+                            <label>{{ __('messages.email') }}</label>
                             <input name="email" value="{{ old('email') }}" class="form-control" />
                         </div>
                         <div class="mb-3">
-                            <label>Password</label>
+                            <label>{{ __('messages.password') }}</label>
                             <input name="password" type="password" class="form-control" />
                         </div>
                         <div class="mb-3">
-                            <label>Confirm password</label>
+                            <label>{{ __('messages.confirm_password') }}</label>
                             <input name="password_confirmation" type="password" class="form-control" />
                         </div>
                         <div class="mb-3">
-                            <label>Account type</label>
+                            <label>{{ __('messages.register_as') }}</label>
                             <select name="role" class="form-select">
-                                <option value="user" @if (old('role', 'user') === 'user') selected @endif>Register as User
+                                <option value="user" @if (old('role', 'user') === 'user') selected @endif>{{ __('messages.user') }}
                                 </option>
-                                <option value="lawyer" @if (old('role') === 'lawyer') selected @endif>Register as Lawyer
+                                <option value="lawyer" @if (old('role') === 'lawyer') selected @endif>{{ __('messages.lawyer') }}
                                 </option>
                             </select>
                             <div class="form-text">If you are a practicing lawyer, choose "Register as Lawyer". Lawyers will
                                 be reviewed by admins before verification.</div>
                         </div>
 
-                        <button class="btn btn-primary">Register</button>
+                        <button class="btn btn-primary">{{ __('messages.register') }}</button>
                     </form>
                 </div>
             </div>

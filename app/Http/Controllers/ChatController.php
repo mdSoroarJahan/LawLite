@@ -82,7 +82,11 @@ class ChatController extends Controller
     public function inbox(Request $request): View
     {
         $user = $request->user();
-        
+
+        if ($user === null) {
+            abort(401, 'Unauthenticated');
+        }
+
         // Get all unique conversation partners
         $conversations = Message::query()
             ->where('sender_id', $user->id)
@@ -90,22 +94,22 @@ class ChatController extends Controller
             ->with(['sender', 'receiver'])
             ->orderBy('created_at', 'desc')
             ->get()
-            ->groupBy(function($message) use ($user) {
+            ->groupBy(function ($message) use ($user) {
                 return $message->sender_id === $user->id ? $message->receiver_id : $message->sender_id;
             })
-            ->map(function($messages) use ($user) {
+            ->map(function ($messages) use ($user) {
                 $latestMessage = $messages->first();
                 $partnerId = $latestMessage->sender_id === $user->id ? $latestMessage->receiver_id : $latestMessage->sender_id;
                 $partner = User::find($partnerId);
                 $unreadCount = $messages->where('receiver_id', $user->id)->where('is_read', false)->count();
-                
+
                 return [
                     'partner' => $partner,
                     'latest_message' => $latestMessage,
                     'unread_count' => $unreadCount,
                 ];
             });
-        
+
         return view('chat.inbox', compact('conversations'));
     }
 }

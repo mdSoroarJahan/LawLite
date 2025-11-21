@@ -2,32 +2,32 @@
 
 @section('content')
     <div class="container py-4">
-        <h1 class="mb-4">Messages</h1>
+        <h1 class="mb-4">{{ __('messages.messages') }}</h1>
 
-        @if($conversations->isEmpty())
+        @if ($conversations->isEmpty())
             <div class="alert alert-info">
-                <p class="mb-0">No messages yet. Start a conversation by messaging a lawyer from their profile.</p>
+                <p class="mb-0">{{ __('messages.no_messages') }}</p>
             </div>
         @else
             <div class="list-group">
-                @foreach($conversations as $conversation)
-                    <a href="javascript:void(0)" 
-                       onclick="openChatWith({{ $conversation['partner']->id }})"
-                       class="list-group-item list-group-item-action">
+                @foreach ($conversations as $conversation)
+                    <a href="javascript:void(0)" onclick="openChatWith({{ $conversation['partner']->id }})"
+                        class="list-group-item list-group-item-action">
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1">
                                 {{ $conversation['partner']->name }}
-                                @if($conversation['unread_count'] > 0)
+                                @if ($conversation['unread_count'] > 0)
                                     <span class="badge bg-primary">{{ $conversation['unread_count'] }}</span>
                                 @endif
                             </h5>
-                            <small class="text-muted">{{ $conversation['latest_message']->created_at->diffForHumans() }}</small>
+                            <small
+                                class="text-muted">{{ $conversation['latest_message']->created_at->diffForHumans() }}</small>
                         </div>
                         <p class="mb-1 text-muted">
-                            @if($conversation['latest_message']->sender_id === auth()->id())
+                            @if ($conversation['latest_message']->sender_id === auth()->id())
                                 <strong>You:</strong>
                             @endif
-                            {{ Str::limit($conversation['latest_message']->content, 80) }}
+                            {{ \Illuminate\Support\Str::limit($conversation['latest_message']->content, 80) }}
                         </p>
                     </a>
                 @endforeach
