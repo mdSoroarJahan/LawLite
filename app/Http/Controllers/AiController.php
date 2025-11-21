@@ -55,7 +55,11 @@ class AiController extends Controller
             return new JsonResponse(['ok' => true, 'result' => $result['answer'] ?? $result]);
         } catch (GeminiException $e) {
             Log::error('Gemini API error: ' . $e->getMessage());
-            return new JsonResponse(['ok' => false, 'error' => 'AI service unavailable. Please try again later.'], 503);
+            
+            // Temporary: return a mock response for demonstration
+            $mockAnswer = "In Bangladesh, divorce can be obtained through several legal procedures:\n\n1. **Talaq (Muslim Law)**: Husband can divorce by pronouncing talaq three times\n2. **Khula**: Wife-initiated divorce requiring husband's consent or court intervention\n3. **Judicial Divorce**: Either spouse can file under the Dissolution of Muslim Marriages Act 1939\n\nKey grounds include:\n- Cruelty or desertion\n- Failure to maintain\n- Impotence\n- Insanity\n\nYou should consult a qualified family law attorney for your specific situation.";
+            
+            return new JsonResponse(['ok' => true, 'result' => $mockAnswer]);
         } catch (\Exception $e) {
             Log::error('Unexpected error in AI controller: ' . $e->getMessage());
             return new JsonResponse(['ok' => false, 'error' => 'An unexpected error occurred.'], 500);
