@@ -14,8 +14,8 @@ class LawyerController extends Controller
      */
     public function index(Request $request): View|ViewFactory
     {
-        // Show seeded lawyers; if none, show an empty collection
-        $lawyers = Lawyer::limit(20)->get();
+        // Load lawyers with their user relationship
+        $lawyers = Lawyer::with('user')->limit(20)->get();
         return view('lawyers.index', compact('lawyers'));
     }
 
@@ -24,7 +24,7 @@ class LawyerController extends Controller
      */
     public function show(int $id): View|ViewFactory
     {
-        $lawyer = Lawyer::findOrFail($id);
+        $lawyer = Lawyer::with('user')->findOrFail($id);
         return view('lawyers.show', compact('lawyer'));
     }
 }

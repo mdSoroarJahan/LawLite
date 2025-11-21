@@ -8,7 +8,7 @@
                 <p class="text-muted"><?php echo e($lawyer->specialty ?? 'General practice'); ?></p>
                 <p>Location: <?php echo e($lawyer->city ?? 'Unknown'); ?></p>
                 <?php if(auth()->guard()->check()): ?>
-                    <button class="btn btn-primary" onclick="alert('Chat feature coming soon!')">Message</button>
+                    <button class="btn btn-primary" onclick="openChatWith(<?php echo e($lawyer->user_id ?? 0); ?>)">Message</button>
                     <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#appointmentModal"
                         data-lawyer-id="<?php echo e($lawyer->id); ?>" data-lawyer-name="<?php echo e($lawyer->name ?? 'Lawyer'); ?>">Book
                         appointment</button>

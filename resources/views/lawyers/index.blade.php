@@ -14,8 +14,8 @@
                 <div class="col-md-4 mb-4">
                     <div class="card h-100 shadow-sm">
                         <div class="card-body">
-                            <h5 class="card-title">{{ $lawyer->name ?? 'Unnamed Lawyer' }}</h5>
-                            <p class="card-text text-muted">{{ $lawyer->specialty ?? 'General Practice' }}</p>
+                            <h5 class="card-title">{{ $lawyer->user->name ?? 'Unnamed Lawyer' }}</h5>
+                            <p class="card-text text-muted">{{ $lawyer->expertise ?? 'General Practice' }}</p>
                             <p class="mb-1"><small class="text-muted">Location: {{ $lawyer->city ?? 'Unknown' }}</small>
                             </p>
                             <a href="{{ route('lawyers.show', $lawyer->id) }}"
