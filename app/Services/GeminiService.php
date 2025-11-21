@@ -79,7 +79,7 @@ class GeminiService
             ]
         ];
 
-        $response = $this->request('POST', "models/gemini-pro:generateContent?key={$this->apiKey}", [
+        $response = $this->request('POST', "models/gemini-1.5-flash:generateContent?key={$this->apiKey}", [
             'json' => $payload,
         ]);
 
