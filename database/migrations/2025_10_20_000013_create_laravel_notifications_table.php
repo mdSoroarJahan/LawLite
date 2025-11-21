@@ -8,7 +8,8 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('laravel_notifications', function (Blueprint $table) {
+        Schema::dropIfExists('notifications');
+        Schema::create('notifications', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('type');
             $table->morphs('notifiable');
@@ -20,6 +21,6 @@ return new class extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('laravel_notifications');
+        Schema::dropIfExists('notifications');
     }
 };

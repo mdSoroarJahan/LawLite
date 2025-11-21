@@ -23,7 +23,8 @@
                         </div>
                         <p class="mb-1">{{ $notification->data['message'] ?? 'You have a new notification' }}</p>
                         @if (!$notification->read_at)
-                            <form method="POST" action="{{ route('notifications.mark-read', $notification->id) }}" class="d-inline">
+                            <form method="POST" action="{{ route('notifications.mark-read', $notification->id) }}"
+                                class="d-inline">
                                 @csrf
                                 <button type="submit" class="btn btn-sm btn-link p-0">Mark as read</button>
                             </form>

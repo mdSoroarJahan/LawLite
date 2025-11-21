@@ -8,6 +8,24 @@
                 <p class="text-muted">Latest legal articles and guides.</p>
             </div>
         </div>
+
+        <!-- Search Bar -->
+        <div class="row mb-4">
+            <div class="col-md-8 mx-auto">
+                <form method="GET" action="{{ route('articles.index') }}">
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control" 
+                               placeholder="Search articles by title or content..." 
+                               value="{{ request('search') }}">
+                        <button type="submit" class="btn btn-primary">{{ __('messages.search') }}</button>
+                        @if(request('search'))
+                            <a href="{{ route('articles.index') }}" class="btn btn-secondary">Clear</a>
+                        @endif
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <div class="row">
             @forelse($articles as $article)
                 <div class="col-md-6 mb-4">

@@ -9,6 +9,23 @@
             </div>
         </div>
 
+        <!-- Search Bar -->
+        <div class="row mb-4">
+            <div class="col-md-8 mx-auto">
+                <form method="GET" action="{{ route('lawyers.index') }}">
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control" 
+                               placeholder="Search by name, expertise, or city..." 
+                               value="{{ request('search') }}">
+                        <button type="submit" class="btn btn-primary">{{ __('messages.search') }}</button>
+                        @if(request('search'))
+                            <a href="{{ route('lawyers.index') }}" class="btn btn-secondary">Clear</a>
+                        @endif
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <div class="row">
             @forelse($lawyers as $lawyer)
                 <div class="col-md-4 mb-4">

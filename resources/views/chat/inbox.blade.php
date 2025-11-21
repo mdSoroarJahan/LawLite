@@ -4,6 +4,23 @@
     <div class="container py-4">
         <h1 class="mb-4">{{ __('messages.messages') }}</h1>
 
+        <!-- Search Bar -->
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <form method="GET" action="{{ route('messages.inbox') }}">
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control" 
+                               placeholder="Search conversations by name..." 
+                               value="{{ request('search') }}">
+                        <button type="submit" class="btn btn-primary">{{ __('messages.search') }}</button>
+                        @if(request('search'))
+                            <a href="{{ route('messages.inbox') }}" class="btn btn-secondary">Clear</a>
+                        @endif
+                    </div>
+                </form>
+            </div>
+        </div>
+
         @if ($conversations->isEmpty())
             <div class="alert alert-info">
                 <p class="mb-0">{{ __('messages.no_messages') }}</p>

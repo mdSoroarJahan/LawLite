@@ -15,7 +15,7 @@ class NotificationsController extends Controller
     public function index(Request $request): View
     {
         $user = $request->user();
-        
+
         if (!$user) {
             return redirect()->route('login');
         }
@@ -24,7 +24,7 @@ class NotificationsController extends Controller
 
         return view('notifications.index', compact('notifications'));
     }
-    
+
     /**
      * Get notifications as JSON
      */
@@ -53,7 +53,7 @@ class NotificationsController extends Controller
 
         return back()->with('success', 'Notification marked as read');
     }
-    
+
     /**
      * Mark all notifications as read
      */

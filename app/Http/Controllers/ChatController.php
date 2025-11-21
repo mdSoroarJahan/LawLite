@@ -87,6 +87,8 @@ class ChatController extends Controller
             abort(401, 'Unauthenticated');
         }
 
+        $search = $request->input('search');
+
         // Get all unique conversation partners
         $conversations = Message::query()
             ->where('sender_id', $user->id)
@@ -109,6 +111,14 @@ class ChatController extends Controller
                     'unread_count' => $unreadCount,
                 ];
             });
+
+        // Filter by search term if provided
+        if ($search) {
+            $conversations = $conversations->filter(function($conversation) use ($search) {
+                return $conversation['partner'] && 
+                       stripos($conversation['partner']->name, $search) !== false;
+            });
+        }
 
         return view('chat.inbox', compact('conversations'));
     }

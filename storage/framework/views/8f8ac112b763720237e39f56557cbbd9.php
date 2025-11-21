@@ -50,8 +50,8 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-end">
-                            <a class="dropdown-item" href="#"><?php echo e(__('messages.profile')); ?></a>
-                            <a class="dropdown-item" href="#">Notifications</a>
+                            <a class="dropdown-item" href="<?php echo e(route('profile.show')); ?>"><?php echo e(__('messages.profile')); ?></a>
+                            <a class="dropdown-item" href="<?php echo e(route('notifications.index')); ?>">Notifications</a>
                             <div class="dropdown-divider"></div>
                             <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" class="px-3 py-1">
                                 <?php echo csrf_field(); ?>
