@@ -79,8 +79,8 @@ class GeminiService
             ]
         ];
 
-        // Use full URL since Guzzle base_uri isn't working correctly
-        $fullUrl = rtrim($this->baseUrl, '/') . "/models/gemini-1.5-flash:generateContent?key={$this->apiKey}";
+        // Use correct Google AI API format
+        $fullUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key={$this->apiKey}";
         $response = $this->request('POST', $fullUrl, [
             'json' => $payload,
         ]);
