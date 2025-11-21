@@ -61,15 +61,32 @@ class GeminiService
     public function askQuestion(string $question, ?string $language = null): ?array
     {
         $language = $language ?? config('gemini.default_language', 'en');
+        
+        // Build the prompt with language preference
+        $prompt = $language === 'bn' 
+            ? "আপনি একজন বাংলাদেশী আইন বিশেষজ্ঞ। নিম্নলিখিত প্রশ্নের উত্তর দিন:\n\n{$question}"
+            : "You are a legal expert in Bangladesh law. Answer the following question concisely:\n\n{$question}";
 
         $payload = [
-            'question' => $question,
-            'language' => $language,
+            'contents' => [
+                [
+                    'parts' => [
+                        ['text' => $prompt]
+                    ]
+                ]
+            ]
         ];
 
-        return $this->request('POST', '/ask', [
+        $response = $this->request('POST', "/models/gemini-pro:generateContent?key={$this->apiKey}", [
             'json' => $payload,
         ]);
+        
+        // Extract text from Google's response format
+        if (isset($response['candidates'][0]['content']['parts'][0]['text'])) {
+            return ['answer' => $response['candidates'][0]['content']['parts'][0]['text']];
+        }
+        
+        return $response;
     }
 
     /**
@@ -119,10 +136,9 @@ class GeminiService
         $attempts = 0;
         $lastEx = null;
 
-        // prepare headers including Authorization
+        // prepare headers (Google Gemini uses API key in URL, not Authorization header)
         $headers = (array) Arr::get($options, 'headers', []);
         $headers = array_merge($headers, [
-            'Authorization' => 'Bearer ' . $this->apiKey,
             'Accept' => 'application/json',
             'Content-Type' => 'application/json',
         ]);

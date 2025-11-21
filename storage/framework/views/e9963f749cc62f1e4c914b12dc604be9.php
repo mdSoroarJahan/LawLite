@@ -82,6 +82,7 @@
             console.warn('Echo/Pusher not configured', e);
         }
     </script>
+    <?php echo $__env->yieldPushContent('scripts'); ?>
 </body>
 
 </html>

@@ -36,22 +36,31 @@ class AiController extends Controller
         $question = strval($data['question']);
         $language = $data['language'] ?? 'en';
 
-        $result = $this->gemini->askQuestion($question, $language);
-
-        // persist to ai_queries table
         try {
-            $ai = AiQuery::create([
-                'user_id' => $request->user() ? $request->user()->id : null,
-                'question' => $data['question'],
-                'answer' => json_encode($result),
-                'language' => $language,
-                'metadata' => null,
-            ]);
-        } catch (\Exception $e) {
-            Log::error('Failed to save AI query: ' . $e->getMessage());
-        }
+            $result = $this->gemini->askQuestion($question, $language);
 
-        return new JsonResponse(['ok' => true, 'result' => $result]);
+            // persist to ai_queries table
+            try {
+                $ai = AiQuery::create([
+                    'user_id' => $request->user() ? $request->user()->id : null,
+                    'question' => $data['question'],
+                    'answer' => json_encode($result),
+                    'language' => $language,
+                    'metadata' => null,
+                ]);
+            } catch (\Exception $e) {
+                Log::error('Failed to save AI query: ' . $e->getMessage());
+            }
+
+            return new JsonResponse(['ok' => true, 'result' => $result['answer'] ?? $result]);
+        } catch (GeminiException $e) {
+            Log::error('Gemini API error: ' . $e->getMessage());
+            return new JsonResponse(['ok' => false, 'error' => 'AI service unavailable. Please try again later.'], 503);
+        } catch (\Exception $e) {
+            Log::error('Unexpected error in AI controller: ' . $e->getMessage());
+            return new JsonResponse(['ok' => false, 'error' => 'An unexpected error occurred.'], 500);
+        }
+    }
     }
 
     /**

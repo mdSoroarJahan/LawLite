@@ -27,12 +27,26 @@
                         </div>
                     <?php endif; ?>
                 </div>
-                <div class="col-lg-5 d-none d-lg-block">
+                <div class="col-lg-5 mt-4 mt-lg-0">
                     <div class="card card-ghost p-4">
                         <h5 class="mb-3">AI Assistant</h5>
-                        <p class="small-muted">Ask legal questions in natural language and get concise summaries and next
-                            steps.</p>
-                        <hr>
+                        <p class="small-muted mb-3">Ask legal questions in natural language and get concise summaries and
+                            next steps.</p>
+
+                        <form action="<?php echo e(route('ai.ask')); ?>" method="POST" id="aiQuestionForm">
+                            <?php echo csrf_field(); ?>
+                            <div class="mb-3">
+                                <textarea name="question" class="form-control" rows="3"
+                                    placeholder="e.g., What are the requirements for filing a divorce in Bangladesh?" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-sm w-100">Ask AI</button>
+                        </form>
+
+                        <div id="aiResponse" class="mt-3" style="display:none;">
+                            <div class="alert alert-info"></div>
+                        </div>
+
+                        <hr class="my-3">
                         <h6 class="mb-1">Featured lawyers</h6>
                         <?php
                             $sample = (object) [
@@ -82,5 +96,58 @@
         </div>
     </section>
 <?php $__env->stopSection(); ?>
+
+<?php $__env->startPush('scripts'); ?>
+    <script>
+        document.getElementById('aiQuestionForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const form = e.target;
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const responseDiv = document.getElementById('aiResponse');
+            const responseAlert = responseDiv.querySelector('.alert');
+
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Processing...';
+            responseDiv.style.display = 'block';
+            responseAlert.className = 'alert alert-info';
+            responseAlert.textContent = 'Thinking...';
+
+            try {
+                const formData = new FormData(form);
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json'
+                    },
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.ok) {
+                    responseAlert.className = 'alert alert-success';
+                    // Handle different result formats
+                    const answer = typeof data.result === 'string' ? data.result : JSON.stringify(data.result,
+                        null, 2);
+                    responseAlert.innerHTML =
+                        '<strong>Answer:</strong><br><div style="white-space: pre-wrap;">' + answer + '</div>';
+                } else {
+                    responseAlert.className = 'alert alert-danger';
+                    responseAlert.textContent = data.error || data.message ||
+                        'An error occurred. Please try again.';
+                }
+            } catch (error) {
+                responseAlert.className = 'alert alert-danger';
+                responseAlert.textContent = 'Network error. Please check your connection and try again.';
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Ask AI';
+            }
+        });
+    </script>
+<?php $__env->stopPush(); ?>
 
 <?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH F:\Defence\LawLite\resources\views/welcome.blade.php ENDPATH**/ ?>
