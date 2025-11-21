@@ -47,7 +47,9 @@ class GeminiService
         }
         $this->retries = intval($cfg);
 
-        $this->client = $client ?? new Client(['base_uri' => $this->baseUrl, 'timeout' => $this->timeout]);
+        // Ensure base_uri ends with / for proper Guzzle path joining
+        $baseUri = rtrim($this->baseUrl, '/') . '/';
+        $this->client = $client ?? new Client(['base_uri' => $baseUri, 'timeout' => $this->timeout]);
     }
 
     /**
