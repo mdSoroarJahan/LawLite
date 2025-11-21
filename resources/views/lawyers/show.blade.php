@@ -8,7 +8,7 @@
                 <p class="text-muted">{{ $lawyer->specialty ?? 'General practice' }}</p>
                 <p>Location: {{ $lawyer->city ?? 'Unknown' }}</p>
                 @auth
-                    <button class="btn btn-primary" onclick="alert('Chat feature coming soon!')">Message</button>
+                    <button class="btn btn-primary" onclick="openChatWith({{ $lawyer->user_id ?? 0 }})">Message</button>
                     <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#appointmentModal"
                         data-lawyer-id="{{ $lawyer->id }}" data-lawyer-name="{{ $lawyer->name ?? 'Lawyer' }}">Book
                         appointment</button>
