@@ -79,8 +79,8 @@ class GeminiService
             ]
         ];
 
-        // Use correct Google AI API format
-        $fullUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key={$this->apiKey}";
+        // Use v1 endpoint with correct model name
+        $fullUrl = "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key={$this->apiKey}";
         $response = $this->request('POST', $fullUrl, [
             'json' => $payload,
         ]);
