@@ -79,7 +79,9 @@ class GeminiService
             ]
         ];
 
-        $response = $this->request('POST', "models/gemini-1.5-flash:generateContent?key={$this->apiKey}", [
+        // Use full URL since Guzzle base_uri isn't working correctly
+        $fullUrl = rtrim($this->baseUrl, '/') . "/models/gemini-1.5-flash:generateContent?key={$this->apiKey}";
+        $response = $this->request('POST', $fullUrl, [
             'json' => $payload,
         ]);
 
