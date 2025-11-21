@@ -7,8 +7,15 @@
                 <h1>{{ $lawyer->name ?? 'Lawyer' }}</h1>
                 <p class="text-muted">{{ $lawyer->specialty ?? 'General practice' }}</p>
                 <p>Location: {{ $lawyer->city ?? 'Unknown' }}</p>
-                <a href="#" class="btn btn-primary">Message</a>
-                <a href="#" class="btn btn-outline-secondary">Book appointment</a>
+                @auth
+                    <button class="btn btn-primary" onclick="alert('Chat feature coming soon!')">Message</button>
+                    <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#appointmentModal"
+                        data-lawyer-id="{{ $lawyer->id }}" data-lawyer-name="{{ $lawyer->name ?? 'Lawyer' }}">Book
+                        appointment</button>
+                @else
+                    <a href="{{ route('login') }}" class="btn btn-primary">Sign in to Message</a>
+                    <a href="{{ route('login') }}" class="btn btn-outline-secondary">Sign in to Book</a>
+                @endauth
             </div>
         </div>
     </div>

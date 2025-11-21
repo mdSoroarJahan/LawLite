@@ -25,7 +25,8 @@
                             <td>
                                 <?php if(is_array($l->documents) && count($l->documents)): ?>
                                     <?php $__currentLoopData = $l->documents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $doc): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <div><a href="<?php echo e(\Illuminate\Support\Facades\Storage::url($doc)); ?>" target="_blank"><?php echo e(basename($doc)); ?></a></div>
+                                        <div><a href="<?php echo e(\Illuminate\Support\Facades\Storage::url($doc)); ?>"
+                                                target="_blank"><?php echo e(basename($doc)); ?></a></div>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 <?php else: ?>
                                     —

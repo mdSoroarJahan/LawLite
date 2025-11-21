@@ -21,6 +21,7 @@ class EndToEndVerificationFlowTest extends TestCase
 
         // Create a lawyer user (simulate registered lawyer)
         $lawyerUser = User::factory()->create(['role' => 'lawyer']);
+        /** @var \App\Models\User $lawyerUser */
 
         // Lawyer uploads documents via profile edit
         $file1 = UploadedFile::fake()->create('license.pdf', 120, 'application/pdf');
@@ -47,6 +48,7 @@ class EndToEndVerificationFlowTest extends TestCase
 
         // Admin reviews and approves
         $admin = User::factory()->create(['role' => 'admin']);
+        /** @var \App\Models\User $admin */
 
         $this->actingAs($admin)
             ->get(route('admin.verification.index'))

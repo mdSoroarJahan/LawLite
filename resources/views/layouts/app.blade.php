@@ -82,6 +82,7 @@
             console.warn('Echo/Pusher not configured', e);
         }
     </script>
+    @stack('scripts')
 </body>
 
 </html>

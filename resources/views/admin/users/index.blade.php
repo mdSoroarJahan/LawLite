@@ -30,6 +30,7 @@
                     <th>Created</th>
                     <th>Actions</th>
                 </tr>
+            </thead>
             <tbody>
                 @foreach ($users as $u)
                     <tr>
@@ -48,36 +49,6 @@
                                 <button class="btn btn-sm btn-outline-danger">Delete</button>
                             </form>
                         </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-        {{ $users->links() }}
-    </div>
-@endsection
-@extends('layouts.app')
-
-@section('content')
-    <div class="container py-6">
-        <h1>Users</h1>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Role</th>
-                    <th>Created</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($users as $u)
-                    <tr>
-                        <td>{{ $u->id }}</td>
-                        <td>{{ $u->name }}</td>
-                        <td>{{ $u->email }}</td>
-                        <td>{{ $u->role }}</td>
-                        <td>{{ $u->created_at->format('Y-m-d') }}</td>
                     </tr>
                 @endforeach
             </tbody>

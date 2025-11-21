@@ -21,7 +21,9 @@ class AdminVerificationTest extends TestCase
         Storage::disk('public')->put('lawyer_documents/sample.pdf', 'dummy');
 
         $admin = User::factory()->create(['role' => 'admin']);
+        /** @var \App\Models\User $admin */
         $user = User::factory()->create(['role' => 'lawyer']);
+        /** @var \App\Models\User $user */
         $lawyer = Lawyer::factory()->create([
             'user_id' => $user->id,
             'verification_status' => 'requested',
@@ -45,6 +47,7 @@ class AdminVerificationTest extends TestCase
     public function test_non_admin_cannot_access_verification_page()
     {
         $user = User::factory()->create(['role' => 'user']);
+        /** @var \App\Models\User $user */
 
         $this->actingAs($user)
             ->get(route('admin.verification.index'))

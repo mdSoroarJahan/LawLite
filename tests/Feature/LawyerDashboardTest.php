@@ -16,6 +16,7 @@ class LawyerDashboardTest extends TestCase
         $this->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);
         // Create a user with role lawyer
         $user = User::factory()->create(['role' => 'lawyer']);
+        /** @var \App\Models\User $user */
         // Ensure no lawyer row exists yet
         $this->assertDatabaseMissing('lawyers', ['user_id' => $user->id]);
 
@@ -30,6 +31,7 @@ class LawyerDashboardTest extends TestCase
     {
         $this->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);
         $user = User::factory()->create(['role' => 'user']);
+        /** @var \App\Models\User $user */
 
         $this->actingAs($user)
             ->post(route('lawyer.request.verification'))

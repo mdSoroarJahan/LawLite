@@ -20,6 +20,7 @@ class LawyerProfileUploadTest extends TestCase
         Storage::fake('public');
 
         $user = User::factory()->create(['role' => 'lawyer']);
+        /** @var \App\Models\User $user */
 
         $file1 = UploadedFile::fake()->create('license.pdf', 100, 'application/pdf');
         $file2 = UploadedFile::fake()->create('nid.jpg', 150, 'image/jpeg');
@@ -38,15 +39,19 @@ class LawyerProfileUploadTest extends TestCase
         $this->assertCount(2, $lawyer->documents);
 
         // Ensure files were stored on the public disk
+        $publicDisk = Storage::disk('public');
         foreach ($lawyer->documents as $path) {
-            Storage::disk('public')->assertExists($path);
+            /** @var \Illuminate\Filesystem\FilesystemAdapter $publicDisk */
+            $this->assertTrue($publicDisk->exists($path), "File {$path} should exist on public disk");
         }
     }
 
     public function test_admin_sees_uploaded_documents_in_verification_list()
     {
         $admin = User::factory()->create(['role' => 'admin']);
+        /** @var \App\Models\User $admin */
         $user = User::factory()->create(['role' => 'lawyer']);
+        /** @var \App\Models\User $user */
 
         Storage::fake('public');
         // Put a fake file so Storage::url will resolve

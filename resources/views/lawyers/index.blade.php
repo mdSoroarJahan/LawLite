@@ -18,7 +18,8 @@
                             <p class="card-text text-muted">{{ $lawyer->specialty ?? 'General Practice' }}</p>
                             <p class="mb-1"><small class="text-muted">Location: {{ $lawyer->city ?? 'Unknown' }}</small>
                             </p>
-                            <a href="#" class="btn btn-sm btn-outline-primary mt-2">View profile</a>
+                            <a href="{{ route('lawyers.show', $lawyer->id) }}"
+                                class="btn btn-sm btn-outline-primary mt-2">View profile</a>
                         </div>
                     </div>
                 </div>

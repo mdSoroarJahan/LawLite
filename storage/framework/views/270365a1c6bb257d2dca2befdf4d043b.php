@@ -10,10 +10,23 @@
                         profile, availability).</p>
 
                     <div class="mt-3 d-flex gap-2 flex-wrap">
-                        <a href="<?php echo e(route('profile.show')); ?>" class="btn btn-outline-primary">Edit Profile</a>
+                        <a href="<?php echo e(route('lawyer.profile.edit')); ?>" class="btn btn-outline-primary">Edit Profile</a>
                         <a href="<?php echo e(route('lawyers.index')); ?>" class="btn btn-outline-secondary">View Public Listings</a>
-                        <a href="#" class="btn btn-outline-success">Manage Appointments</a>
-                        <a href="#" class="btn btn-outline-warning">Verification Status</a>
+                        <a href="<?php echo e(route('lawyer.appointments')); ?>" class="btn btn-outline-success">Manage Appointments</a>
+                    </div>
+
+                    <div class="mt-4">
+                        <h6>Verification</h6>
+                        <p class="small-muted">Status:
+                            <strong><?php echo e(optional($user->lawyer)->verification_status ?? 'not requested'); ?></strong></p>
+                        <?php if((optional($user->lawyer)->verification_status ?? null) !== 'verified'): ?>
+                            <form method="POST" action="<?php echo e(route('lawyer.request.verification')); ?>">
+                                <?php echo csrf_field(); ?>
+                                <button class="btn btn-sm btn-warning">Request verification</button>
+                            </form>
+                        <?php else: ?>
+                            <div class="text-success small">Your account is verified.</div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
