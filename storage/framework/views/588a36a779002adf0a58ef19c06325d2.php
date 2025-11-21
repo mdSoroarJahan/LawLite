@@ -5,41 +5,46 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-7">
-                    <h1 class="display-5 fw-bold">Legal help, simplified — in Bangla & English</h1>
-                    <p class="lead small-muted">Connect with verified lawyers, get fast AI-powered summaries, and manage
-                        appointments — all in one modern, secure app.</p>
+                    <h1 class="display-5 fw-bold"><?php echo e(__('messages.welcome_title')); ?></h1>
+                    <p class="lead small-muted"><?php echo e(__('messages.welcome_subtitle')); ?></p>
 
                     <?php if(auth()->guard()->guest()): ?>
                         <div class="mt-4 d-flex gap-2">
-                            <a href="<?php echo e(route('lawyers.index')); ?>" class="btn btn-lg btn-primary me-2">Find a Lawyer</a>
-                            <a href="<?php echo e(route('login')); ?>" class="btn btn-lg btn-outline-secondary">Sign in</a>
+                            <a href="<?php echo e(route('lawyers.index')); ?>"
+                                class="btn btn-lg btn-primary me-2"><?php echo e(__('messages.find_lawyers')); ?></a>
+                            <a href="<?php echo e(route('login')); ?>"
+                                class="btn btn-lg btn-outline-secondary"><?php echo e(__('messages.login')); ?></a>
                         </div>
                     <?php else: ?>
                         <div class="mt-4 d-flex gap-2">
-                            <a href="<?php echo e(route('lawyers.index')); ?>" class="btn btn-lg btn-primary me-2">Browse Lawyers</a>
+                            <a href="<?php echo e(route('lawyers.index')); ?>"
+                                class="btn btn-lg btn-primary me-2"><?php echo e(__('messages.find_lawyers')); ?></a>
                             <?php if(Auth::user()->role === 'lawyer'): ?>
-                                <a href="<?php echo e(route('lawyer.dashboard')); ?>" class="btn btn-lg btn-accent">My Dashboard</a>
+                                <a href="<?php echo e(route('lawyer.dashboard')); ?>"
+                                    class="btn btn-lg btn-accent"><?php echo e(__('messages.dashboard')); ?></a>
                             <?php elseif(Auth::user()->role === 'admin'): ?>
-                                <a href="<?php echo e(route('admin.dashboard')); ?>" class="btn btn-lg btn-accent">Admin Panel</a>
+                                <a href="<?php echo e(route('admin.dashboard')); ?>"
+                                    class="btn btn-lg btn-accent"><?php echo e(__('messages.admin_panel')); ?></a>
                             <?php else: ?>
-                                <a href="<?php echo e(route('appointments.index')); ?>" class="btn btn-lg btn-accent">My Appointments</a>
+                                <a href="<?php echo e(route('appointments.index')); ?>" class="btn btn-lg btn-accent">Appointments</a>
                             <?php endif; ?>
                         </div>
                     <?php endif; ?>
                 </div>
                 <div class="col-lg-5 mt-4 mt-lg-0">
                     <div class="card card-ghost p-4">
-                        <h5 class="mb-3">AI Assistant</h5>
+                        <h5 class="mb-3"><?php echo e(__('messages.ai_assistant')); ?></h5>
                         <p class="small-muted mb-3">Ask legal questions in natural language and get concise summaries and
                             next steps.</p>
 
                         <form action="<?php echo e(route('ai.ask')); ?>" method="POST" id="aiQuestionForm">
                             <?php echo csrf_field(); ?>
                             <div class="mb-3">
-                                <textarea name="question" class="form-control" rows="3"
-                                    placeholder="e.g., What are the requirements for filing a divorce in Bangladesh?" required></textarea>
+                                <textarea name="question" class="form-control" rows="3" placeholder="<?php echo e(__('messages.ai_placeholder')); ?>"
+                                    required></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-sm w-100">Ask AI</button>
+                            <button type="submit"
+                                class="btn btn-primary btn-sm w-100"><?php echo e(__('messages.ai_submit')); ?></button>
                         </form>
 
                         <div id="aiResponse" class="mt-3" style="display:none;">
@@ -70,25 +75,24 @@
                 <div class="col-md-4">
                     <a href="<?php echo e(route('lawyers.index')); ?>" class="text-decoration-none">
                         <div class="card p-4 h-100 card-ghost">
-                            <h5>Verified Lawyers</h5>
-                            <p class="small-muted mb-0">All professionals are vetted — find the right expertise quickly.</p>
+                            <h5><?php echo e(__('messages.find_lawyers_title')); ?></h5>
+                            <p class="small-muted mb-0"><?php echo e(__('messages.find_lawyers_desc')); ?></p>
                         </div>
                     </a>
                 </div>
                 <div class="col-md-4">
                     <a href="<?php echo e(route('articles.index')); ?>" class="text-decoration-none">
                         <div class="card p-4 h-100 card-ghost">
-                            <h5>AI Summaries</h5>
-                            <p class="small-muted mb-0">Short, bilingual summaries of legal text and contracts to speed
-                                decisions.</p>
+                            <h5><?php echo e(__('messages.legal_advice_title')); ?></h5>
+                            <p class="small-muted mb-0"><?php echo e(__('messages.legal_advice_desc')); ?></p>
                         </div>
                     </a>
                 </div>
                 <div class="col-md-4">
                     <a href="<?php echo e(route('appointments.index')); ?>" class="text-decoration-none">
                         <div class="card p-4 h-100 card-ghost">
-                            <h5>Secure Appointments</h5>
-                            <p class="small-muted mb-0">Book and manage consultations with calendar sync and reminders.</p>
+                            <h5><?php echo e(__('messages.book_appointment_title')); ?></h5>
+                            <p class="small-muted mb-0"><?php echo e(__('messages.book_appointment_desc')); ?></p>
                         </div>
                     </a>
                 </div>

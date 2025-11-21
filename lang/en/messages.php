@@ -12,13 +12,13 @@ return [
     'dashboard' => 'Dashboard',
     'messages' => 'Messages',
     'profile' => 'Profile',
-    
+
     // Welcome Page
     'welcome_title' => 'Legal Assistance Made Simple',
     'welcome_subtitle' => 'Connect with experienced lawyers and get the legal help you need',
     'get_started' => 'Get Started',
     'learn_more' => 'Learn More',
-    
+
     // Features
     'features' => 'Features',
     'find_lawyers_title' => 'Find Lawyers',
@@ -29,12 +29,12 @@ return [
     'document_help_desc' => 'Help with legal documents and paperwork',
     'book_appointment_title' => 'Book Appointment',
     'book_appointment_desc' => 'Schedule meetings with lawyers',
-    
+
     // AI Assistant
     'ai_assistant' => 'AI Legal Assistant',
     'ai_placeholder' => 'Ask a legal question...',
     'ai_submit' => 'Ask',
-    
+
     // Auth
     'email' => 'Email',
     'password' => 'Password',
@@ -47,7 +47,7 @@ return [
     'lawyer' => 'Lawyer',
     'already_account' => 'Already have an account?',
     'no_account' => "Don't have an account?",
-    
+
     // Lawyer
     'expertise' => 'Expertise',
     'city' => 'City',
@@ -61,20 +61,20 @@ return [
     'edit_profile' => 'Edit Profile',
     'upload_documents' => 'Upload Documents',
     'request_verification' => 'Request Verification',
-    
+
     // Admin
     'admin_panel' => 'Admin Panel',
     'users' => 'Users',
     'verify_lawyers' => 'Verify Lawyers',
     'approve' => 'Approve',
     'reject' => 'Reject',
-    
+
     // Chat
     'chat' => 'Chat',
     'send' => 'Send',
     'type_message' => 'Type a message...',
     'no_messages' => 'No messages yet. Start a conversation by messaging a lawyer from their profile.',
-    
+
     // Common
     'save' => 'Save',
     'cancel' => 'Cancel',

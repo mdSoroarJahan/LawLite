@@ -16,16 +16,16 @@ class SetLocale
     public function handle(Request $request, Closure $next): Response
     {
         $locale = session('locale', config('app.locale'));
-        
+
         if ($request->has('lang')) {
             $locale = $request->get('lang');
             if (in_array($locale, ['en', 'bn'])) {
                 session(['locale' => $locale]);
             }
         }
-        
+
         app()->setLocale($locale);
-        
+
         return $next($request);
     }
 }

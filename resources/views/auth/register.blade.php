@@ -36,9 +36,11 @@
                         <div class="mb-3">
                             <label>{{ __('messages.register_as') }}</label>
                             <select name="role" class="form-select">
-                                <option value="user" @if (old('role', 'user') === 'user') selected @endif>{{ __('messages.user') }}
+                                <option value="user" @if (old('role', 'user') === 'user') selected @endif>
+                                    {{ __('messages.user') }}
                                 </option>
-                                <option value="lawyer" @if (old('role') === 'lawyer') selected @endif>{{ __('messages.lawyer') }}
+                                <option value="lawyer" @if (old('role') === 'lawyer') selected @endif>
+                                    {{ __('messages.lawyer') }}
                                 </option>
                             </select>
                             <div class="form-text">If you are a practicing lawyer, choose "Register as Lawyer". Lawyers will

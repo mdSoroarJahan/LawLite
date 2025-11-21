@@ -10,16 +10,21 @@
 
                     @guest
                         <div class="mt-4 d-flex gap-2">
-                            <a href="{{ route('lawyers.index') }}" class="btn btn-lg btn-primary me-2">{{ __('messages.find_lawyers') }}</a>
-                            <a href="{{ route('login') }}" class="btn btn-lg btn-outline-secondary">{{ __('messages.login') }}</a>
+                            <a href="{{ route('lawyers.index') }}"
+                                class="btn btn-lg btn-primary me-2">{{ __('messages.find_lawyers') }}</a>
+                            <a href="{{ route('login') }}"
+                                class="btn btn-lg btn-outline-secondary">{{ __('messages.login') }}</a>
                         </div>
                     @else
                         <div class="mt-4 d-flex gap-2">
-                            <a href="{{ route('lawyers.index') }}" class="btn btn-lg btn-primary me-2">{{ __('messages.find_lawyers') }}</a>
+                            <a href="{{ route('lawyers.index') }}"
+                                class="btn btn-lg btn-primary me-2">{{ __('messages.find_lawyers') }}</a>
                             @if (Auth::user()->role === 'lawyer')
-                                <a href="{{ route('lawyer.dashboard') }}" class="btn btn-lg btn-accent">{{ __('messages.dashboard') }}</a>
+                                <a href="{{ route('lawyer.dashboard') }}"
+                                    class="btn btn-lg btn-accent">{{ __('messages.dashboard') }}</a>
                             @elseif(Auth::user()->role === 'admin')
-                                <a href="{{ route('admin.dashboard') }}" class="btn btn-lg btn-accent">{{ __('messages.admin_panel') }}</a>
+                                <a href="{{ route('admin.dashboard') }}"
+                                    class="btn btn-lg btn-accent">{{ __('messages.admin_panel') }}</a>
                             @else
                                 <a href="{{ route('appointments.index') }}" class="btn btn-lg btn-accent">Appointments</a>
                             @endif
@@ -35,10 +40,11 @@
                         <form action="{{ route('ai.ask') }}" method="POST" id="aiQuestionForm">
                             @csrf
                             <div class="mb-3">
-                                <textarea name="question" class="form-control" rows="3"
-                                    placeholder="{{ __('messages.ai_placeholder') }}" required></textarea>
+                                <textarea name="question" class="form-control" rows="3" placeholder="{{ __('messages.ai_placeholder') }}"
+                                    required></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-sm w-100">{{ __('messages.ai_submit') }}</button>
+                            <button type="submit"
+                                class="btn btn-primary btn-sm w-100">{{ __('messages.ai_submit') }}</button>
                         </form>
 
                         <div id="aiResponse" class="mt-3" style="display:none;">

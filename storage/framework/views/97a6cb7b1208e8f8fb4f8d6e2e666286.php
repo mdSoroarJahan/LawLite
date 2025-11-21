@@ -1,15 +1,15 @@
 <div id="chat-ui" class="card fixed-bottom m-3" style="width:350px;display:none;right:0;">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <strong>Chat</strong>
-        <button id="chat-close" class="btn btn-sm btn-secondary">X</button>
+        <strong><?php echo e(__('messages.chat')); ?></strong>
+        <button id="chat-close" class="btn btn-sm btn-secondary"><?php echo e(__('messages.close')); ?></button>
     </div>
     <div class="card-body" style="height:300px;overflow:auto;" id="chat-messages">
         <div class="text-muted">No conversation selected.</div>
     </div>
     <div class="card-footer">
         <div class="input-group">
-            <input id="chat-input" class="form-control" placeholder="Type a message...">
-            <button id="chat-send" class="btn btn-primary">Send</button>
+            <input id="chat-input" class="form-control" placeholder="<?php echo e(__('messages.type_message')); ?>">
+            <button id="chat-send" class="btn btn-primary"><?php echo e(__('messages.send')); ?></button>
         </div>
     </div>
 </div>

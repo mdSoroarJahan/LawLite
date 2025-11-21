@@ -1,0 +1,49 @@
+@extends('layouts.app')
+
+@section('content')
+    <div class="container py-4">
+        <h1 class="mb-4">Notifications</h1>
+
+        @if ($notifications->isEmpty())
+            <div class="alert alert-info">
+                <p class="mb-0">No notifications yet. We'll notify you about important updates.</p>
+            </div>
+        @else
+            <div class="list-group">
+                @foreach ($notifications as $notification)
+                    <div class="list-group-item {{ $notification->read_at ? '' : 'list-group-item-primary' }}">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6 class="mb-1">
+                                @if (!$notification->read_at)
+                                    <span class="badge bg-primary me-2">New</span>
+                                @endif
+                                {{ $notification->data['title'] ?? 'Notification' }}
+                            </h6>
+                            <small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
+                        </div>
+                        <p class="mb-1">{{ $notification->data['message'] ?? 'You have a new notification' }}</p>
+                        @if (!$notification->read_at)
+                            <form method="POST" action="{{ route('notifications.mark-read', $notification->id) }}" class="d-inline">
+                                @csrf
+                                <button type="submit" class="btn btn-sm btn-link p-0">Mark as read</button>
+                            </form>
+                        @endif
+                    </div>
+                @endforeach
+            </div>
+
+            <div class="mt-3">
+                {{ $notifications->links() }}
+            </div>
+
+            @if ($notifications->where('read_at', null)->count() > 0)
+                <div class="mt-3">
+                    <form method="POST" action="{{ route('notifications.mark-all-read') }}">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-secondary">Mark all as read</button>
+                    </form>
+                </div>
+            @endif
+        @endif
+    </div>
+@endsection

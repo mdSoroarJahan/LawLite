@@ -129,14 +129,16 @@ Route::get('/_debug/session', function (\Illuminate\Http\Request $request) {
     ]);
 });
 
-// Notification endpoints (AJAX)
-Route::middleware('auth')->get('/notifications', [NotificationsController::class, 'index']);
-Route::middleware('auth')->post('/notifications/mark-read', [NotificationsController::class, 'markRead']);
+// Notifications
+Route::middleware('auth')->get('/notifications', [NotificationsController::class, 'index'])->name('notifications.index');
+Route::middleware('auth')->get('/notifications/json', [NotificationsController::class, 'getJson'])->name('notifications.json');
+Route::middleware('auth')->post('/notifications/{id}/mark-read', [NotificationsController::class, 'markRead'])->name('notifications.mark-read');
+Route::middleware('auth')->post('/notifications/mark-all-read', [NotificationsController::class, 'markAllRead'])->name('notifications.mark-all-read');
 
 // User profile
-Route::middleware('auth')->get('/profile', function (\Illuminate\Http\Request $request) {
-    return view('profile.show', ['user' => $request->user()]);
-})->name('profile.show');
+Route::middleware('auth')->get('/profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
+Route::middleware('auth')->put('/profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+Route::middleware('auth')->put('/profile/password', [\App\Http\Controllers\ProfileController::class, 'updatePassword'])->name('profile.password.update');
 
 // Chat endpoints
 Route::middleware('auth')->get('/messages', [ChatController::class, 'inbox'])->name('messages.inbox');
