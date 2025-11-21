@@ -13,16 +13,16 @@ class ArticlesController extends Controller
     public function index(Request $request): View|ViewFactory
     {
         $search = $request->input('search');
-        
+
         $query = Article::latest();
-        
+
         if ($search) {
-            $query->where(function($q) use ($search) {
+            $query->where(function ($q) use ($search) {
                 $q->where('title', 'like', '%' . $search . '%')
-                  ->orWhere('body', 'like', '%' . $search . '%');
+                    ->orWhere('body', 'like', '%' . $search . '%');
             });
         }
-        
+
         $articles = $query->limit(50)->get();
         return view('articles.index', compact('articles'));
     }

@@ -6,13 +6,14 @@ use Illuminate\Http\Request;
 use App\Models\Notification as NavModel; // DB notifications table created earlier (custom)
 use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class NotificationsController extends Controller
 {
     /**
      * Show notifications page
      */
-    public function index(Request $request): View
+    public function index(Request $request): View|RedirectResponse
     {
         $user = $request->user();
 

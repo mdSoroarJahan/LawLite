@@ -14,11 +14,10 @@
             <div class="col-md-8 mx-auto">
                 <form method="GET" action="{{ route('articles.index') }}">
                     <div class="input-group">
-                        <input type="text" name="search" class="form-control" 
-                               placeholder="Search articles by title or content..." 
-                               value="{{ request('search') }}">
+                        <input type="text" name="search" class="form-control"
+                            placeholder="Search articles by title or content..." value="{{ request('search') }}">
                         <button type="submit" class="btn btn-primary">{{ __('messages.search') }}</button>
-                        @if(request('search'))
+                        @if (request('search'))
                             <a href="{{ route('articles.index') }}" class="btn btn-secondary">Clear</a>
                         @endif
                     </div>

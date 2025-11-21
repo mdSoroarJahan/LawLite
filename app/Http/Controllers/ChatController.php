@@ -114,9 +114,9 @@ class ChatController extends Controller
 
         // Filter by search term if provided
         if ($search) {
-            $conversations = $conversations->filter(function($conversation) use ($search) {
-                return $conversation['partner'] && 
-                       stripos($conversation['partner']->name, $search) !== false;
+            $conversations = $conversations->filter(function ($conversation) use ($search) {
+                return $conversation['partner'] &&
+                    stripos($conversation['partner']->name, $search) !== false;
             });
         }
 

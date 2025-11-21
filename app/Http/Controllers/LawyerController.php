@@ -15,20 +15,20 @@ class LawyerController extends Controller
     public function index(Request $request): View|ViewFactory
     {
         $search = $request->input('search');
-        
+
         $query = Lawyer::with('user');
-        
+
         if ($search) {
-            $query->where(function($q) use ($search) {
+            $query->where(function ($q) use ($search) {
                 $q->where('expertise', 'like', '%' . $search . '%')
-                  ->orWhere('city', 'like', '%' . $search . '%')
-                  ->orWhere('bio', 'like', '%' . $search . '%')
-                  ->orWhereHas('user', function($userQuery) use ($search) {
-                      $userQuery->where('name', 'like', '%' . $search . '%');
-                  });
+                    ->orWhere('city', 'like', '%' . $search . '%')
+                    ->orWhere('bio', 'like', '%' . $search . '%')
+                    ->orWhereHas('user', function ($userQuery) use ($search) {
+                        $userQuery->where('name', 'like', '%' . $search . '%');
+                    });
             });
         }
-        
+
         $lawyers = $query->limit(50)->get();
         return view('lawyers.index', compact('lawyers'));
     }
