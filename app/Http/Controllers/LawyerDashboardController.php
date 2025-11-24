@@ -8,11 +8,12 @@ use Illuminate\Contracts\View\Factory as ViewFactory;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\LawyerVerificationRequested;
+use App\Models\LawyerCase;
 
 class LawyerDashboardController extends Controller
 {
     /**
-     * Show a minimal dashboard for lawyers.
+     * Show lawyer dashboard with upcoming cases and AI assistant.
      */
     public function dashboard(Request $request): View|ViewFactory
     {
@@ -21,7 +22,24 @@ class LawyerDashboardController extends Controller
             abort(403, 'Unauthorized.');
         }
 
-        return view('lawyers.dashboard', compact('user'));
+        $lawyer = $user->lawyer;
+
+        // Get upcoming cases (hearing date in the future or today)
+        $upcomingCases = [];
+        if ($lawyer) {
+            $upcomingCases = LawyerCase::where('lawyer_id', $lawyer->id)
+                ->where(function ($query) {
+                    $query->whereDate('hearing_date', '>=', now())
+                        ->orWhereNull('hearing_date');
+                })
+                ->whereIn('status', ['pending', 'in_progress'])
+                ->orderBy('hearing_date', 'asc')
+                ->orderBy('hearing_time', 'asc')
+                ->limit(10)
+                ->get();
+        }
+
+        return view('lawyers.dashboard', compact('user', 'lawyer', 'upcomingCases'));
     }
 
     /**
@@ -35,15 +53,69 @@ class LawyerDashboardController extends Controller
         $lawyer = $user->lawyer;
         $appointments = [];
         if ($lawyer) {
-            // placeholder: if Appointment model exists, we'd load them. Keep empty safe default.
             try {
-                $appointments = \App\Models\Appointment::where('lawyer_id', $lawyer->id)->limit(50)->get();
+                $query = \App\Models\Appointment::where('lawyer_id', $lawyer->id)->with('user');
+
+                // Filter by status if provided
+                if ($request->has('status') && $request->status != '') {
+                    $query->where('status', $request->status);
+                }
+
+                $appointments = $query->orderBy('date', 'asc')
+                    ->orderBy('time', 'asc')
+                    ->get();
             } catch (\Throwable $e) {
                 $appointments = [];
             }
         }
 
         return view('lawyers.appointments', compact('user', 'appointments'));
+    }
+
+    /**
+     * Accept an appointment
+     */
+    public function acceptAppointment(Request $request, $id): \Illuminate\Http\RedirectResponse
+    {
+        $user = $request->user();
+        if (! $user || $user->role !== 'lawyer') abort(403);
+
+        $lawyer = $user->lawyer;
+        if (!$lawyer) {
+            return redirect()->route('lawyer.appointments')->with('error', 'Lawyer profile not found.');
+        }
+
+        $appointment = \App\Models\Appointment::where('id', $id)
+            ->where('lawyer_id', $lawyer->id)
+            ->firstOrFail();
+
+        $appointment->status = 'confirmed';
+        $appointment->save();
+
+        return redirect()->route('lawyer.appointments')->with('success', 'Appointment accepted successfully.');
+    }
+
+    /**
+     * Reject an appointment
+     */
+    public function rejectAppointment(Request $request, $id): \Illuminate\Http\RedirectResponse
+    {
+        $user = $request->user();
+        if (! $user || $user->role !== 'lawyer') abort(403);
+
+        $lawyer = $user->lawyer;
+        if (!$lawyer) {
+            return redirect()->route('lawyer.appointments')->with('error', 'Lawyer profile not found.');
+        }
+
+        $appointment = \App\Models\Appointment::where('id', $id)
+            ->where('lawyer_id', $lawyer->id)
+            ->firstOrFail();
+
+        $appointment->status = 'cancelled';
+        $appointment->save();
+
+        return redirect()->route('lawyer.appointments')->with('success', 'Appointment rejected.');
     }
 
     /**

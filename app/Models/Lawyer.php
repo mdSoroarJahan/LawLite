@@ -47,6 +47,13 @@ class Lawyer extends Model
         return $this->hasMany(Appointment::class);
     }
 
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\LawyerCase, \App\Models\Lawyer> */
+    /** @phpstan-ignore-next-line */
+    public function cases(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(LawyerCase::class);
+    }
+
     /** @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\Analytics, \App\Models\Lawyer> */
     /** @phpstan-ignore-next-line */
     public function analytics(): \Illuminate\Database\Eloquent\Relations\HasOne

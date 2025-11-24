@@ -40,6 +40,14 @@
                     @elseif ($user && $user->role === 'lawyer')
                         <li class="nav-item"><a class="nav-link text-white"
                                 href="{{ route('lawyer.dashboard') }}">{{ __('messages.dashboard') }}</a></li>
+                        <li class="nav-item"><a class="nav-link text-white"
+                                href="{{ route('lawyer.cases.index') }}">Cases</a></li>
+                        <li class="nav-item"><a class="nav-link text-white"
+                                href="{{ route('lawyer.appointments') }}">{{ __('messages.appointments') }}</a></li>
+                        <li class="nav-item"><a class="nav-link text-white"
+                                href="{{ route('messages.inbox') }}">{{ __('messages.messages') }}</a></li>
+                        <li class="nav-item"><a class="nav-link text-white"
+                                href="{{ route('notifications.index') }}">Notifications</a></li>
                     @endif
 
                     <li class="nav-item dropdown ms-3">
