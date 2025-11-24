@@ -14,10 +14,15 @@ class CaseController extends Controller
      */
     public function index(Request $request)
     {
-        $lawyer = Auth::user()->lawyer;
+        $user = Auth::user();
+        $lawyer = $user->lawyer;
 
         if (!$lawyer) {
-            return redirect()->route('lawyer.dashboard')->with('error', 'Lawyer profile not found');
+            // Create lawyer profile if it doesn't exist
+            $lawyer = \App\Models\Lawyer::create([
+                'user_id' => $user->id,
+                'verification_status' => 'pending'
+            ]);
         }
 
         $query = LawyerCase::where('lawyer_id', $lawyer->id);

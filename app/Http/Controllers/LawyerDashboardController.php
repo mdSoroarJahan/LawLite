@@ -25,7 +25,7 @@ class LawyerDashboardController extends Controller
         $lawyer = $user->lawyer;
 
         // Get upcoming cases (hearing date in the future or today)
-        $upcomingCases = [];
+        $upcomingCases = collect([]);
         if ($lawyer) {
             $upcomingCases = LawyerCase::where('lawyer_id', $lawyer->id)
                 ->where(function ($query) {

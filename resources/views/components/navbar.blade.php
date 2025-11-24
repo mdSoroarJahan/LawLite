@@ -8,21 +8,34 @@
 
         <div class="collapse navbar-collapse" id="mainNav">
             <ul class="navbar-nav ms-auto align-items-lg-center">
-                <li class="nav-item"><a class="nav-link text-white"
-                        href="{{ Route::has('home') ? route('home') : url('/') }}">{{ __('messages.home') }}</a></li>
-                <li class="nav-item"><a class="nav-link text-white"
-                        href="{{ route('lawyers.index') }}">{{ __('messages.find_lawyers') }}</a>
-                </li>
-                <li class="nav-item"><a class="nav-link text-white" href="{{ route('articles.index') }}">Articles</a>
-                </li>
-                <li class="nav-item"><a class="nav-link text-white"
-                        href="{{ route('appointments.index') }}">Appointments</a></li>
+                @php $user = Auth::user(); @endphp
 
-                @auth
+                @if ($user && $user->role === 'lawyer')
+                    {{-- Lawyer Navigation --}}
                     <li class="nav-item"><a class="nav-link text-white"
-                            href="{{ route('messages.inbox') }}">{{ __('messages.messages') }}</a>
+                            href="{{ route('lawyer.dashboard') }}">{{ __('messages.home') }}</a></li>
+                    <li class="nav-item"><a class="nav-link text-white"
+                            href="{{ route('articles.index') }}">{{ __('messages.articles') }}</a></li>
+                    <li class="nav-item"><a class="nav-link text-white"
+                            href="{{ route('lawyer.cases.index') }}">{{ __('messages.cases') }}</a></li>
+                    <li class="nav-item"><a class="nav-link text-white"
+                            href="{{ route('lawyer.appointments') }}">{{ __('messages.appointments') }}</a></li>
+                    <li class="nav-item"><a class="nav-link text-white"
+                            href="{{ route('messages.inbox') }}">{{ __('messages.messages') }}</a></li>
+                    <li class="nav-item"><a class="nav-link text-white"
+                            href="{{ route('notifications.index') }}">{{ __('messages.notifications') }}</a></li>
+                @else
+                    {{-- Guest and User Navigation --}}
+                    <li class="nav-item"><a class="nav-link text-white"
+                            href="{{ Route::has('home') ? route('home') : url('/') }}">{{ __('messages.home') }}</a>
                     </li>
-                @endauth
+                    <li class="nav-item"><a class="nav-link text-white"
+                            href="{{ route('lawyers.index') }}">{{ __('messages.find_lawyers') }}</a></li>
+                    <li class="nav-item"><a class="nav-link text-white"
+                            href="{{ route('articles.index') }}">{{ __('messages.articles') }}</a></li>
+                    <li class="nav-item"><a class="nav-link text-white"
+                            href="{{ route('appointments.index') }}">{{ __('messages.appointments') }}</a></li>
+                @endif
 
                 @guest
                     <li class="nav-item ms-3"><a class="btn btn-sm btn-accent"
@@ -30,24 +43,15 @@
                     <li class="nav-item ms-2"><a class="nav-link text-white"
                             href="{{ route('register') }}">{{ __('messages.register') }}</a>
                     </li>
-                    {{-- Dev quick-links moved to the sign-in page to avoid showing role options on the homepage. --}}
                 @else
-                    @php $user = Auth::user(); @endphp
                     @if ($user && $user->role === 'admin')
                         <li class="nav-item"><a class="nav-link text-white"
                                 href="{{ route('admin.dashboard') }}">{{ __('messages.admin_panel') }}</a>
                         </li>
-                    @elseif ($user && $user->role === 'lawyer')
-                        <li class="nav-item"><a class="nav-link text-white"
-                                href="{{ route('lawyer.dashboard') }}">{{ __('messages.dashboard') }}</a></li>
-                        <li class="nav-item"><a class="nav-link text-white"
-                                href="{{ route('lawyer.cases.index') }}">Cases</a></li>
-                        <li class="nav-item"><a class="nav-link text-white"
-                                href="{{ route('lawyer.appointments') }}">{{ __('messages.appointments') }}</a></li>
+                    @elseif ($user && $user->role !== 'lawyer')
+                        {{-- Regular user navigation --}}
                         <li class="nav-item"><a class="nav-link text-white"
                                 href="{{ route('messages.inbox') }}">{{ __('messages.messages') }}</a></li>
-                        <li class="nav-item"><a class="nav-link text-white"
-                                href="{{ route('notifications.index') }}">Notifications</a></li>
                     @endif
 
                     <li class="nav-item dropdown ms-3">
@@ -58,7 +62,9 @@
 
                         <div class="dropdown-menu dropdown-menu-end">
                             <a class="dropdown-item" href="{{ route('profile.show') }}">{{ __('messages.profile') }}</a>
-                            <a class="dropdown-item" href="{{ route('notifications.index') }}">Notifications</a>
+                            @if ($user && $user->role !== 'lawyer')
+                                <a class="dropdown-item" href="{{ route('notifications.index') }}">Notifications</a>
+                            @endif
                             <div class="dropdown-divider"></div>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="px-3 py-1">
                                 @csrf

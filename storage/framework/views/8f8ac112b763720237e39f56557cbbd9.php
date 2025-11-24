@@ -8,20 +8,33 @@
 
         <div class="collapse navbar-collapse" id="mainNav">
             <ul class="navbar-nav ms-auto align-items-lg-center">
-                <li class="nav-item"><a class="nav-link text-white"
-                        href="<?php echo e(Route::has('home') ? route('home') : url('/')); ?>"><?php echo e(__('messages.home')); ?></a></li>
-                <li class="nav-item"><a class="nav-link text-white"
-                        href="<?php echo e(route('lawyers.index')); ?>"><?php echo e(__('messages.find_lawyers')); ?></a>
-                </li>
-                <li class="nav-item"><a class="nav-link text-white" href="<?php echo e(route('articles.index')); ?>">Articles</a>
-                </li>
-                <li class="nav-item"><a class="nav-link text-white"
-                        href="<?php echo e(route('appointments.index')); ?>">Appointments</a></li>
+                <?php $user = Auth::user(); ?>
 
-                <?php if(auth()->guard()->check()): ?>
+                <?php if($user && $user->role === 'lawyer'): ?>
+                    
                     <li class="nav-item"><a class="nav-link text-white"
-                            href="<?php echo e(route('messages.inbox')); ?>"><?php echo e(__('messages.messages')); ?></a>
+                            href="<?php echo e(route('lawyer.dashboard')); ?>"><?php echo e(__('messages.home')); ?></a></li>
+                    <li class="nav-item"><a class="nav-link text-white"
+                            href="<?php echo e(route('articles.index')); ?>"><?php echo e(__('messages.articles')); ?></a></li>
+                    <li class="nav-item"><a class="nav-link text-white"
+                            href="<?php echo e(route('lawyer.cases.index')); ?>"><?php echo e(__('messages.cases')); ?></a></li>
+                    <li class="nav-item"><a class="nav-link text-white"
+                            href="<?php echo e(route('lawyer.appointments')); ?>"><?php echo e(__('messages.appointments')); ?></a></li>
+                    <li class="nav-item"><a class="nav-link text-white"
+                            href="<?php echo e(route('messages.inbox')); ?>"><?php echo e(__('messages.messages')); ?></a></li>
+                    <li class="nav-item"><a class="nav-link text-white"
+                            href="<?php echo e(route('notifications.index')); ?>"><?php echo e(__('messages.notifications')); ?></a></li>
+                <?php else: ?>
+                    
+                    <li class="nav-item"><a class="nav-link text-white"
+                            href="<?php echo e(Route::has('home') ? route('home') : url('/')); ?>"><?php echo e(__('messages.home')); ?></a>
                     </li>
+                    <li class="nav-item"><a class="nav-link text-white"
+                            href="<?php echo e(route('lawyers.index')); ?>"><?php echo e(__('messages.find_lawyers')); ?></a></li>
+                    <li class="nav-item"><a class="nav-link text-white"
+                            href="<?php echo e(route('articles.index')); ?>"><?php echo e(__('messages.articles')); ?></a></li>
+                    <li class="nav-item"><a class="nav-link text-white"
+                            href="<?php echo e(route('appointments.index')); ?>"><?php echo e(__('messages.appointments')); ?></a></li>
                 <?php endif; ?>
 
                 <?php if(auth()->guard()->guest()): ?>
@@ -30,16 +43,15 @@
                     <li class="nav-item ms-2"><a class="nav-link text-white"
                             href="<?php echo e(route('register')); ?>"><?php echo e(__('messages.register')); ?></a>
                     </li>
-                    
                 <?php else: ?>
-                    <?php $user = Auth::user(); ?>
                     <?php if($user && $user->role === 'admin'): ?>
                         <li class="nav-item"><a class="nav-link text-white"
                                 href="<?php echo e(route('admin.dashboard')); ?>"><?php echo e(__('messages.admin_panel')); ?></a>
                         </li>
-                    <?php elseif($user && $user->role === 'lawyer'): ?>
+                    <?php elseif($user && $user->role !== 'lawyer'): ?>
+                        
                         <li class="nav-item"><a class="nav-link text-white"
-                                href="<?php echo e(route('lawyer.dashboard')); ?>"><?php echo e(__('messages.dashboard')); ?></a></li>
+                                href="<?php echo e(route('messages.inbox')); ?>"><?php echo e(__('messages.messages')); ?></a></li>
                     <?php endif; ?>
 
                     <li class="nav-item dropdown ms-3">
@@ -51,7 +63,9 @@
 
                         <div class="dropdown-menu dropdown-menu-end">
                             <a class="dropdown-item" href="<?php echo e(route('profile.show')); ?>"><?php echo e(__('messages.profile')); ?></a>
-                            <a class="dropdown-item" href="<?php echo e(route('notifications.index')); ?>">Notifications</a>
+                            <?php if($user && $user->role !== 'lawyer'): ?>
+                                <a class="dropdown-item" href="<?php echo e(route('notifications.index')); ?>">Notifications</a>
+                            <?php endif; ?>
                             <div class="dropdown-divider"></div>
                             <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" class="px-3 py-1">
                                 <?php echo csrf_field(); ?>
