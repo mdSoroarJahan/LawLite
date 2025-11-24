@@ -32,7 +32,8 @@
                         <div class="card-body">
                             <h5 class="card-title"><?php echo e($article->title); ?></h5>
                             <p class="text-muted"><?php echo e(\Illuminate\Support\Str::limit($article->body, 120)); ?></p>
-                            <a href="<?php echo e(route('articles.show', $article->id)); ?>" class="btn btn-sm btn-primary"><?php echo e(__('messages.read')); ?></a>
+                            <a href="<?php echo e(route('articles.show', $article->id)); ?>"
+                                class="btn btn-sm btn-primary"><?php echo e(__('messages.read')); ?></a>
                         </div>
                     </div>
                 </div>

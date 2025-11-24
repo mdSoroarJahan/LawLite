@@ -3,35 +3,35 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Book Appointment</h5>
+                <h5 class="modal-title">{{ __('messages.book_appointment') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form id="appointment-form">
                 <div class="modal-body">
                     <input type="hidden" name="lawyer_id" id="modal-lawyer-id">
                     <div class="mb-3">
-                        <label>Date</label>
+                        <label>{{ __('messages.date') }}</label>
                         <input type="date" name="date" class="form-control" required>
                     </div>
                     <div class="mb-3">
-                        <label>Time</label>
+                        <label>{{ __('messages.time') }}</label>
                         <input type="time" name="time" class="form-control" required>
                     </div>
                     <div class="mb-3">
-                        <label>Type</label>
+                        <label>{{ __('messages.type') }}</label>
                         <select name="type" class="form-control">
-                            <option value="online">Online</option>
-                            <option value="in-person">In-person</option>
+                            <option value="online">{{ __('messages.online') }}</option>
+                            <option value="in-person">{{ __('messages.in_person') }}</option>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label>Notes</label>
+                        <label>{{ __('messages.notes') }}</label>
                         <textarea name="notes" class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button class="btn btn-primary" type="submit">Book</button>
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">{{ __('messages.cancel') }}</button>
+                    <button class="btn btn-primary" type="submit">{{ __('messages.book') }}</button>
                 </div>
             </form>
         </div>
@@ -58,12 +58,12 @@
                     body: new URLSearchParams(data)
                 });
                 if (res.ok) {
-                    alert('Appointment booked');
+                    alert('{{ __('messages.appointment_booked_success') }}');
                 } else {
-                    alert('Booking failed');
+                    alert('{{ __('messages.booking_failed') }}');
                 }
             } catch (e) {
-                alert('Network error');
+                alert('{{ __('messages.network_error') }}');
             }
             var modal = bootstrap.Modal.getInstance(document.getElementById('appointmentModal'));
             modal.hide();

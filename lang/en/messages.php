@@ -12,6 +12,10 @@ return [
     'dashboard' => 'Dashboard',
     'messages' => 'Messages',
     'profile' => 'Profile',
+    'articles' => 'Articles',
+    'appointments' => 'Appointments',
+    'cases' => 'Cases',
+    'notifications' => 'Notifications',
 
     // Welcome Page
     'welcome_title' => 'Legal Assistance Made Simple',
@@ -88,4 +92,74 @@ return [
     'loading' => 'Loading...',
     'success' => 'Success',
     'error' => 'Error',
+
+    // Articles
+    'articles_subtitle' => 'Latest legal articles and guides.',
+    'search_articles' => 'Search articles by title or content...',
+    'clear' => 'Clear',
+    'read' => 'Read',
+    'no_articles' => 'No articles found.',
+
+    // Cases
+    'my_cases' => 'My Cases',
+    'add_new_case' => 'Add New Case',
+    'all_cases' => 'All Cases',
+    'in_progress' => 'In Progress',
+    'completed' => 'Completed',
+    'closed' => 'Closed',
+    'no_cases_found' => 'No cases found',
+    'add_your_first_case' => 'Add Your First Case',
+    'case_title' => 'Case Title',
+    'client' => 'Client',
+    'hearing_date' => 'Hearing Date',
+    'status' => 'Status',
+    'actions' => 'Actions',
+    'not_scheduled' => 'Not scheduled',
+    'view' => 'View',
+
+    // Appointments
+    'my_appointments' => 'My Appointments',
+    'confirmed' => 'Confirmed',
+    'cancelled' => 'Cancelled',
+    'no_appointments_found' => 'No appointments found',
+    'unknown_client' => 'Unknown Client',
+    'consultation' => 'Consultation',
+    'date' => 'Date',
+    'time' => 'Time',
+    'not_set' => 'Not set',
+    'notes' => 'Notes',
+    'contact' => 'Contact',
+    'accept' => 'Accept',
+    'reject' => 'Reject',
+    'confirm_reject_appointment' => 'Are you sure you want to reject this appointment?',
+
+    // Notifications
+    'no_notifications_yet' => 'No notifications yet. We\'ll notify you about important updates.',
+    'new' => 'New',
+    'notification' => 'Notification',
+    'new_notification_message' => 'You have a new notification',
+    'mark_as_read' => 'Mark as read',
+    'mark_all_as_read' => 'Mark all as read',
+
+    // Profile
+    'role' => 'Role',
+    'language' => 'Language',
+
+    // Find Lawyers
+    'find_lawyers_description' => 'Browse verified lawyers and view profiles. Use search to narrow results.',
+    'search_lawyers_placeholder' => 'Search by name, expertise, or city...',
+    'unnamed_lawyer' => 'Unnamed Lawyer',
+    'general_practice' => 'General Practice',
+    'location' => 'Location',
+    'unknown' => 'Unknown',
+    'no_lawyers_found' => 'No lawyers found',
+    'book_appointment_description' => 'Book a session with a verified lawyer.',
+    'book_appointment' => 'Book Appointment',
+    'type' => 'Type',
+    'online' => 'Online',
+    'in_person' => 'In-person',
+    'book' => 'Book',
+    'appointment_booked_success' => 'Appointment booked successfully',
+    'booking_failed' => 'Booking failed',
+    'network_error' => 'Network error',
 ];

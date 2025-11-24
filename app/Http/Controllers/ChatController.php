@@ -73,6 +73,17 @@ class ChatController extends Controller
             $q->where('sender_id', $withUserId)->where('receiver_id', $userId);
         })->orderBy('created_at')->get();
 
+        // Mark messages from the partner to the current user as read so unread counts update.
+        try {
+            Message::query()
+                ->where('sender_id', $withUserId)
+                ->where('receiver_id', $userId)
+                ->where('is_read', false)
+                ->update(['is_read' => true]);
+        } catch (\Exception $e) {
+            // Don't fail the request if marking read fails; continue returning history
+        }
+
         return new JsonResponse(['ok' => true, 'messages' => $messages]);
     }
 

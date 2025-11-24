@@ -51,6 +51,17 @@
                 box.appendChild(div);
             });
             box.scrollTop = box.scrollHeight;
+            // Remove unread badge from conversation list (if present)
+            try {
+                const convSelector = document.querySelector(
+                    `.list-group-item[onclick*="openChatWith(${withId})"]`);
+                if (convSelector) {
+                    const badge = convSelector.querySelector('.badge');
+                    if (badge) badge.remove();
+                }
+            } catch (err) {
+                // ignore DOM errors
+            }
         }
 
         if (chatToggle) chatToggle.addEventListener('click', () => {
