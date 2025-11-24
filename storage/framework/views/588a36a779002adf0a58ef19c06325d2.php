@@ -1,102 +1,326 @@
 
 
-<?php $__env->startSection('content'); ?>
-    <section class="hero">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-7">
-                    <h1 class="display-5 fw-bold"><?php echo e(__('messages.welcome_title')); ?></h1>
-                    <p class="lead small-muted"><?php echo e(__('messages.welcome_subtitle')); ?></p>
+<?php $__env->startPush('styles'); ?>
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 6rem 0 4rem;
+            position: relative;
+            overflow: hidden;
+        }
 
-                    <?php if(auth()->guard()->guest()): ?>
-                        <div class="mt-4 d-flex gap-2">
+        .hero-shape {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(11, 61, 145, 0.05), transparent 70%);
+            z-index: 0;
+        }
+
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            background: rgba(11, 61, 145, 0.1);
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .ai-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .ai-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card {
+            padding: 2rem;
+            text-align: center;
+            border-right: 1px solid #e2e8f0;
+        }
+
+        .stat-card:last-child {
+            border-right: none;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+    </style>
+<?php $__env->stopPush(); ?>
+
+<?php $__env->startSection('content'); ?>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-shape"></div>
+        <div class="container position-relative" style="z-index: 1;">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill mb-3 fw-semibold">
+                        <i class="bi bi-stars me-1"></i> <?php echo e(__('messages.hero_badge')); ?>
+
+                    </span>
+                    <h1 class="display-4 fw-bold mb-4 lh-tight">
+                        <?php echo e(__('messages.hero_title_1')); ?> <span class="text-primary"><?php echo e(__('messages.hero_title_2')); ?></span>
+                    </h1>
+                    <p class="lead text-muted mb-5">
+                        <?php echo e(__('messages.hero_desc')); ?>
+
+                    </p>
+
+                    <div class="d-flex flex-column flex-sm-row gap-3">
+                        <?php if(auth()->guard()->guest()): ?>
                             <a href="<?php echo e(route('lawyers.index')); ?>"
-                                class="btn btn-lg btn-primary me-2"><?php echo e(__('messages.find_lawyers')); ?></a>
-                            <a href="<?php echo e(route('login')); ?>"
-                                class="btn btn-lg btn-outline-secondary"><?php echo e(__('messages.login')); ?></a>
-                        </div>
-                    <?php else: ?>
-                        <div class="mt-4 d-flex gap-2">
+                                class="btn btn-primary btn-lg px-4 py-3 fw-semibold shadow-sm">
+                                <i class="bi bi-search me-2"></i><?php echo e(__('messages.find_lawyer_btn')); ?>
+
+                            </a>
+                            <a href="<?php echo e(route('register')); ?>" class="btn btn-outline-primary btn-lg px-4 py-3 fw-semibold">
+                                <?php echo e(__('messages.get_started_btn')); ?>
+
+                            </a>
+                        <?php else: ?>
                             <a href="<?php echo e(route('lawyers.index')); ?>"
-                                class="btn btn-lg btn-primary me-2"><?php echo e(__('messages.find_lawyers')); ?></a>
+                                class="btn btn-primary btn-lg px-4 py-3 fw-semibold shadow-sm">
+                                <i class="bi bi-search me-2"></i><?php echo e(__('messages.find_lawyer_btn')); ?>
+
+                            </a>
                             <?php if(Auth::user()->role === 'lawyer'): ?>
-                                <a href="<?php echo e(route('lawyer.dashboard')); ?>"
-                                    class="btn btn-lg btn-accent"><?php echo e(__('messages.dashboard')); ?></a>
+                                <a href="<?php echo e(route('lawyer.dashboard')); ?>" class="btn btn-accent btn-lg px-4 py-3 fw-semibold">
+                                    <i class="bi bi-speedometer2 me-2"></i><?php echo e(__('messages.dashboard')); ?>
+
+                                </a>
                             <?php elseif(Auth::user()->role === 'admin'): ?>
-                                <a href="<?php echo e(route('admin.dashboard')); ?>"
-                                    class="btn btn-lg btn-accent"><?php echo e(__('messages.admin_panel')); ?></a>
+                                <a href="<?php echo e(route('admin.dashboard')); ?>" class="btn btn-accent btn-lg px-4 py-3 fw-semibold">
+                                    <?php echo e(__('messages.admin_panel')); ?>
+
+                                </a>
                             <?php else: ?>
-                                <a href="<?php echo e(route('appointments.index')); ?>" class="btn btn-lg btn-accent">Appointments</a>
+                                <a href="<?php echo e(route('appointments.index')); ?>"
+                                    class="btn btn-accent btn-lg px-4 py-3 fw-semibold">
+                                    <?php echo e(__('messages.my_appointments')); ?>
+
+                                </a>
                             <?php endif; ?>
+                        <?php endif; ?>
+                    </div>
+
+                    <div class="mt-5 d-flex align-items-center gap-4">
+                        <div class="d-flex">
+                            <div class="bg-white rounded-circle border border-2 border-white shadow-sm"
+                                style="width: 40px; height: 40px; background-image: url('https://ui-avatars.com/api/?name=John+Doe&background=random'); background-size: cover;">
+                            </div>
+                            <div class="bg-white rounded-circle border border-2 border-white shadow-sm"
+                                style="width: 40px; height: 40px; background-image: url('https://ui-avatars.com/api/?name=Jane+Smith&background=random'); background-size: cover; margin-left: -15px;">
+                            </div>
+                            <div class="bg-white rounded-circle border border-2 border-white shadow-sm"
+                                style="width: 40px; height: 40px; background-image: url('https://ui-avatars.com/api/?name=Mike+Ross&background=random'); background-size: cover; margin-left: -15px;">
+                            </div>
+                            <div class="bg-primary text-white rounded-circle border border-2 border-white shadow-sm d-flex align-items-center justify-content-center small fw-bold"
+                                style="width: 40px; height: 40px; margin-left: -15px;">+2k</div>
                         </div>
-                    <?php endif; ?>
+                        <div class="small text-muted">
+                            <strong>2,000+</strong> <?php echo e(__('messages.users_trust')); ?>
+
+                        </div>
+                    </div>
                 </div>
-                <div class="col-lg-5 mt-4 mt-lg-0">
-                    <div class="card card-ghost p-4">
-                        <h5 class="mb-3"><?php echo e(__('messages.ai_assistant')); ?></h5>
-                        <p class="small-muted mb-3">Ask legal questions in natural language and get concise summaries and
-                            next steps.</p>
+
+                <div class="col-lg-5 offset-lg-1">
+                    <div class="ai-card p-4 p-md-5">
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3">
+                                <i class="bi bi-robot text-primary fs-4"></i>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold mb-0"><?php echo e(__('messages.ai_card_title')); ?></h5>
+                                <small class="text-muted"><?php echo e(__('messages.ai_card_subtitle')); ?></small>
+                            </div>
+                        </div>
 
                         <form action="<?php echo e(route('ai.ask')); ?>" method="POST" id="aiQuestionForm">
                             <?php echo csrf_field(); ?>
                             <div class="mb-3">
-                                <textarea name="question" class="form-control" rows="3" placeholder="<?php echo e(__('messages.ai_placeholder')); ?>"
-                                    required></textarea>
+                                <textarea name="question" class="form-control bg-light border-0 p-3" rows="4"
+                                    placeholder="<?php echo e(__('messages.ai_input_placeholder')); ?>" style="resize: none;" required></textarea>
                             </div>
-                            <button type="submit"
-                                class="btn btn-primary btn-sm w-100"><?php echo e(__('messages.ai_submit')); ?></button>
+                            <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold">
+                                <i class="bi bi-send me-2"></i><?php echo e(__('messages.ai_submit_btn')); ?>
+
+                            </button>
                         </form>
 
                         <div id="aiResponse" class="mt-3" style="display:none;">
-                            <div class="alert alert-info"></div>
+                            <div class="alert alert-light border shadow-sm"></div>
                         </div>
-
-                        <hr class="my-3">
-                        <h6 class="mb-1">Featured lawyers</h6>
-                        <?php
-                            $sample = (object) [
-                                'name' => 'Adv. Rahman',
-                                'expertise' => 'Family Law, Civil',
-                                'city' => 'Dhaka',
-                                'verified' => true,
-                                'photo' => null,
-                            ];
-                        ?>
-                        <?php echo $__env->make('components.lawyer_card', ['lawyer' => $sample], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="py-5">
+    <!-- Stats Section -->
+    <section class="border-bottom bg-white">
         <div class="container">
-            <div class="row gy-4">
+            <div class="row g-0">
                 <div class="col-md-4">
-                    <a href="<?php echo e(route('lawyers.index')); ?>" class="text-decoration-none">
-                        <div class="card p-4 h-100 card-ghost">
-                            <h5><?php echo e(__('messages.find_lawyers_title')); ?></h5>
-                            <p class="small-muted mb-0"><?php echo e(__('messages.find_lawyers_desc')); ?></p>
-                        </div>
-                    </a>
+                    <div class="stat-card">
+                        <div class="stat-number">500+</div>
+                        <div class="text-muted fw-semibold"><?php echo e(__('messages.stat_verified_lawyers')); ?></div>
+                    </div>
                 </div>
                 <div class="col-md-4">
-                    <a href="<?php echo e(route('articles.index')); ?>" class="text-decoration-none">
-                        <div class="card p-4 h-100 card-ghost">
-                            <h5><?php echo e(__('messages.legal_advice_title')); ?></h5>
-                            <p class="small-muted mb-0"><?php echo e(__('messages.legal_advice_desc')); ?></p>
-                        </div>
-                    </a>
+                    <div class="stat-card">
+                        <div class="stat-number">98%</div>
+                        <div class="text-muted fw-semibold"><?php echo e(__('messages.stat_client_satisfaction')); ?></div>
+                    </div>
                 </div>
                 <div class="col-md-4">
-                    <a href="<?php echo e(route('appointments.index')); ?>" class="text-decoration-none">
-                        <div class="card p-4 h-100 card-ghost">
-                            <h5><?php echo e(__('messages.book_appointment_title')); ?></h5>
-                            <p class="small-muted mb-0"><?php echo e(__('messages.book_appointment_desc')); ?></p>
-                        </div>
-                    </a>
+                    <div class="stat-card">
+                        <div class="stat-number">24/7</div>
+                        <div class="text-muted fw-semibold"><?php echo e(__('messages.stat_ai_support')); ?></div>
+                    </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-6 bg-light-section">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold display-6 mb-3"><?php echo e(__('messages.why_choose_title')); ?></h2>
+                <p class="lead text-muted mx-auto" style="max-width: 600px;">
+                    <?php echo e(__('messages.why_choose_desc')); ?>
+
+                </p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm p-4 hover-lift">
+                        <div class="feature-icon">
+                            <i class="bi bi-people"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3"><?php echo e(__('messages.feature_1_title')); ?></h4>
+                        <p class="text-muted mb-0">
+                            <?php echo e(__('messages.feature_1_desc')); ?>
+
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm p-4 hover-lift">
+                        <div class="feature-icon">
+                            <i class="bi bi-cpu"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3"><?php echo e(__('messages.feature_2_title')); ?></h4>
+                        <p class="text-muted mb-0">
+                            <?php echo e(__('messages.feature_2_desc')); ?>
+
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm p-4 hover-lift">
+                        <div class="feature-icon">
+                            <i class="bi bi-calendar-check"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3"><?php echo e(__('messages.feature_3_title')); ?></h4>
+                        <p class="text-muted mb-0">
+                            <?php echo e(__('messages.feature_3_desc')); ?>
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it Works -->
+    <section class="py-6 bg-white">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <img src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                        alt="Legal Meeting" class="img-fluid rounded-4 shadow-lg">
+                </div>
+                <div class="col-lg-5 offset-lg-1">
+                    <h2 class="fw-bold display-6 mb-5"><?php echo e(__('messages.how_it_works_title')); ?></h2>
+
+                    <div class="d-flex mb-4">
+                        <div class="me-4">
+                            <div class="step-number">1</div>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold"><?php echo e(__('messages.step_1_title')); ?></h5>
+                            <p class="text-muted"><?php echo e(__('messages.step_1_desc')); ?></p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex mb-4">
+                        <div class="me-4">
+                            <div class="step-number">2</div>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold"><?php echo e(__('messages.step_2_title')); ?></h5>
+                            <p class="text-muted"><?php echo e(__('messages.step_2_desc')); ?></p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex">
+                        <div class="me-4">
+                            <div class="step-number">3</div>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold"><?php echo e(__('messages.step_3_title')); ?></h5>
+                            <p class="text-muted"><?php echo e(__('messages.step_3_desc')); ?></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-5 bg-primary text-white">
+        <div class="container text-center py-4">
+            <h2 class="fw-bold mb-3"><?php echo e(__('messages.cta_title')); ?></h2>
+            <p class="lead mb-4 text-white-50"><?php echo e(__('messages.cta_desc')); ?></p>
+            <?php if(auth()->guard()->guest()): ?>
+                <a href="<?php echo e(route('register')); ?>"
+                    class="btn btn-accent btn-lg px-5 fw-bold"><?php echo e(__('messages.cta_btn_guest')); ?></a>
+            <?php else: ?>
+                <a href="<?php echo e(route('lawyers.index')); ?>"
+                    class="btn btn-accent btn-lg px-5 fw-bold"><?php echo e(__('messages.cta_btn_user')); ?></a>
+            <?php endif; ?>
         </div>
     </section>
 <?php $__env->stopSection(); ?>
@@ -113,10 +337,12 @@
 
             // Show loading state
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Processing...';
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML =
+                '<span class="spinner-border spinner-border-sm me-2"></span><?php echo e(__('messages.processing')); ?>';
             responseDiv.style.display = 'block';
             responseAlert.className = 'alert alert-info';
-            responseAlert.textContent = 'Thinking...';
+            responseAlert.textContent = '<?php echo e(__('messages.analyzing_question')); ?>';
 
             try {
                 const formData = new FormData(form);
@@ -137,21 +363,22 @@
                     const answer = typeof data.result === 'string' ? data.result : JSON.stringify(data.result,
                         null, 2);
                     responseAlert.innerHTML =
-                        '<strong>Answer:</strong><br><div style="white-space: pre-wrap;">' + answer + '</div>';
+                        '<strong><?php echo e(__('messages.ai_response_label')); ?></strong><br><div style="white-space: pre-wrap;" class="mt-2">' +
+                        answer + '</div>';
                 } else {
                     responseAlert.className = 'alert alert-danger';
                     responseAlert.textContent = data.error || data.message ||
-                        'An error occurred. Please try again.';
+                        '<?php echo e(__('messages.error_occurred')); ?>';
                 }
             } catch (error) {
                 responseAlert.className = 'alert alert-danger';
-                responseAlert.textContent = 'Network error. Please check your connection and try again.';
+                responseAlert.textContent = '<?php echo e(__('messages.network_error')); ?>';
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Ask AI';
+                submitBtn.innerHTML = originalBtnText;
             }
         });
     </script>
 <?php $__env->stopPush(); ?>
 
-<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH F:\Defence\LawLite\resources\views/welcome.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.landing', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH F:\Defence\LawLite\resources\views/welcome.blade.php ENDPATH**/ ?>

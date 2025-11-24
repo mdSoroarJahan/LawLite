@@ -7,6 +7,7 @@
     <title>{{ config('app.name', 'LawLite') }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
         :root {
@@ -22,9 +23,9 @@
         }
 
         .site-header {
-            background: linear-gradient(90deg, var(--primary), #08306a);
-            color: #fff;
-            box-shadow: 0 6px 18px rgba(2, 6, 23, 0.08);
+            background: #fff;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
         }
 
         .btn-accent {
@@ -55,7 +56,9 @@
     <main class="container py-4">
         @yield('content')
     </main>
-    @include('components.chat_ui')
+    @unless (request()->routeIs('messages.inbox'))
+        @include('components.chat_ui')
+    @endunless
     @include('components.appointment_modal')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Pusher & Echo (optional - requires Pusher keys in .env) -->

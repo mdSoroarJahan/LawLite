@@ -5,16 +5,17 @@
         <div class="row">
             <div class="col-md-8 mx-auto">
                 <h1><?php echo e($lawyer->user->name ?? 'Lawyer'); ?></h1>
-                <p class="text-muted"><?php echo e($lawyer->expertise ?? 'General practice'); ?></p>
-                <p>Location: <?php echo e($lawyer->city ?? 'Unknown'); ?></p>
+                <p class="text-muted"><?php echo e($lawyer->expertise ?? __('messages.general_practice')); ?></p>
+                <p><?php echo e(__('messages.location')); ?>: <?php echo e($lawyer->city ?? __('messages.unknown')); ?></p>
                 <?php if(auth()->guard()->check()): ?>
-                    <button class="btn btn-primary" onclick="openChatWith(<?php echo e($lawyer->user_id ?? 0); ?>)">Message</button>
+                    <button class="btn btn-primary"
+                        onclick="openChatWith(<?php echo e($lawyer->user_id ?? 0); ?>)"><?php echo e(__('messages.message')); ?></button>
                     <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#appointmentModal"
-                        data-lawyer-id="<?php echo e($lawyer->id); ?>" data-lawyer-name="<?php echo e($lawyer->user->name ?? 'Lawyer'); ?>">Book
-                        appointment</button>
+                        data-lawyer-id="<?php echo e($lawyer->id); ?>"
+                        data-lawyer-name="<?php echo e($lawyer->user->name ?? 'Lawyer'); ?>"><?php echo e(__('messages.book_appointment')); ?></button>
                 <?php else: ?>
-                    <a href="<?php echo e(route('login')); ?>" class="btn btn-primary">Sign in to Message</a>
-                    <a href="<?php echo e(route('login')); ?>" class="btn btn-outline-secondary">Sign in to Book</a>
+                    <a href="<?php echo e(route('login')); ?>" class="btn btn-primary"><?php echo e(__('messages.sign_in_to_message')); ?></a>
+                    <a href="<?php echo e(route('login')); ?>" class="btn btn-outline-secondary"><?php echo e(__('messages.sign_in_to_book')); ?></a>
                 <?php endif; ?>
             </div>
         </div>
