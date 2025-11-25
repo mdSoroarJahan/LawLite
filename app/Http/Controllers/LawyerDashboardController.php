@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\LawyerVerificationRequested;
 use App\Models\LawyerCase;
+use App\Models\Invoice;
 
 class LawyerDashboardController extends Controller
 {
@@ -26,6 +27,11 @@ class LawyerDashboardController extends Controller
 
         // Get upcoming cases (hearing date in the future or today)
         $upcomingCases = collect([]);
+        $totalEarnings = 0;
+        $pendingInvoices = 0;
+        $totalCases = 0;
+        $activeCases = 0;
+
         if ($lawyer) {
             $upcomingCases = LawyerCase::where('lawyer_id', $lawyer->id)
                 ->where(function ($query) {
@@ -37,9 +43,16 @@ class LawyerDashboardController extends Controller
                 ->orderBy('hearing_time', 'asc')
                 ->limit(10)
                 ->get();
+
+            $totalEarnings = Invoice::where('lawyer_id', $lawyer->id)->where('status', 'paid')->sum('amount');
+            $pendingInvoices = Invoice::where('lawyer_id', $lawyer->id)->where('status', 'unpaid')->sum('amount');
+            $totalCases = LawyerCase::where('lawyer_id', $lawyer->id)->count();
+            $activeCases = LawyerCase::where('lawyer_id', $lawyer->id)->whereIn('status', ['pending', 'in_progress'])->count();
+            $casesWon = LawyerCase::where('lawyer_id', $lawyer->id)->where('outcome', 'won')->count();
+            $casesLost = LawyerCase::where('lawyer_id', $lawyer->id)->where('outcome', 'lost')->count();
         }
 
-        return view('lawyers.dashboard', compact('user', 'lawyer', 'upcomingCases'));
+        return view('lawyers.dashboard', compact('user', 'lawyer', 'upcomingCases', 'totalEarnings', 'pendingInvoices', 'totalCases', 'activeCases', 'casesWon', 'casesLost'));
     }
 
     /**
@@ -90,6 +103,13 @@ class LawyerDashboardController extends Controller
             ->firstOrFail();
 
         $appointment->status = 'confirmed';
+
+        // Auto-generate Jitsi link if online
+        if ($appointment->type === 'online' && !$appointment->meeting_link) {
+            $roomName = 'LawLite-' . $appointment->id . '-' . \Illuminate\Support\Str::random(8);
+            $appointment->meeting_link = 'https://meet.jit.si/' . $roomName;
+        }
+
         $appointment->save();
 
         return redirect()->route('lawyer.appointments')->with('success', 'Appointment accepted successfully.');
@@ -132,12 +152,26 @@ class LawyerDashboardController extends Controller
                 'phone' => 'nullable|string|max:30',
                 'city' => 'nullable|string|max:120',
                 'expertise' => 'nullable|string|max:255',
+                'bar_council_id' => 'nullable|string|max:255',
+                'education' => 'nullable|array',
+                'experience' => 'nullable|array',
+                'languages' => 'nullable|array',
+                'profile_photo' => 'nullable|image|max:2048',
                 'documents' => 'nullable|array',
                 'documents.*' => 'file|mimes:pdf,jpeg,png,jpg|max:5120',
             ]);
 
             $user->name = strval($data['name']);
             $user->phone = isset($data['phone']) ? strval($data['phone']) : $user->phone;
+
+            // Handle Profile Photo
+            if ($request->hasFile('profile_photo')) {
+                if ($user->profile_photo_path) {
+                    Storage::disk('public')->delete($user->profile_photo_path);
+                }
+                $user->profile_photo_path = $request->file('profile_photo')->store('profile-photos', 'public');
+            }
+
             $user->save();
 
             // Update or create lawyer row
@@ -147,6 +181,12 @@ class LawyerDashboardController extends Controller
             }
             $lawyer->city = isset($data['city']) ? strval($data['city']) : $lawyer->city;
             $lawyer->expertise = isset($data['expertise']) ? strval($data['expertise']) : $lawyer->expertise;
+            $lawyer->bar_council_id = isset($data['bar_council_id']) ? strval($data['bar_council_id']) : $lawyer->bar_council_id;
+
+            // Handle JSON fields
+            if (isset($data['education'])) $lawyer->education = $data['education'];
+            if (isset($data['experience'])) $lawyer->experience = $data['experience'];
+            if (isset($data['languages'])) $lawyer->languages = $data['languages'];
 
             // Handle uploaded documents (append to existing documents array)
             if ($request->hasFile('documents')) {

@@ -31,4 +31,21 @@ class VerificationController extends Controller
         $lawyer->save();
         return redirect()->back()->with('status', 'Verification rejected');
     }
+
+    public function show(int $id)
+    {
+        $lawyer = \App\Models\Lawyer::with('user')->findOrFail($id);
+        return view('admin.verification.show', compact('lawyer'));
+    }
+
+    public function requestInfo(Request $request, int $id)
+    {
+        $lawyer = \App\Models\Lawyer::findOrFail($id);
+        $lawyer->verification_status = 'request_info';
+        $lawyer->save();
+
+        // Optional: Send notification to lawyer
+
+        return redirect()->back()->with('status', 'Requested more info from lawyer');
+    }
 }

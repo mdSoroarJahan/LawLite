@@ -5,8 +5,18 @@ use App\Http\Controllers\AiController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\AppointmentController;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
+    if (Auth::check()) {
+        $user = Auth::user();
+        if ($user->role === 'lawyer') {
+            return redirect()->route('lawyer.dashboard');
+        }
+        if ($user->role === 'admin') {
+            return redirect()->route('admin.dashboard');
+        }
+    }
     return view('welcome');
 });
 
@@ -16,15 +26,15 @@ Route::post('/ai/summarize', [AiController::class, 'summarize'])->name('ai.summa
 // Public list of lawyers
 Route::get('/lawyers', [\App\Http\Controllers\LawyerController::class, 'index'])->name('lawyers.index');
 Route::get('/lawyers/{id}', [\App\Http\Controllers\LawyerController::class, 'show'])->name('lawyers.show');
+// Get available slots
+Route::get('/lawyers/{id}/slots', [AppointmentController::class, 'getSlots'])->name('lawyers.slots');
 
 // Articles
 Route::get('/articles', [\App\Http\Controllers\ArticlesController::class, 'index'])->name('articles.index');
 Route::get('/articles/{id}', [\App\Http\Controllers\ArticlesController::class, 'show'])->name('articles.show');
 
 // Public appointments listing (placeholder)
-Route::get('/appointments', function () {
-    return view('appointments.index');
-})->name('appointments.index');
+Route::get('/appointments', [\App\Http\Controllers\AppointmentController::class, 'index'])->name('appointments.index');
 
 // Auth pages (placeholders)
 Route::get('/login', [\App\Http\Controllers\AuthController::class, 'login'])->name('login');
@@ -110,6 +120,25 @@ Route::middleware(['auth', 'role:lawyer'])->post('/lawyer/request-verification',
 
 // Lawyer case management
 Route::middleware(['auth', 'role:lawyer'])->resource('lawyer/cases', \App\Http\Controllers\Lawyer\CaseController::class, ['as' => 'lawyer']);
+Route::middleware(['auth', 'role:lawyer'])->post('/lawyer/cases/{id}/documents', [\App\Http\Controllers\Lawyer\CaseController::class, 'uploadDocument'])->name('lawyer.cases.documents.store');
+Route::middleware(['auth', 'role:lawyer'])->post('/lawyer/cases/{id}/tasks', [\App\Http\Controllers\Lawyer\CaseController::class, 'storeTask'])->name('lawyer.cases.tasks.store');
+Route::middleware(['auth', 'role:lawyer'])->put('/lawyer/cases/{id}/tasks/{taskId}', [\App\Http\Controllers\Lawyer\CaseController::class, 'updateTask'])->name('lawyer.cases.tasks.update');
+Route::middleware(['auth', 'role:lawyer'])->delete('/lawyer/cases/{id}/tasks/{taskId}', [\App\Http\Controllers\Lawyer\CaseController::class, 'destroyTask'])->name('lawyer.cases.tasks.destroy');
+
+// Lawyer Invoices
+Route::middleware(['auth', 'role:lawyer'])->group(function () {
+    Route::get('/lawyer/invoices', [\App\Http\Controllers\Lawyer\InvoiceController::class, 'index'])->name('lawyer.invoices.index');
+    Route::get('/lawyer/invoices/create', [\App\Http\Controllers\Lawyer\InvoiceController::class, 'create'])->name('lawyer.invoices.create');
+    Route::post('/lawyer/invoices', [\App\Http\Controllers\Lawyer\InvoiceController::class, 'store'])->name('lawyer.invoices.store');
+    Route::get('/lawyer/invoices/{id}', [\App\Http\Controllers\Lawyer\InvoiceController::class, 'show'])->name('lawyer.invoices.show');
+    Route::post('/lawyer/invoices/{id}/pay', [\App\Http\Controllers\Lawyer\InvoiceController::class, 'markAsPaid'])->name('lawyer.invoices.pay');
+});
+
+// Lawyer availability management
+Route::middleware(['auth', 'role:lawyer'])->group(function () {
+    Route::get('/lawyer/availability', [\App\Http\Controllers\LawyerAvailabilityController::class, 'index'])->name('lawyer.availability.index');
+    Route::post('/lawyer/availability', [\App\Http\Controllers\LawyerAvailabilityController::class, 'update'])->name('lawyer.availability.update');
+});
 
 // Admin dashboard and management routes (protected)
 Route::middleware(['auth', 'is_admin'])->group(function () {
@@ -121,8 +150,10 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
 
     // Verification review
     Route::get('/admin/verification', [\App\Http\Controllers\Admin\VerificationController::class, 'index'])->name('admin.verification.index');
+    Route::get('/admin/verification/{id}', [\App\Http\Controllers\Admin\VerificationController::class, 'show'])->name('admin.verification.show');
     Route::post('/admin/verification/{id}/approve', [\App\Http\Controllers\Admin\VerificationController::class, 'approve'])->name('admin.verification.approve');
     Route::post('/admin/verification/{id}/reject', [\App\Http\Controllers\Admin\VerificationController::class, 'reject'])->name('admin.verification.reject');
+    Route::post('/admin/verification/{id}/request-info', [\App\Http\Controllers\Admin\VerificationController::class, 'requestInfo'])->name('admin.verification.request_info');
 });
 
 // Local debug: show session id and CSRF token
@@ -148,7 +179,20 @@ Route::middleware('auth')->put('/profile/password', [\App\Http\Controllers\Profi
 // Chat endpoints
 Route::middleware('auth')->get('/messages', [ChatController::class, 'inbox'])->name('messages.inbox');
 Route::middleware('auth')->post('/chat/send', [ChatController::class, 'send']);
+Route::middleware('auth')->post('/chat/signal', [ChatController::class, 'signal']);
 Route::middleware('auth')->get('/chat/history/{withUserId}', [ChatController::class, 'history']);
 
 // Appointment booking
 Route::middleware('auth')->post('/appointments/book', [AppointmentController::class, 'book']);
+
+// User Case Portal
+Route::middleware('auth')->group(function () {
+    Route::get('/my-cases', [\App\Http\Controllers\UserCaseController::class, 'index'])->name('user.cases.index');
+    Route::get('/my-cases/{id}', [\App\Http\Controllers\UserCaseController::class, 'show'])->name('user.cases.show');
+
+    // Client Invoices
+    Route::get('/my-invoices', [\App\Http\Controllers\Client\InvoiceController::class, 'index'])->name('client.invoices.index');
+    Route::get('/my-invoices/{id}', [\App\Http\Controllers\Client\InvoiceController::class, 'show'])->name('client.invoices.show');
+    Route::get('/my-invoices/{id}/checkout', [\App\Http\Controllers\Client\InvoiceController::class, 'checkout'])->name('client.invoices.checkout');
+    Route::post('/my-invoices/{id}/pay', [\App\Http\Controllers\Client\InvoiceController::class, 'processPayment'])->name('client.invoices.pay');
+});

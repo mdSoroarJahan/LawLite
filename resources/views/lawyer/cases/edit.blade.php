@@ -47,7 +47,7 @@
                             <div class="mb-3">
                                 <label for="status" class="form-label">Status</label>
                                 <select class="form-select @error('status') is-invalid @enderror" id="status"
-                                    name="status">
+                                    name="status" onchange="toggleOutcomeField()">
                                     <option value="pending"
                                         {{ old('status', $case->status) == 'pending' ? 'selected' : '' }}>Pending</option>
                                     <option value="in_progress"
@@ -63,6 +63,43 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+
+                            <div class="mb-3" id="outcome-field" style="display: none;">
+                                <label for="outcome" class="form-label">Case Outcome</label>
+                                <select class="form-select @error('outcome') is-invalid @enderror" id="outcome"
+                                    name="outcome">
+                                    <option value="">Select Outcome</option>
+                                    <option value="won" {{ old('outcome', $case->outcome) == 'won' ? 'selected' : '' }}>
+                                        Won</option>
+                                    <option value="lost"
+                                        {{ old('outcome', $case->outcome) == 'lost' ? 'selected' : '' }}>Lost</option>
+                                    <option value="settled"
+                                        {{ old('outcome', $case->outcome) == 'settled' ? 'selected' : '' }}>Settled
+                                    </option>
+                                    <option value="dismissed"
+                                        {{ old('outcome', $case->outcome) == 'dismissed' ? 'selected' : '' }}>Dismissed
+                                    </option>
+                                    <option value="other"
+                                        {{ old('outcome', $case->outcome) == 'other' ? 'selected' : '' }}>Other</option>
+                                </select>
+                                @error('outcome')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <script>
+                                function toggleOutcomeField() {
+                                    const status = document.getElementById('status').value;
+                                    const outcomeField = document.getElementById('outcome-field');
+                                    if (status === 'completed' || status === 'closed') {
+                                        outcomeField.style.display = 'block';
+                                    } else {
+                                        outcomeField.style.display = 'none';
+                                    }
+                                }
+                                // Run on load
+                                document.addEventListener('DOMContentLoaded', toggleOutcomeField);
+                            </script>
 
                             <hr class="my-4">
 

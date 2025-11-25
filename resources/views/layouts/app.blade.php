@@ -11,42 +11,118 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
         :root {
-            --primary: #0b3d91;
-            --accent: #ffd166;
+            --primary: #0f172a;
+            /* Slate 900 */
+            --primary-hover: #1e293b;
+            --accent: #2563eb;
+            /* Blue 600 */
             --muted: #64748b;
+            --border-color: #e2e8f0;
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
         }
 
         body {
-            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-            background: linear-gradient(180deg, #f8fafc, #f1f5f9);
-            color: #0f172a;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-body);
+            color: #334155;
+            /* Slate 700 */
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            color: var(--primary);
+            font-weight: 700;
+            letter-spacing: -0.025em;
         }
 
         .site-header {
             background: #fff;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            border-color: var(--primary-hover);
         }
 
         .btn-accent {
-            background: var(--accent);
-            color: #0b2540;
+            background-color: var(--accent);
+            color: white;
             border: none;
             font-weight: 600;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
         }
 
-        .hero {
-            padding: 4.5rem 0;
+        .btn-accent:hover {
+            background-color: #1d4ed8;
+            color: white;
         }
 
-        .card-ghost {
-            background: rgba(255, 255, 255, 0.85);
-            border: 0;
-            box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+            border-radius: 0.5rem;
+        }
+
+        .card-header {
+            background-color: transparent;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: 600;
+            padding: 1rem 1.25rem;
+        }
+
+        .card-body {
+            padding: 1.25rem;
+        }
+
+        .form-control,
+        .form-select {
+            border-color: var(--border-color);
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            padding: 0.625rem 0.75rem;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
         }
 
         .small-muted {
             color: var(--muted);
+        }
+
+        /* Utility for SaaS look */
+        .text-primary {
+            color: var(--accent) !important;
+        }
+
+        .bg-primary {
+            background-color: var(--primary) !important;
+        }
+
+        .border-primary {
+            border-color: var(--primary) !important;
+        }
+
+        .badge {
+            font-weight: 600;
         }
     </style>
 </head>

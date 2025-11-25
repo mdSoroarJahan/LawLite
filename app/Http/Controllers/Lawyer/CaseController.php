@@ -74,9 +74,17 @@ class CaseController extends Controller
 
         $validated['lawyer_id'] = $lawyer->id;
 
-        LawyerCase::create($validated);
+        // Try to link client by email
+        if (!empty($validated['client_email'])) {
+            $client = \App\Models\User::where('email', $validated['client_email'])->first();
+            if ($client) {
+                $validated['user_id'] = $client->id;
+            }
+        }
 
-        return redirect()->route('lawyer.cases.index')->with('success', 'Case created successfully!');
+        $case = LawyerCase::create($validated);
+
+        return redirect()->route('lawyer.cases.show', $case)->with('success', 'Case created successfully!');
     }
 
     /**
@@ -85,7 +93,7 @@ class CaseController extends Controller
     public function show($id)
     {
         $lawyer = Auth::user()->lawyer;
-        $case = LawyerCase::where('lawyer_id', $lawyer->id)->findOrFail($id);
+        $case = LawyerCase::where('lawyer_id', $lawyer->id)->with(['documents', 'client'])->findOrFail($id);
 
         return view('lawyer.cases.show', compact('case'));
     }
@@ -120,12 +128,48 @@ class CaseController extends Controller
             'court_location' => 'nullable|string|max:255',
             'case_number' => 'nullable|string|max:100',
             'status' => 'required|in:pending,in_progress,completed,closed',
+            'outcome' => 'nullable|string|in:won,lost,settled,dismissed,other',
             'notes' => 'nullable|string',
         ]);
+
+        // Try to link client by email
+        if (!empty($validated['client_email'])) {
+            $client = \App\Models\User::where('email', $validated['client_email'])->first();
+            if ($client) {
+                $validated['user_id'] = $client->id;
+            }
+        }
 
         $case->update($validated);
 
         return redirect()->route('lawyer.cases.show', $case)->with('success', 'Case updated successfully!');
+    }
+
+    public function uploadDocument(Request $request, $id)
+    {
+        $lawyer = Auth::user()->lawyer;
+        $case = LawyerCase::where('lawyer_id', $lawyer->id)->findOrFail($id);
+
+        $request->validate([
+            'document' => 'required|file|max:10240', // 10MB max
+            'file_name' => 'required|string|max:255',
+        ]);
+
+        if ($request->hasFile('document')) {
+            $file = $request->file('document');
+            $path = $file->store('case_documents', 'public');
+
+            \App\Models\CaseDocument::create([
+                'lawyer_case_id' => $case->id,
+                'file_path' => $path,
+                'file_name' => $request->file_name,
+                'uploaded_by' => Auth::id(),
+            ]);
+
+            return back()->with('success', 'Document uploaded successfully.');
+        }
+
+        return back()->with('error', 'No file uploaded.');
     }
 
     /**
@@ -139,5 +183,56 @@ class CaseController extends Controller
         $case->delete();
 
         return redirect()->route('lawyer.cases.index')->with('success', 'Case deleted successfully!');
+    }
+
+    /**
+     * Store a newly created task
+     */
+    public function storeTask(Request $request, $id)
+    {
+        $lawyer = Auth::user()->lawyer;
+        $case = LawyerCase::where('lawyer_id', $lawyer->id)->findOrFail($id);
+
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'due_date' => 'nullable|date',
+        ]);
+
+        $case->tasks()->create([
+            'title' => $request->title,
+            'due_date' => $request->due_date,
+        ]);
+
+        return back()->with('success', 'Task added successfully.');
+    }
+
+    /**
+     * Update the specified task
+     */
+    public function updateTask(Request $request, $id, $taskId)
+    {
+        $lawyer = Auth::user()->lawyer;
+        $case = LawyerCase::where('lawyer_id', $lawyer->id)->findOrFail($id);
+        $task = $case->tasks()->findOrFail($taskId);
+
+        $task->update([
+            'is_completed' => $request->has('is_completed'),
+        ]);
+
+        return back()->with('success', 'Task updated.');
+    }
+
+    /**
+     * Remove the specified task
+     */
+    public function destroyTask($id, $taskId)
+    {
+        $lawyer = Auth::user()->lawyer;
+        $case = LawyerCase::where('lawyer_id', $lawyer->id)->findOrFail($id);
+        $task = $case->tasks()->findOrFail($taskId);
+
+        $task->delete();
+
+        return back()->with('success', 'Task deleted.');
     }
 }

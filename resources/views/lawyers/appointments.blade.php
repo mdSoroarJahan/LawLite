@@ -118,6 +118,15 @@
                                         </form>
                                     </div>
                                 @endif
+
+                                @if ($appointment->meeting_link)
+                                    <div class="mt-3">
+                                        <a href="{{ $appointment->meeting_link }}" target="_blank"
+                                            class="btn btn-primary btn-sm w-100">
+                                            <i class="bi bi-camera-video"></i> Join Online Meeting
+                                        </a>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>

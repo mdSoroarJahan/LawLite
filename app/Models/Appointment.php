@@ -30,4 +30,14 @@ class Appointment extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function getMeetingLinkAttribute(): ?string
+    {
+        if ($this->type === 'online' && $this->status === 'confirmed') {
+            // Generate a unique room name based on appointment ID and a secret
+            $roomName = 'LawLite-Meeting-' . $this->id . '-' . md5($this->created_at . config('app.key'));
+            return 'https://meet.jit.si/' . $roomName;
+        }
+        return null;
+    }
 }

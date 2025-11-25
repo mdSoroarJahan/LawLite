@@ -23,7 +23,7 @@ class Message extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['sender_id', 'receiver_id', 'content', 'is_read'];
+    protected $fillable = ['sender_id', 'receiver_id', 'content', 'is_read', 'attachment_path', 'attachment_type'];
 
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Message> */
     /** @phpstan-ignore-next-line */

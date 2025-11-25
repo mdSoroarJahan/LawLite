@@ -54,6 +54,8 @@ class MessageSent implements ShouldBroadcastNow
             'sender_id' => $this->message->sender_id,
             'receiver_id' => $this->message->receiver_id,
             'content' => $this->message->content,
+            'attachment_path' => $this->message->attachment_path,
+            'attachment_type' => $this->message->attachment_type,
             'created_at' => $this->message->created_at,
         ];
     }

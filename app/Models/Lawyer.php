@@ -26,11 +26,14 @@ class Lawyer extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'expertise', 'bio', 'license_number', 'verification_status', 'documents', 'latitude', 'longitude', 'city'];
+    protected $fillable = ['user_id', 'expertise', 'bio', 'license_number', 'verification_status', 'documents', 'latitude', 'longitude', 'city', 'education', 'experience', 'languages', 'bar_council_id'];
 
     /** @var array<string,string> */
     protected $casts = [
         'documents' => 'array',
+        'education' => 'array',
+        'experience' => 'array',
+        'languages' => 'array',
     ];
 
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Lawyer> */
@@ -59,5 +62,12 @@ class Lawyer extends Model
     public function analytics(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Analytics::class);
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\LawyerAvailability, \App\Models\Lawyer> */
+    /** @phpstan-ignore-next-line */
+    public function availabilities(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(LawyerAvailability::class);
     }
 }

@@ -10,7 +10,7 @@
 
         <div class="collapse navbar-collapse" id="mainNav">
             <ul class="navbar-nav ms-auto align-items-lg-center fw-medium">
-                @php $user = Auth::user(); @endphp
+                @php $user = auth()->user(); @endphp
 
                 @if ($user && $user->role === 'lawyer')
                     {{-- Lawyer Navigation --}}
@@ -40,9 +40,9 @@
                 @endif
 
                 @guest
-                    <li class="nav-item ms-lg-3"><a class="btn btn-outline-primary px-4 rounded-pill"
+                    <li class="nav-item ms-lg-3"><a class="btn btn-outline-primary px-4"
                             href="{{ route('login') }}">{{ __('messages.login') }}</a></li>
-                    <li class="nav-item ms-2"><a class="btn btn-primary px-4 rounded-pill"
+                    <li class="nav-item ms-2"><a class="btn btn-primary px-4"
                             href="{{ route('register') }}">{{ __('messages.register') }}</a>
                     </li>
                 @else
@@ -53,13 +53,17 @@
                     @elseif ($user && $user->role !== 'lawyer')
                         {{-- Regular user navigation --}}
                         <li class="nav-item"><a class="nav-link"
+                                href="{{ route('user.cases.index') }}">{{ __('messages.cases') }}</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('client.invoices.index') }}">Invoices</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link"
                                 href="{{ route('messages.inbox') }}">{{ __('messages.messages') }}</a></li>
                     @endif
 
                     <li class="nav-item dropdown ms-lg-3">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{ Auth::user()->name ?? Auth::user()->email }}
+                            {{ $user->name ?? $user->email }}
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-2 rounded-3">

@@ -7,20 +7,79 @@ use App\Models\Message;
 use App\Models\User;
 use App\Notifications\GenericNotification;
 use App\Events\MessageSent;
+use App\Events\AudioCallSignal;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\View\View;
 
 class ChatController extends Controller
 {
     /**
+     * Handle WebRTC signaling
+     */
+    public function signal(Request $request): JsonResponse
+    {
+        $request->validate([
+            'receiver_id' => 'required|integer',
+            'signal' => 'required|array',
+        ]);
+
+        $user = $request->user();
+        if (!$user) {
+            return response()->json(['ok' => false], 401);
+        }
+
+        broadcast(new AudioCallSignal(
+            $request->signal,
+            $user->id,
+            $request->receiver_id,
+            $user->name
+        ))->toOthers();
+
+        $message = null;
+        $type = $request->signal['type'] ?? null;
+
+        if ($type === 'offer') {
+            $message = Message::create([
+                'sender_id' => $user->id,
+                'receiver_id' => $request->receiver_id,
+                'content' => 'Started an audio call',
+                'attachment_type' => 'call_log'
+            ]);
+            broadcast(new MessageSent($message))->toOthers();
+        } elseif ($type === 'reject') {
+            $message = Message::create([
+                'sender_id' => $user->id,
+                'receiver_id' => $request->receiver_id,
+                'content' => 'Call declined',
+                'attachment_type' => 'call_log'
+            ]);
+            broadcast(new MessageSent($message))->toOthers();
+        } elseif ($type === 'end' && isset($request->signal['duration'])) {
+            $duration = $request->signal['duration'];
+            $content = $duration ? "Call ended - Duration: $duration" : "Call ended";
+
+            $message = Message::create([
+                'sender_id' => $user->id,
+                'receiver_id' => $request->receiver_id,
+                'content' => $content,
+                'attachment_type' => 'call_log'
+            ]);
+            broadcast(new MessageSent($message))->toOthers();
+        }
+
+        return response()->json(['ok' => true, 'message' => $message]);
+    }
+
+    /**
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function send(Request $request): JsonResponse
     {
-        $data = (array) $request->validate([
+        $request->validate([
             'receiver_id' => 'required|integer',
-            'content' => 'required|string',
+            'content' => 'nullable|string',
+            'attachment' => 'nullable|file|max:10240', // 10MB max
         ]);
 
         $user = $request->user();
@@ -28,11 +87,31 @@ class ChatController extends Controller
             return new JsonResponse(['ok' => false, 'message' => 'Unauthenticated'], 401);
         }
 
-        $message = Message::create([
+        $data = [
             'sender_id' => $user->id,
-            'receiver_id' => $data['receiver_id'],
-            'content' => $data['content'],
-        ]);
+            'receiver_id' => $request->receiver_id,
+            'content' => $request->content ?? '',
+        ];
+
+        if ($request->hasFile('attachment')) {
+            $file = $request->file('attachment');
+            $path = $file->store('chat_attachments', 'public');
+            $data['attachment_path'] = $path;
+
+            // Determine type
+            $mime = $file->getMimeType();
+            if (str_starts_with($mime, 'image/')) {
+                $data['attachment_type'] = 'image';
+            } else {
+                $data['attachment_type'] = 'file';
+            }
+        }
+
+        if (empty($data['content']) && empty($data['attachment_path'])) {
+            return new JsonResponse(['ok' => false, 'message' => 'Message cannot be empty'], 422);
+        }
+
+        $message = Message::create($data);
 
         // TODO: broadcast via Pusher/Echo
         try {
@@ -84,7 +163,18 @@ class ChatController extends Controller
             // Don't fail the request if marking read fails; continue returning history
         }
 
-        return new JsonResponse(['ok' => true, 'messages' => $messages]);
+        $partner = User::find($withUserId);
+        $isOnline = $partner ? $partner->isOnline() : false;
+        $lastSeen = $partner ? $partner->last_seen_at : null;
+
+        return new JsonResponse([
+            'ok' => true,
+            'messages' => $messages,
+            'partner_status' => [
+                'is_online' => $isOnline,
+                'last_seen' => $lastSeen
+            ]
+        ]);
     }
 
     /**

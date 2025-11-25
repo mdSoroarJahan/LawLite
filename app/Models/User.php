@@ -32,10 +32,16 @@ class User extends Authenticatable
         'password',
         'role',
         'language_preference',
-        'location'
+        'location',
+        'profile_photo_path',
+        'last_seen_at'
     ];
 
     protected $hidden = ['password'];
+
+    protected $casts = [
+        'last_seen_at' => 'datetime',
+    ];
 
     /** @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\Lawyer, \App\Models\User> */
     /** @phpstan-ignore-next-line */
@@ -77,5 +83,10 @@ class User extends Authenticatable
     public function aiDocuments(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(AiDocument::class);
+    }
+
+    public function isOnline(): bool
+    {
+        return \Illuminate\Support\Facades\Cache::has('user-is-online-' . $this->id);
     }
 }

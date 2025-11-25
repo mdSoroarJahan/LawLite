@@ -217,4 +217,23 @@ return [
     // Lawyer Profile Page
     'sign_in_to_message' => 'Sign in to Message',
     'sign_in_to_book' => 'Sign in to Book',
+
+    // Lawyer Dashboard
+    'welcome_back' => 'Welcome back',
+    'manage_availability' => 'Manage Availability',
+    'upcoming_cases' => 'Upcoming Cases',
+    'no_upcoming_cases' => 'No upcoming cases scheduled',
+    'add_first_case' => 'Add Your First Case',
+    'practice_analytics' => 'Practice Analytics',
+    'earnings' => 'Earnings',
+    'pending_payment' => 'Pending',
+    'total_cases' => 'Total Cases',
+    'active_cases' => 'Active Cases',
+    'cases_won' => 'Cases Won',
+    'cases_lost' => 'Cases Lost',
+    'not_verified' => 'Not Verified',
+    'manage_invoices' => 'Manage Invoices',
+    'thinking' => 'Thinking...',
+    'answer_label' => 'Answer:',
+    'ai_assistant_intro' => 'Ask legal questions and get AI-powered assistance',
 ];

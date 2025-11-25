@@ -6,44 +6,63 @@
         @if ($lawyers->isEmpty())
             <div class="alert alert-info">No verification requests.</div>
         @else
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Lawyer</th>
-                        <th>Email</th>
-                        <th>Documents</th>
-                        <th>City</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($lawyers as $l)
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
                         <tr>
-                            <td>{{ $l->user->name ?? '—' }}</td>
-                            <td>{{ $l->user->email ?? '—' }}</td>
-                            <td>
-                                @if (is_array($l->documents) && count($l->documents))
-                                    @foreach ($l->documents as $doc)
-                                        <div><a href="{{ \Illuminate\Support\Facades\Storage::url($doc) }}"
-                                                target="_blank">{{ basename($doc) }}</a></div>
-                                    @endforeach
-                                @else
-                                    —
-                                @endif
-                            </td>
-                            <td>{{ $l->city ?? '—' }}</td>
-                            <td>{{ $l->verification_status }}</td>
-                            <td>
-                                <form method="POST" action="{{ route('admin.verification.approve', $l->id) }}"
-                                    style="display:inline">@csrf<button class="btn btn-sm btn-success">Approve</button></form>
-                                <form method="POST" action="{{ route('admin.verification.reject', $l->id) }}"
-                                    style="display:inline">@csrf<button class="btn btn-sm btn-danger">Reject</button></form>
-                            </td>
+                            <th>Lawyer</th>
+                            <th>Bar Council ID</th>
+                            <th>Documents</th>
+                            <th>Details</th>
+                            <th>Status</th>
+                            <th>Actions</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach ($lawyers as $l)
+                            <tr>
+                                <td>
+                                    <div><strong>{{ $l->user->name ?? '—' }}</strong></div>
+                                    <div class="text-muted small">{{ $l->user->email ?? '—' }}</div>
+                                    <div class="text-muted small">{{ $l->city ?? '—' }}</div>
+                                </td>
+                                <td>{{ $l->bar_council_id ?? '—' }}</td>
+                                <td>
+                                    @if (is_array($l->documents) && count($l->documents))
+                                        @foreach ($l->documents as $doc)
+                                            <div><a href="{{ \Illuminate\Support\Facades\Storage::url($doc) }}"
+                                                    target="_blank" class="btn btn-sm btn-outline-primary mb-1">View
+                                                    {{ basename($doc) }}</a></div>
+                                        @endforeach
+                                    @else
+                                        <span class="text-muted">No documents</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if (is_array($l->education))
+                                        <div class="mb-1"><strong>Edu:</strong> {{ count($l->education) }} entries</div>
+                                    @endif
+                                    @if (is_array($l->experience))
+                                        <div class="mb-1"><strong>Exp:</strong> {{ count($l->experience) }} entries</div>
+                                    @endif
+                                    @if (is_array($l->languages))
+                                        <div><strong>Lang:</strong> {{ implode(', ', $l->languages) }}</div>
+                                    @endif
+                                </td>
+                                <td>
+                                    <span class="badge bg-warning text-dark">{{ ucfirst($l->verification_status) }}</span>
+                                </td>
+                                <td>
+                                    <div class="d-flex gap-2">
+                                        <a href="{{ route('admin.verification.show', $l->id) }}"
+                                            class="btn btn-sm btn-primary">Review</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         @endif
     </div>
 @endsection

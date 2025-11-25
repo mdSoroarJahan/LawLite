@@ -5,10 +5,13 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
                 <h1 class="h3">{{ __('messages.dashboard') }}</h1>
-                <p class="text-muted">Welcome back, {{ $user->name }}</p>
+                <p class="text-muted">{{ __('messages.welcome_back') }}, {{ $user->name }}</p>
             </div>
             <a href="{{ route('lawyer.cases.create') }}" class="btn btn-primary">
-                <i class="bi bi-plus-circle"></i> Add New Case
+                <i class="bi bi-plus-circle"></i> {{ __('messages.add_new_case') }}
+            </a>
+            <a href="{{ route('lawyer.availability.index') }}" class="btn btn-outline-primary ms-2">
+                <i class="bi bi-calendar-check"></i> {{ __('messages.manage_availability') }}
             </a>
         </div>
 
@@ -21,15 +24,16 @@
             <div class="col-lg-8 mb-4">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">Upcoming Cases</h5>
-                        <a href="{{ route('lawyer.cases.index') }}" class="btn btn-sm btn-outline-primary">View All</a>
+                        <h5 class="mb-0">{{ __('messages.upcoming_cases') }}</h5>
+                        <a href="{{ route('lawyer.cases.index') }}"
+                            class="btn btn-sm btn-outline-primary">{{ __('messages.view_all') }}</a>
                     </div>
                     <div class="card-body">
                         @if ($upcomingCases->isEmpty())
                             <div class="text-center py-5">
-                                <p class="text-muted">No upcoming cases scheduled</p>
+                                <p class="text-muted">{{ __('messages.no_upcoming_cases') }}</p>
                                 <a href="{{ route('lawyer.cases.create') }}" class="btn btn-sm btn-primary mt-2">
-                                    Add Your First Case
+                                    {{ __('messages.add_first_case') }}
                                 </a>
                             </div>
                         @else
@@ -41,7 +45,7 @@
                                             <div class="flex-grow-1">
                                                 <h6 class="mb-1">{{ $case->title }}</h6>
                                                 <p class="mb-1 text-muted small">
-                                                    <strong>Client:</strong> {{ $case->client_name }}
+                                                    <strong>{{ __('messages.client') }}:</strong> {{ $case->client_name }}
                                                     @if ($case->client_phone)
                                                         <span class="ms-2">📞 {{ $case->client_phone }}</span>
                                                     @endif
@@ -67,13 +71,15 @@
                                                 @endif
                                                 <div class="mt-1">
                                                     @if ($case->status === 'pending')
-                                                        <span class="badge bg-warning">Pending</span>
+                                                        <span class="badge bg-warning">{{ __('messages.pending') }}</span>
                                                     @elseif($case->status === 'in_progress')
-                                                        <span class="badge bg-primary">In Progress</span>
+                                                        <span
+                                                            class="badge bg-primary">{{ __('messages.in_progress') }}</span>
                                                     @elseif($case->status === 'completed')
-                                                        <span class="badge bg-success">Completed</span>
+                                                        <span
+                                                            class="badge bg-success">{{ __('messages.completed') }}</span>
                                                     @else
-                                                        <span class="badge bg-secondary">Closed</span>
+                                                        <span class="badge bg-secondary">{{ __('messages.closed') }}</span>
                                                     @endif
                                                 </div>
                                             </div>
@@ -93,7 +99,7 @@
                         <h5 class="mb-0">{{ __('messages.ai_assistant') }}</h5>
                     </div>
                     <div class="card-body">
-                        <p class="small text-muted mb-3">Ask legal questions and get AI-powered assistance</p>
+                        <p class="small text-muted mb-3">{{ __('messages.ai_assistant_intro') }}</p>
 
                         <form action="{{ route('ai.ask') }}" method="POST" id="aiQuestionForm">
                             @csrf
@@ -116,24 +122,50 @@
                 @if ($lawyer)
                     <div class="card mt-3">
                         <div class="card-body">
-                            <h6 class="card-title">Quick Stats</h6>
-                            <div class="d-flex justify-content-between mb-2">
-                                <span class="text-muted">Total Cases</span>
-                                <strong>{{ \App\Models\LawyerCase::where('lawyer_id', $lawyer->id)->count() }}</strong>
+                            <h6 class="card-title">{{ __('messages.practice_analytics') }}</h6>
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <div class="border rounded p-2 text-center">
+                                        <small class="text-muted d-block">{{ __('messages.earnings') }}</small>
+                                        <h5 class="mb-0 text-success">${{ number_format($totalEarnings, 2) }}</h5>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="border rounded p-2 text-center">
+                                        <small class="text-muted d-block">{{ __('messages.pending_payment') }}</small>
+                                        <h5 class="mb-0 text-warning">${{ number_format($pendingInvoices, 2) }}</h5>
+                                    </div>
+                                </div>
                             </div>
                             <div class="d-flex justify-content-between mb-2">
-                                <span class="text-muted">Active Cases</span>
-                                <strong>{{ \App\Models\LawyerCase::where('lawyer_id', $lawyer->id)->whereIn('status', ['pending', 'in_progress'])->count() }}</strong>
+                                <span class="text-muted">{{ __('messages.total_cases') }}</span>
+                                <strong>{{ $totalCases }}</strong>
                             </div>
-                            <div class="d-flex justify-content-between">
-                                <span class="text-muted">Verification</span>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted">{{ __('messages.active_cases') }}</span>
+                                <strong>{{ $activeCases }}</strong>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted">{{ __('messages.cases_won') }}</span>
+                                <strong class="text-success">{{ $casesWon }}</strong>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted">{{ __('messages.cases_lost') }}</span>
+                                <strong class="text-danger">{{ $casesLost }}</strong>
+                            </div>
+                            <div class="d-flex justify-content-between mb-3">
+                                <span class="text-muted">{{ __('messages.verification') }}</span>
                                 @if ($lawyer->verification_status === 'verified')
-                                    <span class="badge bg-success">Verified</span>
+                                    <span class="badge bg-success">{{ __('messages.verified') }}</span>
                                 @elseif($lawyer->verification_status === 'requested')
-                                    <span class="badge bg-warning">Pending</span>
+                                    <span class="badge bg-warning">{{ __('messages.pending') }}</span>
                                 @else
-                                    <span class="badge bg-secondary">Not Verified</span>
+                                    <span class="badge bg-secondary">{{ __('messages.not_verified') }}</span>
                                 @endif
+                            </div>
+                            <div class="d-grid">
+                                <a href="{{ route('lawyer.invoices.index') }}"
+                                    class="btn btn-outline-primary btn-sm">{{ __('messages.manage_invoices') }}</a>
                             </div>
                         </div>
                     </div>
@@ -154,10 +186,11 @@
             const responseAlert = responseDiv.querySelector('.alert');
 
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Processing...';
+            submitBtn.innerHTML =
+                '<span class="spinner-border spinner-border-sm me-2"></span>{{ __('messages.processing') }}';
             responseDiv.style.display = 'block';
             responseAlert.className = 'alert alert-info';
-            responseAlert.textContent = 'Thinking...';
+            responseAlert.textContent = '{{ __('messages.thinking') }}';
 
             try {
                 const formData = new FormData(form);
@@ -177,15 +210,16 @@
                     const answer = typeof data.result === 'string' ? data.result : JSON.stringify(data.result,
                         null, 2);
                     responseAlert.innerHTML =
-                        '<strong>Answer:</strong><br><div style="white-space: pre-wrap;">' + answer + '</div>';
+                        '<strong>{{ __('messages.answer_label') }}</strong><br><div style="white-space: pre-wrap;">' +
+                        answer + '</div>';
                 } else {
                     responseAlert.className = 'alert alert-danger';
                     responseAlert.textContent = data.error || data.message ||
-                        'An error occurred. Please try again.';
+                        '{{ __('messages.error_occurred') }}';
                 }
             } catch (error) {
                 responseAlert.className = 'alert alert-danger';
-                responseAlert.textContent = 'Network error. Please check your connection and try again.';
+                responseAlert.textContent = '{{ __('messages.network_error') }}';
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.textContent = '{{ __('messages.ai_submit') }}';

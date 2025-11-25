@@ -9,6 +9,7 @@ class LawyerCase extends Model
 {
     protected $fillable = [
         'lawyer_id',
+        'user_id',
         'title',
         'description',
         'client_name',
@@ -19,6 +20,7 @@ class LawyerCase extends Model
         'court_location',
         'case_number',
         'status',
+        'outcome', // Added outcome
         'notes',
     ];
 
@@ -30,5 +32,20 @@ class LawyerCase extends Model
     public function lawyer(): BelongsTo
     {
         return $this->belongsTo(Lawyer::class);
+    }
+
+    public function client(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function documents(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(CaseDocument::class);
+    }
+
+    public function tasks()
+    {
+        return $this->hasMany(CaseTask::class);
     }
 }

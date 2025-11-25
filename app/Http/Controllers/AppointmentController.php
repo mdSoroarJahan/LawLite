@@ -7,9 +7,69 @@ use App\Models\Appointment;
 use App\Models\Lawyer;
 use App\Notifications\GenericNotification;
 use Illuminate\Http\JsonResponse;
+use Carbon\Carbon;
 
 class AppointmentController extends Controller
 {
+    /**
+     * Get available slots for a lawyer on a specific date.
+     */
+    public function getSlots(Request $request, $lawyerId): JsonResponse
+    {
+        $request->validate([
+            'date' => 'required|date|after_or_equal:today',
+        ]);
+
+        $date = Carbon::parse($request->date);
+        $dayOfWeek = strtolower($date->format('l')); // monday, tuesday...
+
+        $lawyer = Lawyer::findOrFail($lawyerId);
+
+        // Get availability for this day
+        $availabilities = $lawyer->availabilities()
+            ->where('day_of_week', $dayOfWeek)
+            ->where('is_active', true)
+            ->get();
+
+        if ($availabilities->isEmpty()) {
+            return new JsonResponse(['ok' => true, 'slots' => []]);
+        }
+
+        // Get existing appointments
+        $existingAppointments = Appointment::where('lawyer_id', $lawyerId)
+            ->where('date', $request->date)
+            ->whereIn('status', ['scheduled', 'confirmed'])
+            ->pluck('time')
+            ->map(function ($time) {
+                return Carbon::parse($time)->format('H:i');
+            })
+            ->toArray();
+
+        $slots = [];
+        $duration = 30; // 30 minutes per slot
+
+        foreach ($availabilities as $availability) {
+            $start = Carbon::parse($availability->start_time);
+            $end = Carbon::parse($availability->end_time);
+
+            while ($start->copy()->addMinutes($duration)->lte($end)) {
+                $timeString = $start->format('H:i');
+
+                // Check if slot is already booked
+                if (!in_array($timeString, $existingAppointments)) {
+                    // Also check if it's in the past for today
+                    if (!$date->isToday() || $start->gt(now())) {
+                        $slots[] = $timeString;
+                    }
+                }
+
+                $start->addMinutes($duration);
+            }
+        }
+
+        return new JsonResponse(['ok' => true, 'slots' => $slots]);
+    }
+
     /**
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -29,6 +89,45 @@ class AppointmentController extends Controller
             return new JsonResponse(['ok' => false, 'message' => 'Unauthenticated'], 401);
         }
 
+        // Validate Availability
+        $date = Carbon::parse($data['date']);
+        $dayOfWeek = strtolower($date->format('l'));
+        $time = Carbon::parse($data['time']);
+
+        $lawyer = Lawyer::findOrFail($data['lawyer_id']);
+
+        // Check if lawyer works on this day and time
+        $isAvailable = $lawyer->availabilities()
+            ->where('day_of_week', $dayOfWeek)
+            ->where('is_active', true)
+            ->whereTime('start_time', '<=', $time->format('H:i:s'))
+            ->whereTime('end_time', '>=', $time->copy()->addMinutes(30)->format('H:i:s')) // Ensure slot fits
+            ->exists();
+
+        if (!$isAvailable) {
+            // Fallback: If no availability is set at all for the lawyer, maybe allow? 
+            // For Phase 2, we want to enforce it. But if they haven't set it up, it blocks everything.
+            // Let's check if they have ANY availability set.
+            if ($lawyer->availabilities()->exists()) {
+                return new JsonResponse(['ok' => false, 'message' => 'Lawyer is not available at this time.'], 422);
+            }
+            // If no availability set, maybe allow for legacy/testing? 
+            // Or strictly block. Let's strictly block to force usage.
+            // return new JsonResponse(['ok' => false, 'message' => 'Lawyer has not set their availability.'], 422);
+            // Actually, for transition, let's allow if NO availability is defined at all.
+        }
+
+        // Check for conflicts
+        $conflict = Appointment::where('lawyer_id', $data['lawyer_id'])
+            ->where('date', $data['date'])
+            ->where('time', $time->format('H:i:s')) // Exact match for now (assuming 30 min slots)
+            ->whereIn('status', ['scheduled', 'confirmed'])
+            ->exists();
+
+        if ($conflict) {
+            return new JsonResponse(['ok' => false, 'message' => 'This slot is already booked.'], 422);
+        }
+
         $appointment = Appointment::create([
             'lawyer_id' => $data['lawyer_id'],
             'user_id' => $user->id,
@@ -41,9 +140,7 @@ class AppointmentController extends Controller
 
         // notify the lawyer
         try {
-            /** @var \App\Models\Lawyer|null $lawyer */
-            $lawyer = Lawyer::find($data['lawyer_id']);
-            if ($lawyer && $lawyer->user) {
+            if ($lawyer->user) {
                 $lawyer->user->notify(new GenericNotification('appointment', 'You have a new appointment'));
             }
         } catch (\Exception $e) {
@@ -51,5 +148,22 @@ class AppointmentController extends Controller
         }
 
         return new JsonResponse(['ok' => true, 'appointment' => $appointment]);
+    }
+
+    /**
+     * List user's appointments
+     */
+    public function index(Request $request)
+    {
+        $user = $request->user();
+        if (!$user) return redirect()->route('login');
+
+        $appointments = Appointment::where('user_id', $user->id)
+            ->with('lawyer.user')
+            ->orderBy('date', 'desc')
+            ->orderBy('time', 'desc')
+            ->get();
+
+        return view('appointments.index', compact('appointments'));
     }
 }

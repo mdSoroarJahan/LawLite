@@ -3,38 +3,28 @@
 @push('styles')
     <style>
         .hero-section {
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            background-color: #ffffff;
             padding: 6rem 0 4rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-shape {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 50%;
-            height: 100%;
-            background: radial-gradient(circle at top right, rgba(11, 61, 145, 0.05), transparent 70%);
-            z-index: 0;
+            border-bottom: 1px solid #e2e8f0;
         }
 
         .feature-icon {
-            width: 64px;
-            height: 64px;
+            width: 56px;
+            height: 56px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 16px;
-            background: rgba(11, 61, 145, 0.1);
-            color: var(--primary);
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
+            border-radius: 12px;
+            background: #eff6ff;
+            /* Blue 50 */
+            color: var(--accent);
+            font-size: 1.75rem;
+            margin-bottom: 1.25rem;
         }
 
         .step-number {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             background: var(--primary);
             color: white;
             border-radius: 50%;
@@ -42,19 +32,14 @@
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            margin-bottom: 1rem;
+            font-size: 0.9rem;
         }
 
         .ai-card {
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease;
-        }
-
-        .ai-card:hover {
-            transform: translateY(-5px);
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
         .stat-card {
@@ -72,6 +57,16 @@
             font-weight: 800;
             color: var(--primary);
             margin-bottom: 0.5rem;
+            letter-spacing: -0.05em;
+        }
+
+        .hover-lift {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
         }
     </style>
 @endpush
@@ -79,7 +74,6 @@
 @section('content')
     <!-- Hero Section -->
     <section class="hero-section">
-        <div class="hero-shape"></div>
         <div class="container position-relative" style="z-index: 1;">
             <div class="row align-items-center">
                 <div class="col-lg-6 mb-5 mb-lg-0">
