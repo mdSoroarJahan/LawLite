@@ -6,9 +6,12 @@ use Tests\TestCase;
 use App\Exceptions\GeminiException;
 use App\Services\GeminiService;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AiGeminiIntegrationTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function testAskEndpointWithAuthReturns502WhenGeminiFails(): void
     {
         // Bind a stub gemini service that throws the GeminiException

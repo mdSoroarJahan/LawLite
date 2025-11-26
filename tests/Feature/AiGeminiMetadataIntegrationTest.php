@@ -6,9 +6,12 @@ use Tests\TestCase;
 use App\Exceptions\GeminiException;
 use App\Services\GeminiService;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AiGeminiMetadataIntegrationTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function testAskEndpointReturnsExceptionMetadata(): void
     {
         // Bind stub that throws GeminiException with metadata
