@@ -47,12 +47,12 @@ Estimated effort
 - Medium/large: 3–7+ days depending on test coverage and third-party packages.
 
 Checklist (to convert into a PR / issue tasks):
-- [ ] Create branch `upgrade/laravel-12`.
-- [ ] Bump composer constraint for `laravel/framework` and run composer update.
-- [ ] Fix code & tests until PHPStan and PHPUnit are green.
-- [ ] Update workflows to target required PHP and re-run CI.
-- [ ] Open PR with description and migration notes.
-- [ ] Tag reviewers and merge when approved.
+- [x] Create branch `upgrade/laravel-12`.
+- [x] Bump composer constraint for `laravel/framework` and run composer update.
+- [x] Fix code & tests until PHPStan and PHPUnit are green.
+- [x] Update workflows to target required PHP and re-run CI.
+- [x] Open PR with description and migration notes.
+- [x] Tag reviewers and merge when approved.
 
 Notes
 - If you prefer, start with a PHPUnit-only branch (`upgrade/phpunit-11`) to get test tooling on the newest runner first.

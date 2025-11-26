@@ -17,6 +17,15 @@ use Illuminate\Notifications\Notifiable;
  * @property string|null $password
  * @property string $role
  * @property string|null $language_preference
+ * @property string|null $location
+ * @property string|null $profile_photo_path
+ * @property \Illuminate\Support\Carbon|null $last_seen_at
+ * @property-read \App\Models\Lawyer|null $lawyer
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Message> $messagesSent
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Message> $messagesReceived
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Appointment> $appointments
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\AiQuery> $aiQueries
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\AiDocument> $aiDocuments
  * @method static \Illuminate\Database\Eloquent\Builder<\App\Models\User> whereIn(string $column, array<int,mixed> $values)
  * @method static \Database\Factories\UserFactory factory(...$parameters)
  * @phpstan-use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\UserFactory>

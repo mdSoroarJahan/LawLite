@@ -10,7 +10,7 @@ class MigrationTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_users_table_exists()
+    public function test_users_table_exists(): void
     {
         $this->assertTrue(Schema::hasTable('users'), 'Users table does not exist');
     }

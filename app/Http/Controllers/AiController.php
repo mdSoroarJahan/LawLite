@@ -55,10 +55,10 @@ class AiController extends Controller
             return new JsonResponse(['ok' => true, 'result' => $result['answer'] ?? $result]);
         } catch (GeminiException $e) {
             Log::error('Gemini API error: ' . $e->getMessage());
-            
+
             $retryAfter = $e->getRetryAfter() ?? 30;
             $payload = [
-                'ok' => false, 
+                'ok' => false,
                 'error' => 'AI service unavailable. Please try again later.',
                 'code' => 'AI_SERVICE_UNAVAILABLE',
                 'retry_after' => $retryAfter
@@ -117,10 +117,10 @@ class AiController extends Controller
             return new JsonResponse(['ok' => true, 'result' => $result]);
         } catch (GeminiException $e) {
             Log::error('Gemini API error: ' . $e->getMessage());
-            
+
             $retryAfter = $e->getRetryAfter() ?? 30;
             $payload = [
-                'ok' => false, 
+                'ok' => false,
                 'error' => 'AI service unavailable. Please try again later.',
                 'code' => 'AI_SERVICE_UNAVAILABLE',
                 'retry_after' => $retryAfter
