@@ -86,12 +86,12 @@
                 <div class="col-md-2 col-6 mb-4 mb-md-0">
                     <h6 class="fw-bold mb-3">{{ __('messages.footer_company') }}</h6>
                     <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#"
+                        <li class="mb-2"><a href="{{ route('about') }}"
                                 class="text-white-50 text-decoration-none">{{ __('messages.footer_about') }}</a>
                         </li>
-                        <li class="mb-2"><a href="#"
+                        <li class="mb-2"><a href="{{ route('contact') }}"
                                 class="text-white-50 text-decoration-none">{{ __('messages.footer_contact') }}</a></li>
-                        <li class="mb-2"><a href="#"
+                        <li class="mb-2"><a href="{{ route('privacy') }}"
                                 class="text-white-50 text-decoration-none">{{ __('messages.footer_privacy') }}</a></li>
                     </ul>
                 </div>

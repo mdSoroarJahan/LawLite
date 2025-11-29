@@ -23,6 +23,11 @@ Route::get('/', function () {
 Route::post('/ai/question', [AiController::class, 'ask'])->name('ai.ask');
 Route::post('/ai/summarize', [AiController::class, 'summarize'])->name('ai.summarize');
 
+// Static Pages
+Route::get('/about', [\App\Http\Controllers\PageController::class, 'about'])->name('about');
+Route::get('/contact', [\App\Http\Controllers\PageController::class, 'contact'])->name('contact');
+Route::get('/privacy', [\App\Http\Controllers\PageController::class, 'privacy'])->name('privacy');
+
 // Public list of lawyers
 Route::get('/lawyers', [\App\Http\Controllers\LawyerController::class, 'index'])->name('lawyers.index');
 Route::get('/lawyers/{id}', [\App\Http\Controllers\LawyerController::class, 'show'])->name('lawyers.show');
