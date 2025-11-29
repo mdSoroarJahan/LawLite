@@ -118,24 +118,7 @@
                         @endguest
                     </div>
 
-                    <div class="mt-5 d-flex align-items-center gap-4">
-                        <div class="d-flex">
-                            <div class="bg-white rounded-circle border border-2 border-white shadow-sm"
-                                style="width: 40px; height: 40px; background-image: url('https://ui-avatars.com/api/?name=John+Doe&background=random'); background-size: cover;">
-                            </div>
-                            <div class="bg-white rounded-circle border border-2 border-white shadow-sm"
-                                style="width: 40px; height: 40px; background-image: url('https://ui-avatars.com/api/?name=Jane+Smith&background=random'); background-size: cover; margin-left: -15px;">
-                            </div>
-                            <div class="bg-white rounded-circle border border-2 border-white shadow-sm"
-                                style="width: 40px; height: 40px; background-image: url('https://ui-avatars.com/api/?name=Mike+Ross&background=random'); background-size: cover; margin-left: -15px;">
-                            </div>
-                            <div class="bg-primary text-white rounded-circle border border-2 border-white shadow-sm d-flex align-items-center justify-content-center small fw-bold"
-                                style="width: 40px; height: 40px; margin-left: -15px;">+2k</div>
-                        </div>
-                        <div class="small text-muted">
-                            <strong>2,000+</strong> {{ __('messages.users_trust') }}
-                        </div>
-                    </div>
+                    <!-- Trust/avatars removed per design request -->
                 </div>
 
                 <div class="col-lg-5 offset-lg-1">
@@ -174,12 +157,7 @@
     <section class="border-bottom bg-white">
         <div class="container">
             <div class="row g-0">
-                <div class="col-md-4">
-                    <div class="stat-card">
-                        <div class="stat-number">500+</div>
-                        <div class="text-muted fw-semibold">{{ __('messages.stat_verified_lawyers') }}</div>
-                    </div>
-                </div>
+                <!-- Verified lawyers stat removed per design request -->
                 <div class="col-md-4">
                     <div class="stat-card">
                         <div class="stat-number">98%</div>
