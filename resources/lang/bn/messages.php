@@ -90,6 +90,7 @@ return [
     'success' => 'সফল',
     'error' => 'ত্রুটি',
     'articles' => 'প্রবন্ধ',
+    'my_articles' => 'আমার প্রবন্ধ',
     'cases' => 'মামলা',
     'notifications' => 'বিজ্ঞপ্তি',
     'articles_subtitle' => 'সর্বশেষ আইনি প্রবন্ধ এবং নির্দেশিকা।',

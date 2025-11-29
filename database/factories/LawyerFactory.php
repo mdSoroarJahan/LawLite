@@ -19,7 +19,16 @@ class LawyerFactory extends Factory
             'documents' => null,
             'latitude' => null,
             'longitude' => null,
-            'city' => null,
+            'city' => $this->faker->city(),
+            'education' => [
+                'LLB (Honours) from ' . $this->faker->randomElement(['University of Dhaka', 'North South University', 'BRAC University']),
+                'LLM from ' . $this->faker->randomElement(['University of London', 'Dhaka University'])
+            ],
+            'experience' => [
+                $this->faker->numberBetween(1, 15) . ' years of practice in High Court',
+                'Associate at ' . $this->faker->company()
+            ],
+            'languages' => $this->faker->randomElements(['English', 'Bengali', 'Hindi'], 2),
         ];
     }
 }

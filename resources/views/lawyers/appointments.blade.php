@@ -108,14 +108,18 @@
                                                 <i class="bi bi-check-circle"></i> {{ __('messages.accept') }}
                                             </button>
                                         </form>
-                                        <form action="{{ route('lawyer.appointments.reject', $appointment->id) }}"
-                                            method="POST" class="flex-fill"
-                                            onsubmit="return confirm('{{ __('messages.confirm_reject_appointment') }}');">
-                                            @csrf
-                                            <button type="submit" class="btn btn-danger btn-sm w-100">
-                                                <i class="bi bi-x-circle"></i> {{ __('messages.reject') }}
-                                            </button>
-                                        </form>
+
+                                        <button type="button" class="btn btn-outline-danger btn-sm flex-fill"
+                                            onclick="showConfirmation('{{ route('lawyer.appointments.reject', $appointment->id) }}', 'Reject Appointment', 'Are you sure you want to reject this appointment? This action cannot be undone.', 'btn-danger', 'Reject Appointment', 'text-danger')">
+                                            <i class="bi bi-x-circle"></i> {{ __('messages.reject') }}
+                                        </button>
+                                    </div>
+                                @elseif ($appointment->status === 'confirmed')
+                                    <div class="mt-3">
+                                        <button type="button" class="btn btn-info btn-sm w-100 text-white"
+                                            onclick="showConfirmation('{{ route('lawyer.appointments.complete', $appointment->id) }}', 'Complete Appointment', 'Are you sure you want to mark this appointment as completed?', 'btn-info text-white', 'Mark Completed', 'text-info')">
+                                            <i class="bi bi-check2-all"></i> Mark as Completed
+                                        </button>
                                     </div>
                                 @endif
 
@@ -134,4 +138,50 @@
             </div>
         @endif
     </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold" id="modalTitle">Confirm Action</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body py-4">
+                    <div class="text-center mb-3">
+                        <div class="avatar-md mx-auto mb-3 text-warning" id="modalIcon">
+                            <i class="bi bi-exclamation-circle display-4"></i>
+                        </div>
+                        <p class="text-muted mb-0 fs-5" id="modalMessage">Are you sure you want to proceed?</p>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 pt-0 justify-content-center pb-4">
+                    <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">Cancel</button>
+                    <form id="confirmationForm" method="POST" action="">
+                        @csrf
+                        <button type="submit" class="btn btn-danger px-4" id="modalConfirmBtn">Confirm</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showConfirmation(actionUrl, title, message, btnClass = 'btn-danger', btnText = 'Confirm', iconClass =
+            'text-warning') {
+            const modal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+            document.getElementById('confirmationForm').action = actionUrl;
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalMessage').textContent = message;
+
+            const confirmBtn = document.getElementById('modalConfirmBtn');
+            confirmBtn.className = `btn ${btnClass} px-4`;
+            confirmBtn.textContent = btnText;
+
+            const iconContainer = document.getElementById('modalIcon');
+            iconContainer.className = `avatar-md mx-auto mb-3 ${iconClass}`;
+
+            modal.show();
+        }
+    </script>
 @endsection

@@ -120,6 +120,7 @@ Route::middleware(['auth', 'role:lawyer'])->get('/lawyer/dashboard', [\App\Http\
 Route::middleware(['auth', 'role:lawyer'])->get('/lawyer/appointments', [\App\Http\Controllers\LawyerDashboardController::class, 'appointments'])->name('lawyer.appointments');
 Route::middleware(['auth', 'role:lawyer'])->post('/lawyer/appointments/{id}/accept', [\App\Http\Controllers\LawyerDashboardController::class, 'acceptAppointment'])->name('lawyer.appointments.accept');
 Route::middleware(['auth', 'role:lawyer'])->post('/lawyer/appointments/{id}/reject', [\App\Http\Controllers\LawyerDashboardController::class, 'rejectAppointment'])->name('lawyer.appointments.reject');
+Route::middleware(['auth', 'role:lawyer'])->post('/lawyer/appointments/{id}/complete', [\App\Http\Controllers\LawyerDashboardController::class, 'completeAppointment'])->name('lawyer.appointments.complete');
 Route::middleware(['auth', 'role:lawyer'])->match(['get', 'post'], '/lawyer/profile/edit', [\App\Http\Controllers\LawyerDashboardController::class, 'editProfile'])->name('lawyer.profile.edit');
 Route::middleware(['auth', 'role:lawyer'])->post('/lawyer/request-verification', [\App\Http\Controllers\LawyerDashboardController::class, 'requestVerification'])->name('lawyer.request.verification');
 
@@ -145,6 +146,9 @@ Route::middleware(['auth', 'role:lawyer'])->group(function () {
     Route::post('/lawyer/availability', [\App\Http\Controllers\LawyerAvailabilityController::class, 'update'])->name('lawyer.availability.update');
 });
 
+// Lawyer Article Management
+Route::middleware(['auth', 'role:lawyer'])->resource('lawyer/articles', \App\Http\Controllers\Lawyer\ArticleController::class, ['as' => 'lawyer']);
+
 // Admin dashboard and management routes (protected)
 Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'dashboard'])->name('admin.dashboard');
@@ -159,6 +163,12 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::post('/admin/verification/{id}/approve', [\App\Http\Controllers\Admin\VerificationController::class, 'approve'])->name('admin.verification.approve');
     Route::post('/admin/verification/{id}/reject', [\App\Http\Controllers\Admin\VerificationController::class, 'reject'])->name('admin.verification.reject');
     Route::post('/admin/verification/{id}/request-info', [\App\Http\Controllers\Admin\VerificationController::class, 'requestInfo'])->name('admin.verification.request_info');
+
+    // Article Management
+    Route::resource('/admin/articles', \App\Http\Controllers\Admin\ArticleController::class, ['as' => 'admin']);
+    // Admin Article Approval
+    Route::post('/admin/articles/{article}/approve', [\App\Http\Controllers\Admin\ArticleController::class, 'approve'])->name('admin.articles.approve');
+    Route::post('/admin/articles/{article}/reject', [\App\Http\Controllers\Admin\ArticleController::class, 'reject'])->name('admin.articles.reject');
 });
 
 // Local debug: show session id and CSRF token
@@ -173,6 +183,7 @@ Route::get('/_debug/session', function (\Illuminate\Http\Request $request) {
 // Notifications
 Route::middleware('auth')->get('/notifications', [NotificationsController::class, 'index'])->name('notifications.index');
 Route::middleware('auth')->get('/notifications/json', [NotificationsController::class, 'getJson'])->name('notifications.json');
+Route::middleware('auth')->get('/notifications/{id}/read', [NotificationsController::class, 'readAndRedirect'])->name('notifications.read');
 Route::middleware('auth')->post('/notifications/{id}/mark-read', [NotificationsController::class, 'markRead'])->name('notifications.mark-read');
 Route::middleware('auth')->post('/notifications/mark-all-read', [NotificationsController::class, 'markAllRead'])->name('notifications.mark-all-read');
 
@@ -189,6 +200,9 @@ Route::middleware('auth')->get('/chat/history/{withUserId}', [ChatController::cl
 
 // Appointment booking
 Route::middleware('auth')->post('/appointments/book', [AppointmentController::class, 'book']);
+Route::middleware('auth')->get('/payment/checkout/{id}', [AppointmentController::class, 'paymentCheckout'])->name('payment.checkout');
+Route::middleware('auth')->post('/payment/process/{id}', [AppointmentController::class, 'paymentProcess'])->name('payment.process');
+
 
 // User Case Portal
 Route::middleware('auth')->group(function () {

@@ -67,4 +67,30 @@ class NotificationsController extends Controller
 
         return back()->with('success', 'All notifications marked as read');
     }
+
+    /**
+     * Mark notification as read and redirect to target
+     */
+    public function readAndRedirect(Request $request, $id): RedirectResponse
+    {
+        $user = $request->user();
+        if (!$user) return redirect()->route('login');
+
+        $notification = $user->notifications()->where('id', $id)->first();
+
+        if ($notification) {
+            $notification->markAsRead();
+
+            // Determine redirect URL based on type
+            $type = $notification->data['type'] ?? '';
+
+            if ($type === 'appointment') {
+                return redirect()->route($user->role === 'lawyer' ? 'lawyer.appointments' : 'appointments.index');
+            } elseif ($type === 'message') {
+                return redirect()->route('messages.inbox');
+            }
+        }
+
+        return back();
+    }
 }

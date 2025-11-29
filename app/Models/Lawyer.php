@@ -26,7 +26,7 @@ class Lawyer extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'expertise', 'bio', 'license_number', 'verification_status', 'documents', 'latitude', 'longitude', 'city', 'education', 'experience', 'languages', 'bar_council_id'];
+    protected $fillable = ['user_id', 'expertise', 'bio', 'hourly_rate', 'license_number', 'verification_status', 'documents', 'latitude', 'longitude', 'city', 'education', 'experience', 'languages', 'bar_council_id'];
 
     /** @var array<string,string> */
     protected $casts = [

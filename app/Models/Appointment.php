@@ -12,7 +12,7 @@ class Appointment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['lawyer_id', 'user_id', 'date', 'time', 'status', 'type', 'notes'];
+    protected $fillable = ['lawyer_id', 'user_id', 'date', 'time', 'status', 'type', 'notes', 'payment_status', 'amount', 'payment_method', 'transaction_id'];
 
     /**
     /** @method static \Database\Factories\AppointmentFactory factory(...$parameters)

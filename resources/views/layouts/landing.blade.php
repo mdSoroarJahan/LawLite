@@ -68,12 +68,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4 mb-4 mb-md-0">
-                    <h5 class="fw-bold mb-3">LawLite</h5>
+                    <h5 class="fw-bold mb-3 text-white">LawLite</h5>
                     <p class="text-white-50">{{ __('messages.hero_desc') }}
                     </p>
                 </div>
                 <div class="col-md-2 col-6 mb-4 mb-md-0">
-                    <h6 class="fw-bold mb-3">{{ __('messages.footer_platform') }}</h6>
+                    <h6 class="fw-bold mb-3 text-white">{{ __('messages.footer_platform') }}</h6>
                     <ul class="list-unstyled">
                         <li class="mb-2"><a href="{{ route('lawyers.index') }}"
                                 class="text-white-50 text-decoration-none">{{ __('messages.find_lawyers') }}</a></li>
@@ -84,7 +84,7 @@
                     </ul>
                 </div>
                 <div class="col-md-2 col-6 mb-4 mb-md-0">
-                    <h6 class="fw-bold mb-3">{{ __('messages.footer_company') }}</h6>
+                    <h6 class="fw-bold mb-3 text-white">{{ __('messages.footer_company') }}</h6>
                     <ul class="list-unstyled">
                         <li class="mb-2"><a href="{{ route('about') }}"
                                 class="text-white-50 text-decoration-none">{{ __('messages.footer_about') }}</a>
@@ -96,7 +96,7 @@
                     </ul>
                 </div>
                 <div class="col-md-4">
-                    <h6 class="fw-bold mb-3">{{ __('messages.footer_subscribe') }}</h6>
+                    <h6 class="fw-bold mb-3 text-white">{{ __('messages.footer_subscribe') }}</h6>
                     <form class="d-flex gap-2">
                         <input type="email" class="form-control"
                             placeholder="{{ __('messages.email_placeholder') }}">

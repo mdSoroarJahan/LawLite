@@ -74,8 +74,7 @@ class LawyerDashboardController extends Controller
                     $query->where('status', $request->status);
                 }
 
-                $appointments = $query->orderBy('date', 'asc')
-                    ->orderBy('time', 'asc')
+                $appointments = $query->orderBy('created_at', 'desc')
                     ->get();
             } catch (\Throwable $e) {
                 $appointments = [];
@@ -136,6 +135,29 @@ class LawyerDashboardController extends Controller
         $appointment->save();
 
         return redirect()->route('lawyer.appointments')->with('success', 'Appointment rejected.');
+    }
+
+    /**
+     * Complete an appointment
+     */
+    public function completeAppointment(Request $request, $id): \Illuminate\Http\RedirectResponse
+    {
+        $user = $request->user();
+        if (! $user || $user->role !== 'lawyer') abort(403);
+
+        $lawyer = $user->lawyer;
+        if (!$lawyer) {
+            return redirect()->route('lawyer.appointments')->with('error', 'Lawyer profile not found.');
+        }
+
+        $appointment = \App\Models\Appointment::where('id', $id)
+            ->where('lawyer_id', $lawyer->id)
+            ->firstOrFail();
+
+        $appointment->status = 'completed';
+        $appointment->save();
+
+        return redirect()->route('lawyer.appointments')->with('success', 'Appointment marked as completed.');
     }
 
     /**

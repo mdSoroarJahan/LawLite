@@ -1,6 +1,37 @@
 @extends('layouts.app')
 
 @section('content')
+    <style>
+        .marquee-container {
+            display: flex;
+            overflow: hidden;
+            width: 100%;
+            mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+        }
+
+        .marquee-content {
+            white-space: nowrap;
+            padding-right: 2rem;
+            flex-shrink: 0;
+            animation: marquee 15s linear infinite;
+        }
+
+        @keyframes marquee {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-100%);
+            }
+        }
+
+        /* Pause on hover */
+        .marquee-container:hover .marquee-content {
+            animation-play-state: paused;
+        }
+    </style>
     <div class="container py-6">
         <div class="row mb-4">
             <div class="col-md-8 mx-auto text-center">
@@ -34,15 +65,48 @@
         <div class="row">
             @forelse($lawyers as $lawyer)
                 <div class="col-md-4 mb-4">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $lawyer->user->name ?? __('messages.unnamed_lawyer') }}</h5>
-                            <p class="card-text text-muted">{{ $lawyer->expertise ?? __('messages.general_practice') }}</p>
-                            <p class="mb-1"><small class="text-muted">{{ __('messages.location') }}:
-                                    {{ $lawyer->city ?? __('messages.unknown') }}</small>
+                    <div class="card h-100 shadow-sm border-0 hover-lift">
+                        <div class="card-body text-center p-4">
+                            @if ($lawyer->user && $lawyer->user->profile_photo_path)
+                                <img src="{{ asset('storage/' . $lawyer->user->profile_photo_path) }}"
+                                    alt="{{ $lawyer->user->name }}" class="rounded-circle mb-3 object-fit-cover shadow-sm"
+                                    style="width: 100px; height: 100px;">
+                            @else
+                                <div class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center text-secondary mb-3 shadow-sm"
+                                    style="width: 100px; height: 100px; font-size: 2.5rem;">
+                                    {{ substr($lawyer->user->name ?? 'L', 0, 1) }}
+                                </div>
+                            @endif
+
+                            <h5 class="card-title fw-bold mb-1">{{ $lawyer->user->name ?? __('messages.unnamed_lawyer') }}
+                            </h5>
+                            <p class="text-primary small mb-2 fw-semibold">
+                                {{ $lawyer->expertise ?? __('messages.general_practice') }}</p>
+
+                            @if (is_array($lawyer->education) && count($lawyer->education) > 0)
+                                @php $eduText = $lawyer->education[0]; @endphp
+                                @if (strlen($eduText) > 25)
+                                    <div class="marquee-container mb-2" title="{{ $eduText }}">
+                                        <div class="marquee-content small text-muted">
+                                            <i class="bi bi-mortarboard-fill me-1"></i> {{ $eduText }}
+                                        </div>
+                                        <div class="marquee-content small text-muted">
+                                            <i class="bi bi-mortarboard-fill me-1"></i> {{ $eduText }}
+                                        </div>
+                                    </div>
+                                @else
+                                    <p class="small text-muted mb-2 text-truncate" title="{{ $eduText }}">
+                                        <i class="bi bi-mortarboard-fill me-1"></i> {{ $eduText }}
+                                    </p>
+                                @endif
+                            @endif
+
+                            <p class="small text-muted mb-3">
+                                <i class="bi bi-geo-alt-fill me-1"></i> {{ $lawyer->city ?? __('messages.unknown') }}
                             </p>
+
                             <a href="{{ route('lawyers.show', $lawyer->id) }}"
-                                class="btn btn-sm btn-outline-primary mt-2">{{ __('messages.view_profile') }}</a>
+                                class="btn btn-outline-primary w-100 rounded-pill">{{ __('messages.view_profile') }}</a>
                         </div>
                     </div>
                 </div>

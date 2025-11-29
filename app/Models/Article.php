@@ -15,7 +15,7 @@ class Article extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'content', 'author_id', 'language', 'published_at'];
+    protected $fillable = ['title', 'content', 'author_id', 'language', 'published_at', 'status'];
 
     /** @phpstan-return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Article> */
     /** @phpstan-ignore-next-line */

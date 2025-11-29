@@ -51,7 +51,27 @@ class ProfileController extends Controller
 
         $user->update($validated);
 
-        return redirect()->route('profile.show')->with('success', 'Profile updated successfully!');
+        if ($user->role === 'lawyer') {
+            $lawyerData = $request->validate([
+                'bio' => 'nullable|string|max:1000',
+                'expertise' => 'nullable|string|max:255',
+                'hourly_rate' => 'nullable|numeric|min:0',
+                'city' => 'nullable|string|max:255',
+                'license_number' => 'nullable|string|max:255',
+                'education' => 'nullable|string|max:1000',
+            ]);
+
+            if (isset($lawyerData['education'])) {
+                $lawyerData['education'] = array_filter(array_map('trim', explode("\n", $lawyerData['education'])));
+            }
+
+            $user->lawyer()->updateOrCreate(
+                ['user_id' => $user->id],
+                $lawyerData
+            );
+        }
+
+        return back()->with('success', 'Profile updated successfully.');
     }
 
     /**

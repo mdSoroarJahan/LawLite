@@ -8,6 +8,7 @@ use App\Models\Lawyer;
 use App\Notifications\GenericNotification;
 use Illuminate\Http\JsonResponse;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class AppointmentController extends Controller
 {
@@ -53,13 +54,14 @@ class AppointmentController extends Controller
             $end = Carbon::parse($availability->end_time);
 
             while ($start->copy()->addMinutes($duration)->lte($end)) {
-                $timeString = $start->format('H:i');
+                $checkTime = $start->format('H:i');
+                $displayTime = $start->format('h:i A');
 
                 // Check if slot is already booked
-                if (!in_array($timeString, $existingAppointments)) {
+                if (!in_array($checkTime, $existingAppointments)) {
                     // Also check if it's in the past for today
                     if (!$date->isToday() || $start->gt(now())) {
-                        $slots[] = $timeString;
+                        $slots[] = $displayTime;
                     }
                 }
 
@@ -67,7 +69,11 @@ class AppointmentController extends Controller
             }
         }
 
-        return new JsonResponse(['ok' => true, 'slots' => $slots]);
+        return new JsonResponse([
+            'ok' => true,
+            'slots' => $slots,
+            'hourly_rate' => $lawyer->hourly_rate ?? 500 // Default if null
+        ]);
     }
 
     /**
@@ -82,6 +88,7 @@ class AppointmentController extends Controller
             'time' => 'required',
             'type' => 'nullable|string',
             'notes' => 'nullable|string',
+            'payment_method' => 'required|string|in:bkash,card,cash',
         ]);
 
         $user = $request->user();
@@ -121,21 +128,31 @@ class AppointmentController extends Controller
         $conflict = Appointment::where('lawyer_id', $data['lawyer_id'])
             ->where('date', $data['date'])
             ->where('time', $time->format('H:i:s')) // Exact match for now (assuming 30 min slots)
-            ->whereIn('status', ['scheduled', 'confirmed'])
+            ->whereIn('status', ['scheduled', 'confirmed', 'pending'])
             ->exists();
 
         if ($conflict) {
             return new JsonResponse(['ok' => false, 'message' => 'This slot is already booked.'], 422);
         }
 
+        // Calculate Payment
+        $amount = $lawyer->hourly_rate ?? 500;
+        $paymentStatus = 'pending';
+        $transactionId = null;
+
+        // Create appointment first with pending status
         $appointment = Appointment::create([
             'lawyer_id' => $data['lawyer_id'],
             'user_id' => $user->id,
             'date' => $data['date'],
-            'time' => $data['time'],
-            'status' => 'scheduled',
+            'time' => $time->format('H:i:s'),
+            'status' => 'pending',
             'type' => $data['type'] ?? 'online',
             'notes' => $data['notes'] ?? null,
+            'payment_status' => 'pending',
+            'amount' => $amount,
+            'payment_method' => $data['payment_method'],
+            'transaction_id' => null,
         ]);
 
         // notify the lawyer
@@ -147,7 +164,48 @@ class AppointmentController extends Controller
             // log
         }
 
+        // If online payment, return redirect URL
+        if (in_array($data['payment_method'], ['bkash', 'card'])) {
+            return new JsonResponse([
+                'ok' => true,
+                'appointment' => $appointment,
+                'redirect_url' => route('payment.checkout', $appointment->id)
+            ]);
+        }
+
         return new JsonResponse(['ok' => true, 'appointment' => $appointment]);
+    }
+
+    public function paymentCheckout($id)
+    {
+        $appointment = Appointment::findOrFail($id);
+
+        // Security check
+        if ($appointment->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        if ($appointment->payment_status === 'paid') {
+            return redirect()->route('appointments.index')->with('success', 'Payment already completed.');
+        }
+
+        return view('payment.mock_gateway', compact('appointment'));
+    }
+
+    public function paymentProcess($id)
+    {
+        $appointment = Appointment::findOrFail($id);
+
+        if ($appointment->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $appointment->update([
+            'payment_status' => 'paid',
+            'transaction_id' => strtoupper(uniqid('TXN')),
+        ]);
+
+        return redirect()->route('appointments.index')->with('success', 'Payment successful! Appointment confirmed.');
     }
 
     /**

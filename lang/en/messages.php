@@ -13,6 +13,7 @@ return [
     'messages' => 'Messages',
     'profile' => 'Profile',
     'articles' => 'Articles',
+    'my_articles' => 'My Articles',
     'appointments' => 'Appointments',
     'cases' => 'Cases',
     'notifications' => 'Notifications',

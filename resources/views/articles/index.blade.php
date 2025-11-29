@@ -31,7 +31,7 @@
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <h5 class="card-title">{{ $article->title }}</h5>
-                            <p class="text-muted">{{ \Illuminate\Support\Str::limit($article->body, 120) }}</p>
+                            <p class="text-muted">{{ \Illuminate\Support\Str::limit($article->content, 120) }}</p>
                             <a href="{{ route('articles.show', $article->id) }}"
                                 class="btn btn-sm btn-primary">{{ __('messages.read') }}</a>
                         </div>

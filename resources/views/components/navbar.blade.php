@@ -17,7 +17,7 @@
                     <li class="nav-item"><a class="nav-link"
                             href="{{ route('lawyer.dashboard') }}">{{ __('messages.home') }}</a></li>
                     <li class="nav-item"><a class="nav-link"
-                            href="{{ route('articles.index') }}">{{ __('messages.articles') }}</a></li>
+                            href="{{ route('lawyer.articles.index') }}">{{ __('messages.my_articles') }}</a></li>
                     <li class="nav-item"><a class="nav-link"
                             href="{{ route('lawyer.cases.index') }}">{{ __('messages.cases') }}</a></li>
                     <li class="nav-item"><a class="nav-link"
