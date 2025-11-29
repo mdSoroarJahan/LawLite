@@ -176,6 +176,7 @@ return [
     'ai_input_placeholder' => 'Example: What are the requirements for registering a company in Bangladesh?',
     'ai_submit_btn' => 'Ask AI Assistant',
     'stat_verified_lawyers' => 'Verified Lawyers',
+    'stat_secure_platform' => 'Secure Platform',
     'stat_client_satisfaction' => 'Client Satisfaction',
     'stat_ai_support' => 'AI Support',
     'why_choose_title' => 'Why Choose LawLite?',

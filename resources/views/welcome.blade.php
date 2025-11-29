@@ -157,7 +157,12 @@
     <section class="border-bottom bg-white">
         <div class="container">
             <div class="row g-0">
-                <!-- Verified lawyers stat removed per design request -->
+                <div class="col-md-4">
+                    <div class="stat-card">
+                        <div class="stat-number">100%</div>
+                        <div class="text-muted fw-semibold">{{ __('messages.stat_secure_platform') }}</div>
+                    </div>
+                </div>
                 <div class="col-md-4">
                     <div class="stat-card">
                         <div class="stat-number">98%</div>
