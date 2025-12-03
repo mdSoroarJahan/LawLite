@@ -54,7 +54,8 @@
                         {{-- Regular user navigation --}}
                         <li class="nav-item"><a class="nav-link"
                                 href="{{ route('user.cases.index') }}">{{ __('messages.cases') }}</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('client.invoices.index') }}">Invoices</a>
+                        <li class="nav-item"><a class="nav-link"
+                                href="{{ route('client.invoices.index') }}">{{ __('messages.invoices') }}</a>
                         </li>
                         <li class="nav-item"><a class="nav-link"
                                 href="{{ route('messages.inbox') }}">{{ __('messages.messages') }}</a></li>

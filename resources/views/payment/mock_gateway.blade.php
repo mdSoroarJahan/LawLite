@@ -6,64 +6,44 @@
             <div class="col-md-6">
                 <div class="card shadow-sm">
                     <div class="card-header bg-white py-3">
-                        <h4 class="mb-0 text-center">
-                            @if ($appointment->payment_method == 'bkash')
-                                <span class="text-danger fw-bold">bKash</span> Payment Gateway
-                            @else
-                                <span class="text-primary fw-bold">Secure</span> Card Payment
-                            @endif
-                        </h4>
+                        <h5 class="mb-0 fw-bold">Confirm Payment</h5>
                     </div>
-                    <div class="card-body p-4">
+                    <div class="card-body">
                         <div class="text-center mb-4">
-                            <div class="display-6 fw-bold mb-2">{{ number_format($appointment->amount, 2) }} BDT</div>
-                            <div class="text-muted">Consultation with {{ $appointment->lawyer->user->name }}</div>
-                            <div class="small text-muted">{{ \Carbon\Carbon::parse($appointment->date)->format('d M Y') }}
-                                at {{ \Carbon\Carbon::parse($appointment->time)->format('h:i A') }}</div>
+                            <img src="https://securepay.sslcommerz.com/public/image/sslcommerz.png" alt="SSLCommerz"
+                                style="height: 50px;">
+                            <p class="text-muted mt-2">Secure Payment Gateway</p>
                         </div>
 
-                        <div class="alert alert-info small">
-                            <i class="bi bi-info-circle me-1"></i> This is a secure payment simulation. No real money will
-                            be deducted.
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Service:</span>
+                            <span class="fw-bold">Legal Consultation</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Lawyer:</span>
+                            <span class="fw-bold">{{ $appointment->lawyer->user->name }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Date & Time:</span>
+                            <span>{{ $appointment->date }} at {{ $appointment->time }}</span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between mb-4">
+                            <span class="h5">Total Amount:</span>
+                            <span class="h5 text-primary">৳
+                                {{ number_format($appointment->lawyer->hourly_rate ?? 500, 2) }}</span>
                         </div>
 
-                        <form action="{{ route('payment.process', $appointment->id) }}" method="POST" id="payment-form">
+                        <form action="{{ route('payment.process', $appointment->id) }}" method="POST">
                             @csrf
-
-                            @if ($appointment->payment_method == 'bkash')
-                                <div class="mb-3">
-                                    <label class="form-label">Your bKash Number</label>
-                                    <input type="text" class="form-control" placeholder="01XXXXXXXXX" required
-                                        pattern="01[0-9]{9}">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">PIN</label>
-                                    <input type="password" class="form-control" placeholder="*****" required>
-                                </div>
-                            @else
-                                <div class="mb-3">
-                                    <label class="form-label">Card Number</label>
-                                    <input type="text" class="form-control" placeholder="XXXX XXXX XXXX XXXX" required>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label class="form-label">Expiry</label>
-                                        <input type="text" class="form-control" placeholder="MM/YY" required>
-                                    </div>
-                                    <div class="col-6">
-                                        <label class="form-label">CVC</label>
-                                        <input type="text" class="form-control" placeholder="123" required>
-                                    </div>
-                                </div>
-                            @endif
-
-                            <div class="d-grid mt-4">
-                                <button type="submit"
-                                    class="btn btn-lg {{ $appointment->payment_method == 'bkash' ? 'btn-danger' : 'btn-primary' }}">
-                                    Confirm Payment
-                                </button>
-                            </div>
+                            <button type="submit" class="btn btn-primary w-100 py-2">
+                                Pay Now with SSLCommerz
+                            </button>
                         </form>
+
+                        <div class="text-center mt-3">
+                            <small class="text-muted">You will be redirected to SSLCommerz sandbox for testing.</small>
+                        </div>
                     </div>
                 </div>
             </div>

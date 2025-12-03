@@ -203,6 +203,15 @@ Route::middleware('auth')->post('/appointments/book', [AppointmentController::cl
 Route::middleware('auth')->get('/payment/checkout/{id}', [AppointmentController::class, 'paymentCheckout'])->name('payment.checkout');
 Route::middleware('auth')->post('/payment/process/{id}', [AppointmentController::class, 'paymentProcess'])->name('payment.process');
 
+// SSLCommerz Callbacks (Excluded from Session/CSRF to prevent 419/Logout issues)
+Route::withoutMiddleware([\Illuminate\Session\Middleware\StartSession::class, \Illuminate\View\Middleware\ShareErrorsFromSession::class, \App\Http\Middleware\VerifyCsrfToken::class])->group(function () {
+    Route::post('/payment/success', [\App\Http\Controllers\PaymentController::class, 'success'])->name('payment.success');
+    Route::post('/payment/fail', [\App\Http\Controllers\PaymentController::class, 'fail'])->name('payment.fail');
+    Route::post('/payment/cancel', [\App\Http\Controllers\PaymentController::class, 'cancel'])->name('payment.cancel');
+    Route::post('/payment/ipn', [\App\Http\Controllers\PaymentController::class, 'ipn'])->name('payment.ipn');
+});
+
+
 
 // User Case Portal
 Route::middleware('auth')->group(function () {

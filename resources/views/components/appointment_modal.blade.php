@@ -41,33 +41,22 @@
 
                     <!-- Payment Section -->
                     <div class="mb-3">
-                        <label class="form-label fw-semibold">Payment Method</label>
+                        <label class="form-label fw-semibold">Payment Details</label>
                         <div class="p-3 bg-light rounded border">
                             <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
                                 <span>Consultation Fee:</span>
                                 <span class="fw-bold text-primary fs-5" id="consultation-fee-display">...</span>
                             </div>
 
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="radio" name="payment_method" id="pay-bkash"
-                                    value="bkash" checked>
-                                <label class="form-check-label d-flex align-items-center" for="pay-bkash">
-                                    <span class="badge bg-danger me-2">bKash</span> Mobile Money
-                                </label>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="radio" name="payment_method" id="pay-card"
-                                    value="card">
-                                <label class="form-check-label" for="pay-card">
-                                    💳 Credit/Debit Card
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="payment_method" id="pay-cash"
-                                    value="cash">
-                                <label class="form-check-label" for="pay-cash">
-                                    💵 Pay at Office
-                                </label>
+                            <input type="hidden" name="payment_method" value="sslcommerz">
+
+                            <div class="text-center p-3 bg-white rounded border">
+                                <p class="mb-2 text-muted small">Secured Payment via</p>
+                                <img src="https://securepay.sslcommerz.com/public/image/sslcommerz.png" alt="SSLCommerz"
+                                    style="height: 30px; max-width: 100%;">
+                                <div class="mt-2 small text-muted">
+                                    <i class="bi bi-shield-check text-success"></i> Safe & Secure
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -98,17 +87,8 @@
             return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         }
 
-        // Update button text based on payment method
-        function updateButtonText() {
-            const method = document.querySelector('input[name="payment_method"]:checked')?.value;
-            if (method === 'cash') {
-                bookBtn.textContent = '{{ __('messages.book') }}';
-            } else {
-                bookBtn.textContent = 'Pay & Book Appointment';
-            }
-        }
-
-        paymentRadios.forEach(radio => radio.addEventListener('change', updateButtonText));
+        // Set button text
+        if (bookBtn) bookBtn.textContent = 'Pay & Book Appointment';
 
         // Fetch slots when date changes
         dateInput?.addEventListener('change', async function() {
@@ -230,8 +210,17 @@
                 if (button) {
                     // Extract info from data-* attributes
                     const lawyerId = button.getAttribute('data-lawyer-id');
+                    const hourlyRate = button.getAttribute('data-hourly-rate');
+
                     if (lawyerId) {
                         document.getElementById('modal-lawyer-id').value = lawyerId;
+
+                        // Update fee display immediately
+                        const feeDisplay = document.getElementById('consultation-fee-display');
+                        if (feeDisplay) {
+                            feeDisplay.textContent = (hourlyRate || '500') + ' BDT';
+                        }
+
                         // Reset fields
                         form.reset();
                         timeInput.value = '';

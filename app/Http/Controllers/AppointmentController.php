@@ -10,8 +10,16 @@ use Illuminate\Http\JsonResponse;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
+use App\Services\Payment\SSLCommerz;
+
 class AppointmentController extends Controller
 {
+    protected $sslcommerz;
+
+    public function __construct(SSLCommerz $sslcommerz)
+    {
+        $this->sslcommerz = $sslcommerz;
+    }
     /**
      * Get available slots for a lawyer on a specific date.
      */
@@ -88,7 +96,7 @@ class AppointmentController extends Controller
             'time' => 'required',
             'type' => 'nullable|string',
             'notes' => 'nullable|string',
-            'payment_method' => 'required|string|in:bkash,card,cash',
+            'payment_method' => 'required|string',
         ]);
 
         $user = $request->user();
@@ -165,7 +173,7 @@ class AppointmentController extends Controller
         }
 
         // If online payment, return redirect URL
-        if (in_array($data['payment_method'], ['bkash', 'card'])) {
+        if (in_array($data['payment_method'], ['bkash', 'card', 'sslcommerz'])) {
             return new JsonResponse([
                 'ok' => true,
                 'appointment' => $appointment,
@@ -200,12 +208,25 @@ class AppointmentController extends Controller
             abort(403);
         }
 
-        $appointment->update([
-            'payment_status' => 'paid',
-            'transaction_id' => strtoupper(uniqid('TXN')),
-        ]);
+        // Initiate SSLCommerz Payment
+        $paymentData = [
+            'total_amount' => $appointment->lawyer->hourly_rate ?? 500,
+            'currency' => 'BDT',
+            'tran_id' => uniqid('APPT_'),
+            'cus_name' => Auth::user()->name,
+            'cus_email' => Auth::user()->email,
+            'cus_phone' => Auth::user()->phone ?? '01700000000',
+            'product_name' => 'Consultation with ' . $appointment->lawyer->user->name,
+            'ref_id' => 'APPT_' . $appointment->id, // Internal Reference
+        ];
 
-        return redirect()->route('appointments.index')->with('success', 'Payment successful! Appointment confirmed.');
+        $result = $this->sslcommerz->initiatePayment($paymentData);
+
+        if ($result['status'] === 'success') {
+            return redirect($result['redirect_url']);
+        } else {
+            return back()->with('error', 'Payment initiation failed: ' . ($result['message'] ?? 'Unknown error'));
+        }
     }
 
     /**

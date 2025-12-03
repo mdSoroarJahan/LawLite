@@ -3,8 +3,9 @@
 @section('content')
     <div class="container py-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="h3">Invoices</h1>
-            <a href="{{ route('lawyer.invoices.create') }}" class="btn btn-primary">Create Invoice</a>
+            <h1 class="h3">{{ __('messages.invoices') }}</h1>
+            <a href="{{ route('lawyer.invoices.create') }}"
+                class="btn btn-primary">{{ __('messages.create_invoice') ?? 'Create Invoice' }}</a>
         </div>
 
         @if ($invoices->isEmpty())

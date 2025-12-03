@@ -127,11 +127,60 @@
     </style>
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     <?php echo $__env->make('components.navbar', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
     <main class="container py-4">
         <?php echo $__env->yieldContent('content'); ?>
     </main>
+
+    <footer class="bg-dark text-white py-5 mt-auto">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="fw-bold mb-3 text-white">LawLite</h5>
+                    <p class="text-white-50"><?php echo e(__('messages.hero_desc')); ?>
+
+                    </p>
+                </div>
+                <div class="col-md-2 col-6 mb-4 mb-md-0">
+                    <h6 class="fw-bold mb-3 text-white"><?php echo e(__('messages.footer_platform')); ?></h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="<?php echo e(route('lawyers.index')); ?>"
+                                class="text-white-50 text-decoration-none"><?php echo e(__('messages.find_lawyers')); ?></a></li>
+                        <li class="mb-2"><a href="<?php echo e(route('articles.index')); ?>"
+                                class="text-white-50 text-decoration-none"><?php echo e(__('messages.articles')); ?></a></li>
+                        <li class="mb-2"><a href="<?php echo e(route('appointments.index')); ?>"
+                                class="text-white-50 text-decoration-none"><?php echo e(__('messages.appointments')); ?></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 col-6 mb-4 mb-md-0">
+                    <h6 class="fw-bold mb-3 text-white"><?php echo e(__('messages.footer_company')); ?></h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="<?php echo e(route('about')); ?>"
+                                class="text-white-50 text-decoration-none"><?php echo e(__('messages.footer_about')); ?></a>
+                        </li>
+                        <li class="mb-2"><a href="<?php echo e(route('contact')); ?>"
+                                class="text-white-50 text-decoration-none"><?php echo e(__('messages.footer_contact')); ?></a></li>
+                        <li class="mb-2"><a href="<?php echo e(route('privacy')); ?>"
+                                class="text-white-50 text-decoration-none"><?php echo e(__('messages.footer_privacy')); ?></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h6 class="fw-bold mb-3 text-white"><?php echo e(__('messages.footer_subscribe')); ?></h6>
+                    <form class="d-flex gap-2">
+                        <input type="email" class="form-control"
+                            placeholder="<?php echo e(__('messages.email_placeholder')); ?>">
+                        <button class="btn btn-accent"
+                            type="button"><?php echo e(__('messages.footer_subscribe_btn')); ?></button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-top border-secondary mt-4 pt-4 text-center text-white-50">
+                <small>&copy; <?php echo e(date('Y')); ?> LawLite. <?php echo e(__('messages.footer_rights')); ?></small>
+            </div>
+        </div>
+    </footer>
+
     <?php if (! (request()->routeIs('messages.inbox'))): ?>
         <?php echo $__env->make('components.chat_ui', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
     <?php endif; ?>

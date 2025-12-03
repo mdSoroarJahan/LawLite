@@ -79,6 +79,9 @@ return [
     'send' => 'Send',
     'type_message' => 'Type a message...',
     'no_messages' => 'No messages yet. Start a conversation by messaging a lawyer from their profile.',
+    'no_conversations' => 'No conversations found.',
+    'welcome_chat' => 'Welcome to your Messages',
+    'select_conversation' => 'Select a conversation from the left to start chatting.',
 
     // Common
     'save' => 'Save',
@@ -235,7 +238,12 @@ return [
     'cases_lost' => 'Cases Lost',
     'not_verified' => 'Not Verified',
     'manage_invoices' => 'Manage Invoices',
+    'invoices' => 'Invoices',
+    'my_invoices' => 'My Invoices',
+    'no_invoices' => 'No invoices found.',
+    'create_invoice' => 'Create Invoice',
     'thinking' => 'Thinking...',
     'answer_label' => 'Answer:',
     'ai_assistant_intro' => 'Ask legal questions and get AI-powered assistance',
+    'audio_call' => 'Audio Call',
 ];

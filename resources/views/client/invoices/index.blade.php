@@ -2,10 +2,10 @@
 
 @section('content')
     <div class="container py-5">
-        <h2 class="mb-4">My Invoices</h2>
+        <h2 class="mb-4">{{ __('messages.my_invoices') }}</h2>
 
         @if ($invoices->isEmpty())
-            <div class="alert alert-info">You have no invoices.</div>
+            <div class="alert alert-info">{{ __('messages.no_invoices') ?? 'You have no invoices.' }}</div>
         @else
             <div class="card">
                 <div class="card-body">

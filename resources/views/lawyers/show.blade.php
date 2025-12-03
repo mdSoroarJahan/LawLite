@@ -30,7 +30,7 @@
                         <button class="btn btn-primary"
                             onclick="openChatWith({{ $lawyer->user_id ?? 0 }})">{{ __('messages.message') }}</button>
                         <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#appointmentModal"
-                            data-lawyer-id="{{ $lawyer->id }}"
+                            data-lawyer-id="{{ $lawyer->id }}" data-hourly-rate="{{ $lawyer->hourly_rate ?? 500 }}"
                             data-lawyer-name="{{ $lawyer->user->name ?? 'Lawyer' }}">{{ __('messages.book_appointment') }}</button>
                     @else
                         <a href="{{ route('login') }}" class="btn btn-primary">{{ __('messages.sign_in_to_message') }}</a>

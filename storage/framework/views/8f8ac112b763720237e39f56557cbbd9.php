@@ -17,7 +17,7 @@
                     <li class="nav-item"><a class="nav-link"
                             href="<?php echo e(route('lawyer.dashboard')); ?>"><?php echo e(__('messages.home')); ?></a></li>
                     <li class="nav-item"><a class="nav-link"
-                            href="<?php echo e(route('articles.index')); ?>"><?php echo e(__('messages.articles')); ?></a></li>
+                            href="<?php echo e(route('lawyer.articles.index')); ?>"><?php echo e(__('messages.my_articles')); ?></a></li>
                     <li class="nav-item"><a class="nav-link"
                             href="<?php echo e(route('lawyer.cases.index')); ?>"><?php echo e(__('messages.cases')); ?></a></li>
                     <li class="nav-item"><a class="nav-link"
@@ -54,7 +54,8 @@
                         
                         <li class="nav-item"><a class="nav-link"
                                 href="<?php echo e(route('user.cases.index')); ?>"><?php echo e(__('messages.cases')); ?></a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?php echo e(route('client.invoices.index')); ?>">Invoices</a>
+                        <li class="nav-item"><a class="nav-link"
+                                href="<?php echo e(route('client.invoices.index')); ?>"><?php echo e(__('messages.invoices')); ?></a>
                         </li>
                         <li class="nav-item"><a class="nav-link"
                                 href="<?php echo e(route('messages.inbox')); ?>"><?php echo e(__('messages.messages')); ?></a></li>
