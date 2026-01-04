@@ -1,0 +1,36 @@
+/vendor
+/node_modules
+/public/build
+/public/hot
+/public/storage
+/storage/*.key
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/testing/*
+/storage/framework/views/*
+/storage/logs/*
+.env
+.env.backup
+.env.production
+.phpunit.result.cache
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-error.log*
+
+# Databases
+*.sqlite
+*.sqlite-journal
+*.sql
+
+# Composer
+auth.json
+
+# IDEs
+.idea
+.vscode
+*.sublime-workspace
+*.sublime-project

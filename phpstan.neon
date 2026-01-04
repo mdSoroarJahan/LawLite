@@ -1,0 +1,17 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+    - phpstan-baseline.neon
+
+parameters:
+    level: 10
+    reportUnmatchedIgnoredErrors: false
+    excludePaths:
+        - scripts/*
+    stubFiles:
+        - phpstan-stubs/hasfactory.php
+    # Removed local stubs because Larastan provides compatible stubs that otherwise
+    # caused duplicate class declaration errors. If you need project-specific
+    # stubs, add them carefully to avoid conflicts with vendor stubs.
+    ignoreErrors:
+        - message: '#If condition is always false\.#'
+          path: scripts/check_command_autoload.php

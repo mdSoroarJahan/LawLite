@@ -1,0 +1,36 @@
+{
+  "name": "mdsoroarjahan/lawlite",
+  "description": "LawLite - Bilingual legal consultation platform",
+  "license": "MIT",
+  "type": "project",
+  "require": {
+  "php": "^8.2",
+  "laravel/framework": "^12.0",
+    "guzzlehttp/guzzle": "^7.10"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    },
+    "classmap": [
+      "database/seeders"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/",
+      "Database\\Factories\\": "database/factories/"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "11.5",
+    "fakerphp/faker": "^1.24",
+    "phpstan/phpstan": "^2.1",
+    "larastan/larastan": "^3.8",
+    "mockery/mockery": "^1.6"
+  }
+  ,
+  "scripts": {
+    "test-prepare": "php scripts/test-prepare.php"
+  }
+}

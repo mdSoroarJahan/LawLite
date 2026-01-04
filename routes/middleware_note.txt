@@ -1,0 +1,7 @@
+Register middleware in `app/Http/Kernel.php` under $routeMiddleware:
+
+'role' => \App\Http\Middleware\EnsureRole::class,
+'is_admin' => \App\Http\Middleware\IsAdmin::class,
+'is_verified_lawyer' => \App\Http\Middleware\IsVerifiedLawyer::class,
+
+Then use in routes: Route::middleware(['auth','role:admin'])->group(...)

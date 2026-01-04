@@ -1,0 +1,1069 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Binary operation "\." between ''user\.'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: app/Events/AudioCallSignal.php
+
+		-
+			message: '#^Method App\\Events\\AudioCallSignal\:\:__construct\(\) has parameter \$receiverId with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Events/AudioCallSignal.php
+
+		-
+			message: '#^Method App\\Events\\AudioCallSignal\:\:__construct\(\) has parameter \$senderId with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Events/AudioCallSignal.php
+
+		-
+			message: '#^Method App\\Events\\AudioCallSignal\:\:__construct\(\) has parameter \$senderName with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Events/AudioCallSignal.php
+
+		-
+			message: '#^Method App\\Events\\AudioCallSignal\:\:__construct\(\) has parameter \$signal with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Events/AudioCallSignal.php
+
+		-
+			message: '#^Property App\\Events\\AudioCallSignal\:\:\$receiverId has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: app/Events/AudioCallSignal.php
+
+		-
+			message: '#^Property App\\Events\\AudioCallSignal\:\:\$senderId has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: app/Events/AudioCallSignal.php
+
+		-
+			message: '#^Property App\\Events\\AudioCallSignal\:\:\$senderName has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: app/Events/AudioCallSignal.php
+
+		-
+			message: '#^Property App\\Events\\AudioCallSignal\:\:\$signal has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: app/Events/AudioCallSignal.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Admin\\VerificationController\:\:approve\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Admin/VerificationController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Admin\\VerificationController\:\:reject\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Admin/VerificationController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Admin\\VerificationController\:\:requestInfo\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Admin/VerificationController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Admin\\VerificationController\:\:show\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Admin/VerificationController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Lawyer\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Models\\Lawyer\>\:\:\$user\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/AppointmentController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$end_time\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/AppointmentController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$start_time\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/AppointmentController.php
+
+		-
+			message: '#^Call to an undefined method App\\Models\\Lawyer\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Models\\Lawyer\>\:\:availabilities\(\)\.$#'
+			identifier: method.notFound
+			count: 3
+			path: app/Http/Controllers/AppointmentController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\AppointmentController\:\:getSlots\(\) has parameter \$lawyerId with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Controllers/AppointmentController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\AppointmentController\:\:index\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/AppointmentController.php
+
+		-
+			message: '#^Parameter \#1 \$time of static method Carbon\\Carbon\:\:parse\(\) expects Carbon\\Month\|Carbon\\WeekDay\|DateTimeInterface\|float\|int\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 6
+			path: app/Http/Controllers/AppointmentController.php
+
+		-
+			message: '#^Binary operation "\." between ''%%'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 2
+			path: app/Http/Controllers/ArticlesController.php
+
+		-
+			message: '#^Right side of && is always true\.$#'
+			identifier: booleanAnd.rightAlwaysTrue
+			count: 1
+			path: app/Http/Controllers/AuthController.php
+
+		-
+			message: '#^Cannot access offset ''duration'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Http/Controllers/ChatController.php
+
+		-
+			message: '#^Cannot access offset ''type'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Http/Controllers/ChatController.php
+
+		-
+			message: '#^Cannot access property \$receiver_id on App\\Models\\Message\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Http/Controllers/ChatController.php
+
+		-
+			message: '#^Cannot access property \$sender_id on App\\Models\\Message\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: app/Http/Controllers/ChatController.php
+
+		-
+			message: '#^Parameter \#1 \$haystack of function str_starts_with expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/ChatController.php
+
+		-
+			message: '#^Parameter \#2 \$needle of function stripos expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/ChatController.php
+
+		-
+			message: '#^Part \$duration \(mixed\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 1
+			path: app/Http/Controllers/ChatController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Invoice\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Models\\Invoice\>\:\:\$status\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/Client/InvoiceController.php
+
+		-
+			message: '#^Call to an undefined method App\\Models\\Invoice\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Models\\Invoice\>\:\:save\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Controllers/Client/InvoiceController.php
+
+		-
+			message: '#^Cannot access property \$id on App\\Models\\User\|null\.$#'
+			identifier: property.nonObject
+			count: 4
+			path: app/Http/Controllers/Client/InvoiceController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Client\\InvoiceController\:\:checkout\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Client/InvoiceController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Client\\InvoiceController\:\:checkout\(\) has parameter \$id with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Controllers/Client/InvoiceController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Client\\InvoiceController\:\:index\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Client/InvoiceController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Client\\InvoiceController\:\:processPayment\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Client/InvoiceController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Client\\InvoiceController\:\:processPayment\(\) has parameter \$id with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Controllers/Client/InvoiceController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Client\\InvoiceController\:\:show\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Client/InvoiceController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Client\\InvoiceController\:\:show\(\) has parameter \$id with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Controllers/Client/InvoiceController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\LawyerCase\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Models\\LawyerCase\>\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Call to an undefined method App\\Models\\LawyerCase\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Models\\LawyerCase\>\:\:delete\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Call to an undefined method App\\Models\\LawyerCase\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Models\\LawyerCase\>\:\:tasks\(\)\.$#'
+			identifier: method.notFound
+			count: 3
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Call to an undefined method App\\Models\\LawyerCase\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Models\\LawyerCase\>\:\:update\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Cannot access offset ''client_email'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Cannot access offset ''lawyer_id'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Cannot access offset ''user_id'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Cannot access property \$id on App\\Models\\Lawyer\|null\.$#'
+			identifier: property.nonObject
+			count: 8
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Cannot access property \$id on App\\Models\\User\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Cannot access property \$lawyer on App\\Models\\User\|null\.$#'
+			identifier: property.nonObject
+			count: 10
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Cannot call method create\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Cannot call method delete\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Cannot call method findOrFail\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Cannot call method update\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Lawyer\\CaseController\:\:create\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Lawyer\\CaseController\:\:destroy\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Lawyer\\CaseController\:\:destroy\(\) has parameter \$id with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Lawyer\\CaseController\:\:destroyTask\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Lawyer\\CaseController\:\:destroyTask\(\) has parameter \$id with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Lawyer\\CaseController\:\:destroyTask\(\) has parameter \$taskId with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Lawyer\\CaseController\:\:edit\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Lawyer\\CaseController\:\:edit\(\) has parameter \$id with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Lawyer\\CaseController\:\:index\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Lawyer\\CaseController\:\:show\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Lawyer\\CaseController\:\:show\(\) has parameter \$id with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Lawyer\\CaseController\:\:store\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Lawyer\\CaseController\:\:storeTask\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Lawyer\\CaseController\:\:storeTask\(\) has parameter \$id with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Lawyer\\CaseController\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Lawyer\\CaseController\:\:update\(\) has parameter \$id with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Lawyer\\CaseController\:\:updateTask\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Lawyer\\CaseController\:\:updateTask\(\) has parameter \$id with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Lawyer\\CaseController\:\:updateTask\(\) has parameter \$taskId with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Lawyer\\CaseController\:\:uploadDocument\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Lawyer\\CaseController\:\:uploadDocument\(\) has parameter \$id with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Parameter \#1 \$attributes of static method Illuminate\\Database\\Eloquent\\Builder\<App\\Models\\LawyerCase\>\:\:create\(\) expects array\<string, mixed\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Lawyer/CaseController.php
+
+		-
+			message: '#^Call to an undefined method App\\Models\\Invoice\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Models\\Invoice\>\:\:update\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Controllers/Lawyer/InvoiceController.php
+
+		-
+			message: '#^Cannot access offset ''amount'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Http/Controllers/Lawyer/InvoiceController.php
+
+		-
+			message: '#^Cannot access offset ''client_email'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Http/Controllers/Lawyer/InvoiceController.php
+
+		-
+			message: '#^Cannot access offset ''description'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Http/Controllers/Lawyer/InvoiceController.php
+
+		-
+			message: '#^Cannot access offset ''due_date'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Http/Controllers/Lawyer/InvoiceController.php
+
+		-
+			message: '#^Cannot access property \$id on App\\Models\\Lawyer\|null\.$#'
+			identifier: property.nonObject
+			count: 3
+			path: app/Http/Controllers/Lawyer/InvoiceController.php
+
+		-
+			message: '#^Cannot access property \$id on App\\Models\\User\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Http/Controllers/Lawyer/InvoiceController.php
+
+		-
+			message: '#^Cannot access property \$lawyer on App\\Models\\User\|null\.$#'
+			identifier: property.nonObject
+			count: 5
+			path: app/Http/Controllers/Lawyer/InvoiceController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Lawyer\\InvoiceController\:\:create\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Lawyer/InvoiceController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Lawyer\\InvoiceController\:\:index\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Lawyer/InvoiceController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Lawyer\\InvoiceController\:\:markAsPaid\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Lawyer/InvoiceController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Lawyer\\InvoiceController\:\:markAsPaid\(\) has parameter \$id with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Controllers/Lawyer/InvoiceController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Lawyer\\InvoiceController\:\:show\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Lawyer/InvoiceController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Lawyer\\InvoiceController\:\:show\(\) has parameter \$id with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Controllers/Lawyer/InvoiceController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Lawyer\\InvoiceController\:\:store\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Lawyer/InvoiceController.php
+
+		-
+			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 1
+			path: app/Http/Controllers/LawyerAvailabilityController.php
+
+		-
+			message: '#^Cannot access offset ''day_of_week'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Http/Controllers/LawyerAvailabilityController.php
+
+		-
+			message: '#^Cannot access offset ''end_time'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Http/Controllers/LawyerAvailabilityController.php
+
+		-
+			message: '#^Cannot access offset ''is_active'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Http/Controllers/LawyerAvailabilityController.php
+
+		-
+			message: '#^Cannot access offset ''schedule'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Http/Controllers/LawyerAvailabilityController.php
+
+		-
+			message: '#^Cannot access offset ''start_time'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Http/Controllers/LawyerAvailabilityController.php
+
+		-
+			message: '#^Cannot access property \$lawyer on App\\Models\\User\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: app/Http/Controllers/LawyerAvailabilityController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\LawyerAvailabilityController\:\:index\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/LawyerAvailabilityController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\LawyerAvailabilityController\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/LawyerAvailabilityController.php
+
+		-
+			message: '#^Binary operation "\." between ''%%'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 4
+			path: app/Http/Controllers/LawyerController.php
+
+		-
+			message: '#^Call to function compact\(\) contains possibly undefined variable \$casesLost\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: app/Http/Controllers/LawyerDashboardController.php
+
+		-
+			message: '#^Call to function compact\(\) contains possibly undefined variable \$casesWon\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: app/Http/Controllers/LawyerDashboardController.php
+
+		-
+			message: '#^Cannot access offset ''bar_council_id'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Http/Controllers/LawyerDashboardController.php
+
+		-
+			message: '#^Cannot access offset ''city'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Http/Controllers/LawyerDashboardController.php
+
+		-
+			message: '#^Cannot access offset ''education'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Http/Controllers/LawyerDashboardController.php
+
+		-
+			message: '#^Cannot access offset ''experience'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Http/Controllers/LawyerDashboardController.php
+
+		-
+			message: '#^Cannot access offset ''expertise'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Http/Controllers/LawyerDashboardController.php
+
+		-
+			message: '#^Cannot access offset ''languages'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Http/Controllers/LawyerDashboardController.php
+
+		-
+			message: '#^Cannot access offset ''name'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Http/Controllers/LawyerDashboardController.php
+
+		-
+			message: '#^Cannot access offset ''phone'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Http/Controllers/LawyerDashboardController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\LawyerDashboardController\:\:acceptAppointment\(\) has parameter \$id with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Controllers/LawyerDashboardController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\LawyerDashboardController\:\:editProfile\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/LawyerDashboardController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\LawyerDashboardController\:\:rejectAppointment\(\) has parameter \$id with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Controllers/LawyerDashboardController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\LawyerDashboardController\:\:requestVerification\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/LawyerDashboardController.php
+
+		-
+			message: '#^Negated boolean expression is always false\.$#'
+			identifier: booleanNot.alwaysFalse
+			count: 1
+			path: app/Http/Controllers/LawyerDashboardController.php
+
+		-
+			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|int\|resource\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 5
+			path: app/Http/Controllers/LawyerDashboardController.php
+
+		-
+			message: '#^Property App\\Models\\Lawyer\:\:\$documents \(array\<string, mixed\>\|null\) does not accept list\<mixed\>\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: app/Http/Controllers/LawyerDashboardController.php
+
+		-
+			message: '#^Property App\\Models\\Lawyer\:\:\$education \(array\|null\) does not accept mixed\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: app/Http/Controllers/LawyerDashboardController.php
+
+		-
+			message: '#^Property App\\Models\\Lawyer\:\:\$experience \(array\|null\) does not accept mixed\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: app/Http/Controllers/LawyerDashboardController.php
+
+		-
+			message: '#^Property App\\Models\\Lawyer\:\:\$languages \(array\|null\) does not accept mixed\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: app/Http/Controllers/LawyerDashboardController.php
+
+		-
+			message: '#^Property App\\Models\\User\:\:\$profile_photo_path \(string\|null\) does not accept string\|false\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: app/Http/Controllers/LawyerDashboardController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\NotificationsController\:\:markRead\(\) has parameter \$id with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Controllers/NotificationsController.php
+
+		-
+			message: '#^Cannot access offset ''current_password'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Http/Controllers/ProfileController.php
+
+		-
+			message: '#^Cannot access offset ''password'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Http/Controllers/ProfileController.php
+
+		-
+			message: '#^Cannot access offset ''profile_photo_path'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Http/Controllers/ProfileController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ProfileController\:\:show\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/ProfileController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ProfileController\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/ProfileController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ProfileController\:\:updatePassword\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/ProfileController.php
+
+		-
+			message: '#^Parameter \#1 \$attributes of method Illuminate\\Database\\Eloquent\\Model\:\:update\(\) expects array\<string, mixed\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/ProfileController.php
+
+		-
+			message: '#^Parameter \#1 \$value of static method Illuminate\\Support\\Facades\\Hash\:\:check\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/ProfileController.php
+
+		-
+			message: '#^Parameter \#1 \$value of static method Illuminate\\Support\\Facades\\Hash\:\:make\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/ProfileController.php
+
+		-
+			message: '#^Parameter \#2 \$hashedValue of static method Illuminate\\Support\\Facades\\Hash\:\:check\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/ProfileController.php
+
+		-
+			message: '#^Cannot access property \$id on App\\Models\\User\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: app/Http/Controllers/UserCaseController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\UserCaseController\:\:index\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/UserCaseController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\UserCaseController\:\:show\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/UserCaseController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\UserCaseController\:\:show\(\) has parameter \$id with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Controllers/UserCaseController.php
+
+		-
+			message: '#^Parameter \#1 \$locale of method Illuminate\\Foundation\\Application\:\:setLocale\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Middleware/SetLocale.php
+
+		-
+			message: '#^Binary operation "\." between Carbon\\Carbon\|null and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: app/Models/Appointment.php
+
+		-
+			message: '#^Method App\\Models\\CaseDocument\:\:case\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/CaseDocument.php
+
+		-
+			message: '#^Method App\\Models\\CaseDocument\:\:uploader\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/CaseDocument.php
+
+		-
+			message: '#^Method App\\Models\\CaseTask\:\:case\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/CaseTask.php
+
+		-
+			message: '#^Method App\\Models\\Invoice\:\:client\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Invoice.php
+
+		-
+			message: '#^Method App\\Models\\Invoice\:\:lawyer\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Invoice.php
+
+		-
+			message: '#^Method App\\Models\\LawyerAvailability\:\:lawyer\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/LawyerAvailability.php
+
+		-
+			message: '#^Method App\\Models\\LawyerCase\:\:client\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/LawyerCase.php
+
+		-
+			message: '#^Method App\\Models\\LawyerCase\:\:documents\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/LawyerCase.php
+
+		-
+			message: '#^Method App\\Models\\LawyerCase\:\:lawyer\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/LawyerCase.php
+
+		-
+			message: '#^Method App\\Models\\LawyerCase\:\:tasks\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/LawyerCase.php
+
+		-
+			message: '#^Cannot access property \$name on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Notifications/LawyerVerificationRequested.php
+
+		-
+			message: '#^Cannot access property \$user on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Notifications/LawyerVerificationRequested.php
+
+		-
+			message: '#^Method App\\Notifications\\LawyerVerificationRequested\:\:__construct\(\) has parameter \$lawyer with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Notifications/LawyerVerificationRequested.php
+
+		-
+			message: '#^Method App\\Notifications\\LawyerVerificationRequested\:\:getLawyer\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Notifications/LawyerVerificationRequested.php
+
+		-
+			message: '#^Method App\\Notifications\\LawyerVerificationRequested\:\:toMail\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Notifications/LawyerVerificationRequested.php
+
+		-
+			message: '#^Method App\\Notifications\\LawyerVerificationRequested\:\:toMail\(\) has parameter \$notifiable with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Notifications/LawyerVerificationRequested.php
+
+		-
+			message: '#^Method App\\Notifications\\LawyerVerificationRequested\:\:via\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Notifications/LawyerVerificationRequested.php
+
+		-
+			message: '#^Method App\\Notifications\\LawyerVerificationRequested\:\:via\(\) has parameter \$notifiable with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Notifications/LawyerVerificationRequested.php
+
+		-
+			message: '#^Part \$userName \(mixed\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 2
+			path: app/Notifications/LawyerVerificationRequested.php
+
+		-
+			message: '#^Property App\\Notifications\\LawyerVerificationRequested\:\:\$lawyer has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: app/Notifications/LawyerVerificationRequested.php
+
+		-
+			message: '#^Cannot access offset ''content'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Services/GeminiService.php
+
+		-
+			message: '#^Cannot access offset ''parts'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Services/GeminiService.php
+
+		-
+			message: '#^Cannot access offset ''text'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Services/GeminiService.php
+
+		-
+			message: '#^Cannot access offset 0 on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: app/Services/GeminiService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: tests/Feature/AdminVerificationTest.php
+
+		-
+			message: '#^Method Tests\\Feature\\AdminVerificationTest\:\:test_admin_can_approve_verification\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Feature/AdminVerificationTest.php
+
+		-
+			message: '#^Method Tests\\Feature\\AdminVerificationTest\:\:test_non_admin_cannot_access_verification_page\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Feature/AdminVerificationTest.php
+
+		-
+			message: '#^Method Tests\\Feature\\EndToEndVerificationFlowTest\:\:test_full_verification_flow_from_upload_to_admin_approval\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Feature/EndToEndVerificationFlowTest.php
+
+		-
+			message: '#^Offset 0 does not exist on array\<string, mixed\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: tests/Feature/EndToEndVerificationFlowTest.php
+
+		-
+			message: '#^Parameter \#1 \$path of function basename expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Feature/EndToEndVerificationFlowTest.php
+
+		-
+			message: '#^Method Tests\\Feature\\LawyerDashboardTest\:\:test_lawyer_can_request_verification\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Feature/LawyerDashboardTest.php
+
+		-
+			message: '#^Method Tests\\Feature\\LawyerDashboardTest\:\:test_non_lawyer_cannot_request_verification\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Feature/LawyerDashboardTest.php
+
+		-
+			message: '#^Method Tests\\Feature\\LawyerProfileUploadTest\:\:test_admin_sees_uploaded_documents_in_verification_list\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Feature/LawyerProfileUploadTest.php
+
+		-
+			message: '#^Method Tests\\Feature\\LawyerProfileUploadTest\:\:test_lawyer_can_upload_documents\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Feature/LawyerProfileUploadTest.php
+
+		-
+			message: '#^Parameter \#1 \$path of method Illuminate\\Filesystem\\FilesystemAdapter\:\:exists\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Feature/LawyerProfileUploadTest.php
+
+		-
+			message: '#^Part \$path \(mixed\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 1
+			path: tests/Feature/LawyerProfileUploadTest.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: tests/Feature/LawyerVerificationNotificationTest.php
+
+		-
+			message: '#^Cannot access property \$id on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: tests/Feature/LawyerVerificationNotificationTest.php
+
+		-
+			message: '#^Cannot call method getLawyer\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: tests/Feature/LawyerVerificationNotificationTest.php
+
+		-
+			message: '#^Method Tests\\Feature\\LawyerVerificationNotificationTest\:\:test_admins_are_notified_when_lawyer_requests_verification\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Feature/LawyerVerificationNotificationTest.php
