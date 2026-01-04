@@ -1179,7 +1179,7 @@
                     const navbarHeight = 80; // Account for fixed navbar
                     const elementPosition = toolPanel.getBoundingClientRect().top + window.pageYOffset;
                     const offsetPosition = elementPosition - navbarHeight;
-                    
+
                     window.scrollTo({
                         top: offsetPosition,
                         behavior: 'smooth'
