@@ -146,25 +146,38 @@ class AiFeaturesController extends Controller
     public function checkRights(Request $request): JsonResponse
     {
         $data = $request->validate([
-            'situation' => 'required|string|max:3000',
-            'category' => 'required|string|in:consumer,property,family,criminal,labor,civil',
+            'situation' => 'nullable|string|max:3000',
+            'category' => 'required|string',
             'language' => 'nullable|string|in:en,bn',
         ]);
 
         $language = $data['language'] ?? 'bn';
 
+        // Map category values to display names
         $categoryNames = [
+            'arrest' => $language === 'bn' ? 'গ্রেফতারের সময় অধিকার' : 'Rights During Arrest',
+            'women' => $language === 'bn' ? 'নারী অধিকার' : 'Women\'s Rights',
+            'children' => $language === 'bn' ? 'শিশু অধিকার' : 'Children\'s Rights',
             'consumer' => $language === 'bn' ? 'ভোক্তা অধিকার' : 'Consumer Rights',
             'property' => $language === 'bn' ? 'সম্পত্তি অধিকার' : 'Property Rights',
+            'labour' => $language === 'bn' ? 'শ্রম অধিকার' : 'Labour Rights',
+            'cyber' => $language === 'bn' ? 'সাইবার অপরাধে অধিকার' : 'Cyber Crime Rights',
             'family' => $language === 'bn' ? 'পারিবারিক আইন' : 'Family Law',
             'criminal' => $language === 'bn' ? 'ফৌজদারি আইন' : 'Criminal Law',
             'labor' => $language === 'bn' ? 'শ্রম আইন' : 'Labor Law',
             'civil' => $language === 'bn' ? 'দেওয়ানি আইন' : 'Civil Law',
         ];
 
+        // Get category display name - use the value directly if not in map (for translated text from frontend)
+        $categoryDisplay = $categoryNames[$data['category']] ?? $data['category'];
+
+        // Use situation if provided, otherwise just explain rights for the category
+        $situation = $data['situation'] ?? '';
+        $situationText = !empty($situation) ? ($language === 'bn' ? "\n\nপরিস্থিতি:\n{$situation}" : "\n\nSituation:\n{$situation}") : '';
+
         $prompt = $language === 'bn'
-            ? "আপনি বাংলাদেশের আইন বিশেষজ্ঞ। নিম্নলিখিত পরিস্থিতিতে একজন নাগরিকের কী কী আইনি অধিকার রয়েছে তা বিশ্লেষণ করুন:\n\nবিভাগ: {$categoryNames[$data['category']]}\n\nপরিস্থিতি:\n{$data['situation']}\n\nঅনুগ্রহ করে নিম্নলিখিত বিষয়গুলো অন্তর্ভুক্ত করুন:\n১. প্রযোজ্য আইনি অধিকারসমূহ\n২. সংশ্লিষ্ট আইন ও ধারা\n৩. প্রতিকার পাওয়ার উপায়\n৪. কোথায় অভিযোগ করতে হবে\n৫. সতর্কতা ও পরামর্শ"
-            : "You are a Bangladesh law expert. Analyze what legal rights a citizen has in the following situation:\n\nCategory: {$categoryNames[$data['category']]}\n\nSituation:\n{$data['situation']}\n\nPlease include:\n1. Applicable legal rights\n2. Relevant laws and sections\n3. Ways to get remedy\n4. Where to file complaints\n5. Cautions and advice";
+            ? "আপনি বাংলাদেশের আইন বিশেষজ্ঞ। নিম্নলিখিত বিষয়ে একজন নাগরিকের কী কী আইনি অধিকার রয়েছে তা বিশ্লেষণ করুন:\n\nবিভাগ: {$categoryDisplay}{$situationText}\n\nঅনুগ্রহ করে নিম্নলিখিত বিষয়গুলো অন্তর্ভুক্ত করুন:\n১. প্রযোজ্য আইনি অধিকারসমূহ\n২. সংশ্লিষ্ট আইন ও ধারা\n৩. প্রতিকার পাওয়ার উপায়\n৪. কোথায় অভিযোগ করতে হবে\n৫. সতর্কতা ও পরামর্শ"
+            : "You are a Bangladesh law expert. Analyze what legal rights a citizen has regarding the following:\n\nCategory: {$categoryDisplay}{$situationText}\n\nPlease include:\n1. Applicable legal rights\n2. Relevant laws and sections\n3. Ways to get remedy\n4. Where to file complaints\n5. Cautions and advice";
 
         return $this->makeAiRequest($prompt, $language);
     }
