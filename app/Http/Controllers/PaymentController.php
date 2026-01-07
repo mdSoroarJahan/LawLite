@@ -29,6 +29,7 @@ class PaymentController extends Controller
 
             if ($appointment) {
                 $appointment->update([
+                    'status' => 'pending', // Keep as pending for lawyer approval
                     'payment_status' => 'paid',
                     'transaction_id' => $tran_id,
                 ]);

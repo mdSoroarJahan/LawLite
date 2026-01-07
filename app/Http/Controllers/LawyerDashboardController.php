@@ -7,6 +7,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Contracts\View\Factory as ViewFactory;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Log;
 use App\Notifications\LawyerVerificationRequested;
 use App\Models\LawyerCase;
 use App\Models\Invoice;
@@ -113,6 +114,18 @@ class LawyerDashboardController extends Controller
 
         $appointment->save();
 
+        // Notify the client
+        try {
+            if ($appointment->user) {
+                $appointment->user->notify(new \App\Notifications\GenericNotification(
+                    'appointment',
+                    'Your appointment has been accepted by ' . $user->name
+                ));
+            }
+        } catch (\Exception $e) {
+            Log::error('Failed to send appointment acceptance notification: ' . $e->getMessage());
+        }
+
         return redirect()->route('lawyer.appointments')->with('success', 'Appointment accepted successfully.');
     }
 
@@ -135,6 +148,18 @@ class LawyerDashboardController extends Controller
 
         $appointment->status = 'cancelled';
         $appointment->save();
+
+        // Notify the client
+        try {
+            if ($appointment->user) {
+                $appointment->user->notify(new \App\Notifications\GenericNotification(
+                    'appointment',
+                    'Your appointment has been rejected by ' . $user->name
+                ));
+            }
+        } catch (\Exception $e) {
+            Log::error('Failed to send appointment rejection notification: ' . $e->getMessage());
+        }
 
         return redirect()->route('lawyer.appointments')->with('success', 'Appointment rejected.');
     }
